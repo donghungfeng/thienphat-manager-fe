@@ -1,0 +1,54 @@
+<div class="modal-header">
+  <h4 class="modal-title text-primary-1">{{data ? 'Sửa thông tin công ty' : 'Thêm mới công ty'}}</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="closeModal(false)">
+  </button>
+</div>
+<div class="modal-body">
+  <div class="text-primary-1 fw-bold">
+    Thông tin đăng nhập
+  </div>
+  <form [formGroup]="form" class="d-flex flex-column gap-4">
+    <div class="row">
+      <div class="col">
+        <div>Tên công ty <span class="text-danger">*</span></div>
+        <input placeholder="Nhập tên công ty" type="text" class="form-control" formControlName="fullName" required>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('fullName')?.touched && form.get('fullName')?.invalid">
+          <div *ngIf="form.get('fullName')?.errors?.['required']">
+            Vui lòng nhập tên đăng nhập
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div>Mã số thuế <span class="text-danger">*</span></div>
+        <input placeholder="Nhập mã số thuế" type="text" class="form-control" formControlName="taxNumber" required>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('taxNumber')?.touched && form.get('taxNumber')?.invalid">
+          <div *ngIf="form.get('taxNumber')?.errors?.['required']">
+            Vui lòng nhập mã số thuế
+          </div>
+          <div *ngIf="form.get('taxNumber')?.errors?.['pattern']">
+            Mã số thuế chỉ nhập số
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div>Số điện thoại <span class="text-danger">*</span></div>
+        <input placeholder="Nhập số điện thoại" type="text" class="form-control" formControlName="phone" required>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('phone')?.touched && form.get('phone')?.invalid">
+          <div *ngIf="form.get('phone')?.errors?.['required']">
+            Vui lòng nhập số điện thoại
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div>Địa chỉ</div>
+        <input placeholder="Nhập địa chỉ" type="text" class="form-control" formControlName="address">
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="closeModal(false)">Hủy</button>
+  <button type="button" class="btn btn-primary-1">{{data ? 'Lưu thay đổi' : 'Thêm công ty'}}</button>
+</div>

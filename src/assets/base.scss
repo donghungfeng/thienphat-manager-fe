@@ -99,3 +99,25 @@
 // DEMO
 // 
 @import "demo-ui/demo";
+
+.body {
+  font-family: "Lexend", sans-serif !important;;
+}
+
+.form-control-icon {
+  border-left: 1px solid #dee2e6;
+  border-top: 1px solid #dee2e6;
+  border-bottom: 1px solid #dee2e6;
+  border-radius: 4px; 
+  padding: 5px 8px; 
+  border-top-right-radius: 0; 
+  border-bottom-right-radius: 0;
+}
+.form-control-custom {
+  border-left: none!important; 
+  border-top-left-radius: 0!important;
+   border-bottom-left-radius: 0!important;
+}
+.container-body {
+  height: calc(100vh - 104px);
+}

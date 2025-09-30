@@ -52,6 +52,10 @@ import {FooterComponent} from './Layout/Components/footer/footer.component';
 
 // ThemeOptions
 import {ThemeOptions} from './theme-options';
+import { LoginModule } from './Pages/login/login.module';
+import { DashboardHomeModule } from './Pages/dashboard/dashboard.module';
+import { CongTyModule } from './Pages/cong-ty/cong-ty.module';
+import { QuanLyModule } from './Pages/quan-ly/quan-ly.module';
 
 @NgModule({
   declarations: [
@@ -82,7 +86,10 @@ import {ThemeOptions} from './theme-options';
     RouterModule,
     BrowserAnimationsModule,
     StoreModule.forRoot({ config: configReducer }),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
     CommonModule,
 
     // Angular Bootstrap Components
@@ -102,13 +109,17 @@ import {ThemeOptions} from './theme-options';
     TablesModule,
     WidgetsModule,
     ComponentsModule,
+    // Custome Module
+    LoginModule,
+    DashboardHomeModule,
+    CongTyModule,
+    QuanLyModule
   ],
   providers: [
     ConfigService,
     ThemeOptions,
-    provideCharts(withDefaultRegisterables())
+    provideCharts(withDefaultRegisterables()),
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-
-export class AppModule { }
+export class AppModule {}

@@ -6,46 +6,48 @@ import { ConfigState } from '../../../ThemeOptions/store/config.state';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
+  selector: "app-sidebar",
+  templateUrl: "./sidebar.component.html",
   standalone: false,
-  styles: [`
-    /* Override the existing styles with important to ensure animation works */
-    .vsm-dropdown {
-      max-height: 0 !important;
-      overflow: hidden !important;
-      opacity: 0 !important;
-      transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out !important;
-      position: relative !important;
-    }
-    
-    .vsm-dropdown-show {
-      max-height: 500px !important;
-      opacity: 1 !important;
-    }
-    
-    /* Arrow rotation - override existing transform */
-    .vsm-item.has-sub .vsm-arrow {
-      transition: transform 0.3s ease !important;
-      transform: rotate(270deg) !important;  /* Point right */
-    }
-    
-    .vsm-item.has-sub.vsm-open .vsm-arrow {
-      transform: rotate(360deg) !important;  /* Point down */
-    }
-  `]
+  styles: [
+    `
+      /* Override the existing styles with important to ensure animation works */
+      .vsm-dropdown {
+        max-height: 0 !important;
+        overflow: hidden !important;
+        opacity: 0 !important;
+        transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out !important;
+        position: relative !important;
+      }
+
+      .vsm-dropdown-show {
+        max-height: 500px !important;
+        opacity: 1 !important;
+      }
+
+      /* Arrow rotation - override existing transform */
+      .vsm-item.has-sub .vsm-arrow {
+        transition: transform 0.3s ease !important;
+        transform: rotate(270deg) !important; /* Point right */
+      }
+
+      .vsm-item.has-sub.vsm-open .vsm-arrow {
+        transform: rotate(360deg) !important; /* Point down */
+      }
+    `,
+  ],
 })
 export class SidebarComponent implements OnInit {
   public extraParameter: any;
   public openMenus: string[] = [];
-  
-  // Supported menu types: dashboardsMenu, pagesMenu, elementsMenu, componentsMenu, 
+
+  // Supported menu types: dashboardsMenu, pagesMenu, elementsMenu, componentsMenu,
   // tablesMenu, formsMenu, chartsMenu, widgetsMenu
 
   public config$: Observable<ConfigState>;
 
   constructor(
-    public globals: ThemeOptions, 
+    public globals: ThemeOptions,
     private activatedRoute: ActivatedRoute,
     private configService: ConfigService
   ) {
@@ -54,8 +56,104 @@ export class SidebarComponent implements OnInit {
 
   private newInnerWidth = 0;
   private innerWidth = 0;
-  activeId = 'dashboardsMenu';
-
+  activeId = "dashboardsMenu";
+  listMenus: any[] = [
+    {
+      header: "Dashboard",
+      key: "dashboard",
+      path: "/dashboard",
+      parent: "",
+      name: "Dashboard",
+      icon: "pe-7s-graph2",
+      children: [],
+    },
+    {
+      header: "",
+      key: "company",
+      path: "",
+      parent: "",
+      name: "Công ty",
+      icon: "pe-7s-home",
+      children: [
+        {
+          header: "Danh sách công ty",
+          key: "companyChild",
+          path: "/cong-ty",
+          parent: "company",
+          name: "Công ty",
+          icon: "",
+        },
+        {
+          header: "",
+          key: "customer",
+          path: "/khach-hang",
+          parent: "company",
+          name: "Khách hàng",
+          icon: "",
+        },
+      ],
+    },
+    {
+      header: "",
+      key: "job",
+      path: "",
+      parent: "",
+      name: "Công việc",
+      icon: "pe-7s-file",
+      children: [
+        {
+          header: "",
+          key: "jobProcess",
+          path: "/xu-ly-cong-viec",
+          parent: "job",
+          name: "Xử lý công việc",
+          icon: "",
+        },
+        {
+          header: "",
+          key: "jobCustomer",
+          path: "/xu-ly-cong-viec-khach-hang",
+          parent: "job",
+          name: "Khách hàng",
+          icon: "",
+        },
+      ],
+    },
+    {
+      header: "",
+      key: "managemant",
+      parent: "",
+      path: "",
+      name: "Quản lý",
+      icon: "pe-7s-config",
+      children: [
+        {
+          header: "",
+          key: "department",
+          path: "/phong-ban",
+          parent: "managemant",
+          name: "Phòng ban",
+          icon: "",
+        },
+        {
+          header: "",
+          key: "employee",
+          path: "/nhan-vien",
+          parent: "managemant",
+          name: "Nhân viên",
+          icon: "",
+        },
+        {
+          header: "",
+          key: "workLog",
+          path: "/bang-cham-cong",
+          parent: "managemant",
+          name: "Bảng chấm công",
+          icon: "",
+        },
+      ],
+    },
+  ];
   toggleSidebar() {
     this.globals.toggleSidebar = !this.globals.toggleSidebar;
     // If we're closing the sidebar, also clear the hover state
@@ -87,11 +185,17 @@ export class SidebarComponent implements OnInit {
     });
 
     // Get the extraParameter from the route to determine which menu should be open
-    this.extraParameter = this.activatedRoute.snapshot.firstChild?.data['extraParameter'];
-    
+    this.extraParameter =
+      this.activatedRoute.snapshot.firstChild?.data["extraParameter"];
+
     // Initialize open menus based on current route
     if (this.extraParameter) {
-      this.openMenus = [this.extraParameter];
+      const findParent = this.listMenus.find(item => item.children.find(el => el.key === this.extraParameter))
+      if (findParent) {
+        this.openMenus = [findParent.key];
+      } else {
+        this.openMenus = [this.extraParameter]
+      }
     }
   }
 
@@ -113,7 +217,7 @@ export class SidebarComponent implements OnInit {
     }
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener("window:resize", ["$event"])
   onResize(event: Event) {
     this.newInnerWidth = (event.target as Window).innerWidth;
 
@@ -122,6 +226,5 @@ export class SidebarComponent implements OnInit {
     } else {
       this.globals.toggleSidebar = false;
     }
-
   }
 }

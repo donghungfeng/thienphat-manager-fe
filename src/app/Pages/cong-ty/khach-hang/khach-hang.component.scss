@@ -1,0 +1,12 @@
+.horizontal-scroll-first-column {
+  overflow-x: auto;
+}
+
+.horizontal-scroll-first-column > table > * > tr > th:nth-child(2),
+.horizontal-scroll-first-column > table > * > tr > td:nth-child(2) {
+  position: sticky;
+  width: 50px;
+  max-width: 50px;
+  left: -16px;
+  z-index: 1;
+}

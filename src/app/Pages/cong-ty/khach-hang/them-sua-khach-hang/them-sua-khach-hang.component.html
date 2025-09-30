@@ -1,0 +1,97 @@
+<div class="modal-header">
+  <h4 class="modal-title text-primary-1">{{data ? 'Sửa thông tin khách hàng' : 'Thêm mới khách hàng'}}</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="closeModal(false)">
+  </button>
+</div>
+<div class="modal-body">
+  <div class="text-primary-1 fw-bold">
+    Thông tin khách hàng
+  </div>
+  <form [formGroup]="form" class="d-flex flex-column gap-4">
+    <div class="row">
+      <div class="col">
+        <div>Họ và tên <span class="text-danger">*</span></div>
+        <input placeholder="Nhập họ và tên" type="text" class="form-control" formControlName="fullName" required>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('fullName')?.touched && form.get('fullName')?.invalid">
+          <div *ngIf="form.get('fullName')?.errors?.['required']">
+            Vui lòng nhập họ và tên
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div>Số điện thoại <span class="text-danger">*</span></div>
+        <input placeholder="Nhập số điện thoại" type="text" class="form-control" formControlName="phone" required>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('phone')?.touched && form.get('phone')?.invalid">
+          <div *ngIf="form.get('phone')?.errors?.['required']">
+            Vui lòng nhập số điện thoại
+          </div>
+          <div *ngIf="form.get('phone')?.errors?.['pattern']">
+            Số điện thoại chỉ nhập số
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div>Địa chỉ <span class="text-danger">*</span></div>
+        <input placeholder="Địa chỉ" type="text" class="form-control" formControlName="address" required>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('address')?.touched && form.get('address')?.invalid">
+          <div *ngIf="form.get('address')?.errors?.['required']">
+            Vui lòng nhập địa chỉ
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div>Công ty</div>
+        <select formControlName="companyName" class="form-select">
+          <option value="">Chọn công ty</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('companyName')?.touched && form.get('companyName')?.invalid">
+          <div *ngIf="form.get('companyName')?.errors?.['required']">
+            Vui lòng chọn công ty
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div>Zalo ID <span class="text-danger">*</span></div>
+        <input placeholder="Nhập Zalo ID" type="text" class="form-control" formControlName="zaloId" required>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('zaloId')?.touched && form.get('zaloId')?.invalid">
+          <div *ngIf="form.get('zaloId')?.errors?.['required']">
+            Vui lòng nhập Zalo ID
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div>Trạng thái</div>
+        <select formControlName="status" class="form-select">
+          <option value="">Chọn Trạng thái</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('status')?.touched && form.get('status')?.invalid">
+          <div *ngIf="form.get('status')?.errors?.['required']">
+            Vui lòng chọn trạng thái
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div>Ghi chú</div>
+        <input placeholder="Ghi chú" type="text" class="form-control" formControlName="note" required>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="closeModal(false)">Hủy</button>
+  <button type="button" class="btn btn-primary-1">{{data ? 'Lưu thay đổi' : 'Thêm khách  hàng'}}</button>
+</div>

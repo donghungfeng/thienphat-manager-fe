@@ -17,5 +17,4 @@ export class LoginBoxedComponent {
   onForgotPassword() {
     // Handle forgot password action
   }
-
 }

@@ -158,12 +158,13 @@ $sidebar-box-shadow: 7px 0 60px rgba(0, 0, 0, 0.05);
 
   %side-link-hover {
     background: $dropdown-link-hover-bg;
-    color: $primary;
+    color: $itemOpenColor;
   }
 
   & .vsm-item:hover .vsm-icon {
     opacity: .6;
     transform: scale(1.1);
+    color: $itemOpenColor;
   }
   
   & .vsm-item .vsm-link.active-item .vsm-icon {

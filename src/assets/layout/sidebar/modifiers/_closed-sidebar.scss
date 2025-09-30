@@ -44,7 +44,7 @@
         .logo-full {
           display: none;
           opacity: 0;
-          transform: scale(0.8);
+          transform: translateX(63px) scale(0.8);
         }
         
         .logo-collapsed {
@@ -128,8 +128,9 @@
           .logo-full {
             display: block;
             opacity: 1;
-            transform: scale(1);
+            transform: translateX(63px) scale(1);
             animation: fadeInScale .3s ease-out;
+            transition: all 0.3s;
           }
           
           .logo-collapsed {

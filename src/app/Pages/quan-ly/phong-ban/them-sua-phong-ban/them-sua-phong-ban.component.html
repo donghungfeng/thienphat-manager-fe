@@ -1,0 +1,57 @@
+<div class="modal-header">
+  <h4 class="modal-title text-primary-1">{{data ? 'Sửa thông tin phòng ban' : 'Thêm mới phòng ban'}}</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="closeModal(false)">
+  </button>
+</div>
+<div class="modal-body">
+  <div class="text-primary-1 fw-bold">
+    Thông tin phòng ban
+  </div>
+  <form [formGroup]="form" class="d-flex flex-column gap-4">
+    <div class="row">
+      <div class="col">
+        <div>Tên phòng ban <span class="text-danger">*</span></div>
+        <input placeholder="Nhập tên phòng ban" type="text" class="form-control" formControlName="fullName" required>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('fullName')?.touched && form.get('fullName')?.invalid">
+          <div *ngIf="form.get('fullName')?.errors?.['required']">
+            Vui lòng nhập tên phòng ban
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div>Tên cơ sở <span class="text-danger">*</span></div>
+        <input placeholder="Nhập mã số thuế" type="text" class="form-control" formControlName="unit" required>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('unit')?.touched && form.get('unit')?.invalid">
+          <div *ngIf="form.get('unit')?.errors?.['required']">
+            Vui lòng nhập tên cơ sở
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div>Trạng thái <span class="text-danger">*</span></div>
+        <select formControlName="status" class="form-select">
+          <option value="">Chọn Trạng thái</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('status')?.touched && form.get('status')?.invalid">
+          <div *ngIf="form.get('status')?.errors?.['required']">
+            Vui lòng chọn trạng thái
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div>Ghi chú</div>
+        <input placeholder="Nhập ghi chú" type="text" class="form-control" formControlName="note">
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="closeModal(false)">Hủy</button>
+  <button type="button" class="btn btn-primary-1">{{data ? 'Lưu thay đổi' : 'Thêm phòng ban'}}</button>
+</div>

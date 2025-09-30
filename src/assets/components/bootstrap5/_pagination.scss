@@ -6,10 +6,11 @@
 .page-link {
   position: relative;
   display: block;
-  color: $pagination-color;
+  color: black!important;
   text-decoration: if($link-decoration == none, null, none);
-  background-color: $pagination-bg;
-  border: $pagination-border-width solid $pagination-border-color;
+  background-color: white!important;
+  border: none!important;
+  outline: none;
   @include transition($pagination-transition);
 
   &:hover {
@@ -22,10 +23,8 @@
 
   &:focus {
     z-index: 3;
-    color: $pagination-focus-color;
-    background-color: $pagination-focus-bg;
-    outline: $pagination-focus-outline;
-    box-shadow: $pagination-focus-box-shadow;
+    // color: $pagination-focus-color;
+    // box-shadow: $pagination-focus-box-shadow;
   }
 }
 
@@ -38,7 +37,8 @@
     z-index: 3;
     color: $pagination-active-color;
     @include gradient-bg($pagination-active-bg);
-    border-color: $pagination-active-border-color;
+    border: 1px solid black!important;
+    border-radius: 4px!important;
   }
 
   &.disabled .page-link {

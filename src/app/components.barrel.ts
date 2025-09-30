@@ -39,3 +39,8 @@ export { ChartBoxes3Component } from './DemoPages/Widgets/chart-boxes3/chart-box
 export { ForgotPasswordBoxedComponent } from './DemoPages/UserPages/forgot-password-boxed/forgot-password-boxed.component';
 export { LoginBoxedComponent } from './DemoPages/UserPages/login-boxed/login-boxed.component';
 export { RegisterBoxedComponent } from './DemoPages/UserPages/register-boxed/register-boxed.component';
+
+// Custom Page
+export { LoginComponent } from './Pages/login/login.component'
+export { DashboardHomeComponent } from './Pages/dashboard/dashboard.component'
+export { CongTyComponent } from './Pages/cong-ty/cong-ty/cong-ty.component'
