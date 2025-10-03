@@ -122,3 +122,23 @@
 .text-primary-1 {
   color: #020AB3!important;
 }
+
+.btn-status {
+  color: white;
+  &-success {
+    background-color: #38976A;
+    font-size: 12px;
+  }
+  &-danger {
+    background-color: #DF4756;
+    font-size: 12px;
+  }
+  &-warning {
+    background-color: #FFC823;
+    font-size: 12px;
+  }
+  &-primary {
+    background-color: #21CEF1;
+    font-size: 12px;
+  }
+}

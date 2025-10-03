@@ -1,0 +1,125 @@
+<div class="modal-header">
+  <h4 class="modal-title text-primary-1">{{data ? 'Sửa thông tin nhân viên' : 'Thêm mới nhân viên'}}</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="closeModal(false)">
+  </button>
+</div>
+<div class="modal-body">
+  <div class="text-primary-1 fw-bold mb-2">
+    Thông tin nhân viên
+  </div>
+  <form [formGroup]="form" class="d-flex flex-column gap-4">
+    <div class="row">
+      <div class="col">
+        <div>Tài khoản <span class="text-danger">*</span></div>
+        <input placeholder="Nhập tài khoản" type="text" class="form-control" formControlName="userName">
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('userName')?.touched && form.get('userName')?.invalid">
+          <div *ngIf="form.get('userName')?.errors?.['required']">
+            Vui lòng nhập tài khoản
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div>Họ và tên <span class="text-danger">*</span></div>
+        <input placeholder="Nhập họ và tên" type="text" class="form-control" formControlName="fullName">
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('fullName')?.touched && form.get('fullName')?.invalid">
+          <div *ngIf="form.get('fullName')?.errors?.['required']">
+            Vui lòng nhập họ và tên
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div>Số điện thoại <span class="text-danger">*</span></div>
+        <input placeholder="Nhập số điện thoại" type="text" class="form-control" formControlName="phone">
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('phone')?.touched && form.get('phone')?.invalid">
+          <div *ngIf="form.get('phone')?.errors?.['required']">
+            Vui lòng nhập số điện thoại
+          </div>
+          <div *ngIf="form.get('phone')?.errors?.['pattern']">
+            Số điện thoại không hợp lệ
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div>Địa chỉ</div>
+        <input placeholder="Nhập địa chỉ" type="text" class="form-control" formControlName="address">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div>CCCD <span class="text-danger">*</span></div>
+        <input placeholder="Nhập số CCCD" type="text" class="form-control" formControlName="cccd">
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('cccd')?.touched && form.get('cccd')?.invalid">
+          <div *ngIf="form.get('cccd')?.errors?.['required']">
+            Vui lòng nhập CCCD
+          </div>
+          <div *ngIf="form.get('cccd')?.errors?.['pattern']">
+            CCCD chỉ được nhập số
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div>Phòng ban <span class="text-danger">*</span></div>
+        <select class="form-select" formControlName="departmentId">
+          <option value="">Chọn phòng ban</option>
+          <option *ngFor="let dept of departmentList" [value]="dept.id">{{ dept.name }}</option>
+        </select>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('departmentId')?.touched && form.get('departmentId')?.invalid">
+          <div *ngIf="form.get('departmentId')?.errors?.['required']">
+            Vui lòng chọn phòng ban
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div>Thiết bị <span class="text-danger">*</span></div>
+        <input placeholder="Nhập tên thiết bị" type="text" class="form-control" formControlName="device">
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('device')?.touched && form.get('device')?.invalid">
+          <div *ngIf="form.get('device')?.errors?.['required']">
+            Vui lòng nhập tên thiết bị
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div>Mã thiết bị <span class="text-danger">*</span></div>
+        <input placeholder="Nhập mã thiết bị" type="text" class="form-control" formControlName="deviceCode">
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('deviceCode')?.touched && form.get('deviceCode')?.invalid">
+          <div *ngIf="form.get('deviceCode')?.errors?.['required']">
+            Vui lòng nhập mã thiết bị
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div>Trạng thái <span class="text-danger">*</span></div>
+        <select formControlName="status" class="form-select">
+          <option value="">Chọn trạng thái</option>
+          <option value="1">Hoạt động</option>
+          <option value="0">Ngừng hoạt động</option>
+        </select>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('status')?.touched && form.get('status')?.invalid">
+          <div *ngIf="form.get('status')?.errors?.['required']">
+            Vui lòng chọn trạng thái
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div>Ghi chú</div>
+        <input placeholder="Nhập ghi chú" type="text" class="form-control" formControlName="note">
+      </div>
+    </div>
+
+  </form>
+
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="closeModal(false)">Hủy</button>
+  <button type="button" class="btn btn-primary-1">{{data ? 'Lưu thay đổi' : 'Thêm nhân viên'}}</button>
+</div>

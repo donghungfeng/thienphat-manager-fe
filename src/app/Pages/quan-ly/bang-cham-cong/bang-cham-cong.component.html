@@ -1,0 +1,132 @@
+<div class="bg-white p-4 d-flex flex-column container-body">
+  <div class="d-flex justify-content-between align-items-center gap-2 mb-4">
+    <div class="d-flex gap-2 align-items-center">
+      <button class="btn btn-primary-1" (click)="addEditEmployee()">
+        Báo cáo công việc
+      </button>
+      <button class="btn btn-warning text-white" (click)="addEditEmployee()">
+        Giải trình
+      </button>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+      <button class="btn btn-outline-secondary">
+        <i class="fa-solid fa-sliders"></i>
+        Bộ lọc
+      </button>
+      <div class="d-flex align-items-center">
+        <div class="form-control-icon">
+          <img src="../../../../assets/images/icon/search-normal.png" alt="">
+        </div>
+        <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
+      </div>
+    </div>
+  </div>
+  <div class="card card-body d-flex flex-column flex-grow-1 mb-4 overflow-y-auto container-scroll horizontal-scroll-first-column">
+    <table class="table table-striped overflow-x-auto " style="min-width: 2000px;">
+      <thead>
+        <tr>
+          <th scope="col" *ngFor="let header of headers" class="fw-lighter" [style]="header.style">
+            {{ header.name }}
+          </th>
+          <th scope="col" class="fw-lighter" style="width: 150px;">Thao tác</th>
+        </tr>
+        <tr>
+          <th scope="col">
+          </th>
+          <th scope="col">
+            <div class="d-flex align-items-center">
+              <div class="form-control-icon">
+                <img src="../../../../assets/images/icon/search-normal.png" alt="">
+              </div>
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
+            </div>
+          </th>
+          <th scope="col">
+            <div class="d-flex align-items-center">
+              <div class="form-control-icon">
+                <img src="../../../../assets/images/icon/search-normal.png" alt="">
+              </div>
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
+            </div>
+          </th>
+          <th scope="col">
+            <div class="d-flex align-items-center">
+              <div class="form-control-icon">
+                <img src="../../../../assets/images/icon/search-normal.png" alt="">
+              </div>
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
+            </div>
+          </th>
+          <th scope="col">
+            <div class="d-flex align-items-center">
+              <div class="form-control-icon">
+                <img src="../../../../assets/images/icon/search-normal.png" alt="">
+              </div>
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
+            </div>
+          </th>
+          <th scope="col">
+            <div class="d-flex align-items-center">
+              <div class="form-control-icon">
+                <img src="../../../../assets/images/icon/search-normal.png" alt="">
+              </div>
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
+            </div>
+          </th>
+          <th scope="col">
+            <div class="d-flex align-items-center">
+              <div class="form-control-icon">
+                <img src="../../../../assets/images/icon/search-normal.png" alt="">
+              </div>
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
+            </div>
+          </th>
+          <th scope="col">
+            <div class="d-flex align-items-center">
+              <div class="form-control-icon">
+                <img src="../../../../assets/images/icon/search-normal.png" alt="">
+              </div>
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
+            </div>
+          </th>
+          <th scope="col">
+            <div class="d-flex align-items-center">
+              <div class="form-control-icon">
+                <img src="../../../../assets/images/icon/search-normal.png" alt="">
+              </div>
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of listDatas; index as i" class="fw-light">
+        <td>{{ i + 1 }}</td>
+        <td>{{ item.fullName }}</td>
+        <td>{{ item.checkIn }}</td>
+        <td>{{ item.checkOut }}</td>
+        <td>{{ item.device }}</td>
+        <td>{{ item.deviceCode }}</td>
+        <td>{{ item.checkInPosition }}</td>
+        <td>{{ item.checkOutPosition }}</td>
+        <td>
+          <div [class]="svShare.getColorStatusLogWorkByCode(item.status)" class="text-white text-center rounded py-1">
+            {{svShare.getStatusLogWorkNamByCode(item.status)}}
+          </div>
+        </td>
+        <td>
+          <div class="d-flex gap-2">
+            <img src="../../../../assets/images/icon/Eye.png" alt="">
+            <img src="../../../../assets/images/icon/PencilSimpleLine.png" alt="">
+            <img src="../../../../assets/images/icon/Trash.png" alt="">
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="d-flex justify-content-end">
+    <ngb-pagination class="d-flex justify-content-start" [collectionSize]="70" [page]="1"></ngb-pagination>
+  </div>
+</div>

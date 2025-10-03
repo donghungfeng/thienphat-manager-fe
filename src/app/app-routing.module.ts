@@ -50,6 +50,8 @@ import {
 import { CongTyComponent } from './Pages/cong-ty/cong-ty/cong-ty.component';
 import { KhachHangComponent } from './Pages/cong-ty/khach-hang/khach-hang.component';
 import { PhongBanComponent } from './Pages/quan-ly/phong-ban/phong-ban.component';
+import { NhanVienComponent } from './Pages/quan-ly/nhan-vien/nhan-vien.component';
+import { BangChamCongComponent } from './Pages/quan-ly/bang-cham-cong/bang-cham-cong.component';
 
 const routes: Routes = [
   {
@@ -80,6 +82,16 @@ const routes: Routes = [
         path: "phong-ban",
         component: PhongBanComponent,
         data: { extraParameter: "department" },
+      },
+      {
+        path: "nhan-vien",
+        component: NhanVienComponent,
+        data: { extraParameter: "employee" },
+      },
+      {
+        path: "bang-cham-cong",
+        component: BangChamCongComponent,
+        data: { extraParameter: "workLog" },
       },
 
       //   // Elements
