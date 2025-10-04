@@ -52,6 +52,9 @@ import { KhachHangComponent } from './Pages/cong-ty/khach-hang/khach-hang.compon
 import { PhongBanComponent } from './Pages/quan-ly/phong-ban/phong-ban.component';
 import { NhanVienComponent } from './Pages/quan-ly/nhan-vien/nhan-vien.component';
 import { BangChamCongComponent } from './Pages/quan-ly/bang-cham-cong/bang-cham-cong.component';
+import { XuLyCongViecComponent } from './Pages/cong-viec/xu-ly-cong-viec/xu-ly-cong-viec.component';
+import { ZaloOAComponent } from './Pages/zalo-oa/zalo-oa.component';
+import { UserRouteAccessService } from './user-route-access-service';
 
 const routes: Routes = [
   {
@@ -61,6 +64,7 @@ const routes: Routes = [
   {
     path: "",
     component: BaseLayoutComponent,
+    canActivate: [UserRouteAccessService],
     children: [
       { path: "", redirectTo: "/dashboard", pathMatch: "full" },
       {
@@ -93,62 +97,18 @@ const routes: Routes = [
         component: BangChamCongComponent,
         data: { extraParameter: "workLog" },
       },
-
-      //   // Elements
-      //   {path: 'elements/buttons-standard', component: StandardComponent, data: {extraParameter: 'elementsMenu'}},
-      //   {path: 'elements/dropdowns', component: DropdownsComponent, data: {extraParameter: 'elementsMenu'}},
-      //   {path: 'elements/icons', component: IconsComponent, data: {extraParameter: 'elementsMenu'}},
-      //   {path: 'elements/cards', component: CardsComponent, data: {extraParameter: 'elementsMenu'}},
-      //   {path: 'elements/list-group', component: ListGroupsComponent, data: {extraParameter: 'elementsMenu'}},
-      //   {path: 'elements/timeline', component: TimelineComponent, data: {extraParameter: 'elementsMenu'}},
-
-      //   // Components
-      //   {path: 'components/tabs', component: TabsComponent, data: {extraParameter: 'componentsMenu'}},
-      //   {path: 'components/accordions', component: AccordionsComponent, data: {extraParameter: 'componentsMenu'}},
-      //   {path: 'components/carousel', component: CarouselComponent, data: {extraParameter: 'componentsMenu'}},
-      //   {path: 'components/modals', component: ModalsComponent, data: {extraParameter: 'componentsMenu'}},
-      //   {path: 'components/pagination', component: PaginationComponent, data: {extraParameter: 'componentsMenu'}},
-      //   {path: 'components/progress-bar', component: ProgressBarComponent, data: {extraParameter: 'componentsMenu'}},
-      //   {path: 'components/tooltips-popovers', component: TooltipsPopoversComponent, data: {extraParameter: 'componentsMenu'}},
-
-      //   // Charts
-      //   {path: 'charts/chartjs', component: ChartjsComponent, data: {extraParameter: 'chartsMenu'}},
-
-      //   // Forms
-      //   {path: 'forms/controls', component: ControlsComponent, data: {extraParameter: 'formsMenu'}},
-      //   {path: 'forms/layouts', component: LayoutComponent, data: {extraParameter: 'formsMenu'}},
-
-      //   // Tables
-      //   {path: 'tables/regular', component: RegularComponent, data: {extraParameter: 'tablesMenu'}},
-      //   {path: 'tables/bootstrap', component: TablesMainComponent, data: {extraParameter: 'tablesMenu'}},
-
-      //   // Widgets
-      //   {path: 'widgets/chart-boxes-3', component: ChartBoxes3Component, data: {extraParameter: 'widgetsMenu'}},
-    ],
-  },
-  {
-    path: "",
-    component: PagesLayoutComponent,
-    children: [
-      // User Pages
       {
-        path: "pages/login-boxed",
-        component: LoginBoxedComponent,
-        data: { extraParameter: "" },
+        path: "xu-ly-cong-viec",
+        component: XuLyCongViecComponent,
+        data: { extraParameter: "jobProcess" },
       },
       {
-        path: "pages/register-boxed",
-        component: RegisterBoxedComponent,
-        data: { extraParameter: "" },
-      },
-      {
-        path: "pages/forgot-password-boxed",
-        component: ForgotPasswordBoxedComponent,
-        data: { extraParameter: "" },
+        path: "zalo-oa",
+        component: ZaloOAComponent,
+        data: { extraParameter: "zalo-oa" },
       },
     ],
   },
-  { path: "**", redirectTo: "" },
 ];
 
 @NgModule({

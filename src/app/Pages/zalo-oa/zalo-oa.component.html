@@ -1,0 +1,114 @@
+<div class="bg-white p-4 d-flex flex-column container-body">
+  <div class="d-flex gap-4 w-100 h-100">
+    <div class="border h-100" style="width: 70%;">
+      <div class="px-4 py-3 d-flex align-items-center gap-2">
+        <div>
+          <img width="60" class="rounded-circle" src="./assets/images/avatars/1.jpg" alt="">
+        </div>
+        <div>
+          <div class="fw-bold">
+            Nguyễn Quý Trung | Công ty TNHH ABC
+          </div>
+          <div class="text-secondary fw-light" style="font-size: 14px;">
+            0982733398
+          </div>
+        </div>
+      </div>
+      <div class="chat-bg">
+        <div class="p-4">
+          <div class="d-flex justify-content-center mb-4">
+            <div class="timeline-chat">
+              Thứ 4, ngày 24 tháng 5, 2025
+            </div>
+          </div>
+          <div>
+            <div *ngFor="let mess of messengerList">
+              <div *ngIf="mess.type === 1" class="row mb-2">
+                <div class="col">
+                  <div>
+                    <div class="d-flex gap-2">
+                      <div style="width: 48px;">
+                        <img width="48" class="rounded-circle" src="./assets/images/avatars/1.jpg" alt="">
+                      </div>
+                      <div class="d-flex flex-column gap-2">
+                        <div *ngFor="let content of mess.contents" class="bg-white rounded-3 p-2 chat-content">
+                          {{content}}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="sent-time-q">
+                      {{mess.time}}
+                    </div>
+                  </div>
+                </div>
+                <div class="col"></div>
+              </div>
+              <div *ngIf="mess.type === 2" class="row mb-2">
+                <div class="col"></div>
+                <div class="col">
+                  <div class="d-flex flex-column gap-2">
+                    <div *ngFor="let content of mess.contents" class="answer-chat rounded-3 p-2">
+                      {{content}}
+                    </div>
+                  </div>
+                  <div class="sent-time-a">
+                    {{mess.time}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex align-items-center w-100 bg-white" style="padding-right: 16px;">
+        <div class="w-100">
+          <input type="text" class="chat-type" placeholder="Nhập @, tin nhắn tới Nguyễn Quý Trung">
+        </div>
+        <div class="d-flex gap-2 align-items-center">
+          <img src="../../../assets/images/icon/emoji-happy.png" alt="">
+          <img src="../../../assets/images/icon/send.png" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="border h-100" style="width: 30%;">
+      <div class="px-4 py-3">
+        <div class="fw-bold">
+          Mẫu tin nhắn
+        </div>
+        <div class="d-flex align-items-center gap-2 mb-4">
+          <div style="width: 25%;">
+            <button class="btn btn-outline-secondary w-100">
+              <i class="fa-solid fa-sliders"></i>
+              Bộ lọc
+            </button>
+          </div>
+          <div class="d-flex align-items-center" style="width: 75%;">
+            <div class="form-control-icon">
+              <img src="../../../../assets/images/icon/search-normal.png" alt="">
+            </div>
+            <input type="text" class="form form-control form-control-custom" placeholder="Tìm kiếm">
+          </div>
+        </div>
+        <div class="h-100">
+          <div class="d-flex flex-column gap-2 overflow-auto" style="max-height: calc(100vh - 300px);">
+            <div *ngFor="let template of listTemplate" class="card card-hover">
+              <div class="card-body">
+                <div>
+                  <div class="fw-bold">
+                    {{template.templateName}}
+                  </div>
+                  <div class="fw-light text-secondary" style="font-size: 14px;">
+                    {{template.templateTypeName}}
+                  </div>
+                </div>
+                <hr />
+                <div class="fw-light text-secondary" style="font-size: 14px;" [innerHTML]="template.content">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

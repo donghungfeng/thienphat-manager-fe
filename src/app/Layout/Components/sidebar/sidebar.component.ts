@@ -153,6 +153,15 @@ export class SidebarComponent implements OnInit {
         },
       ],
     },
+    {
+      header: "Zalo OA",
+      key: "zalo-oa",
+      path: "/zalo-oa",
+      parent: "",
+      name: "Zalo OA",
+      icon: "pe-7s-headphones",
+      children: [],
+    },
   ];
   toggleSidebar() {
     this.globals.toggleSidebar = !this.globals.toggleSidebar;
@@ -190,11 +199,13 @@ export class SidebarComponent implements OnInit {
 
     // Initialize open menus based on current route
     if (this.extraParameter) {
-      const findParent = this.listMenus.find(item => item.children.find(el => el.key === this.extraParameter))
+      const findParent = this.listMenus.find((item) =>
+        item.children.find((el) => el.key === this.extraParameter)
+      );
       if (findParent) {
         this.openMenus = [findParent.key];
       } else {
-        this.openMenus = [this.extraParameter]
+        this.openMenus = [this.extraParameter];
       }
     }
   }

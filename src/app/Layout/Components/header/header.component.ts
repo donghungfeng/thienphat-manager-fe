@@ -23,11 +23,11 @@ export class HeaderComponent implements OnInit {
       key: "companyChild",
     },
     {
-      header: "",
+      header: "Danh sách khách hàng",
       key: "customer",
     },
     {
-      header: "",
+      header: "Danh sách công việc",
       key: "jobProcess",
     },
     {
@@ -35,19 +35,23 @@ export class HeaderComponent implements OnInit {
       key: "jobCustomer",
     },
     {
-      header: "",
+      header: "Phòng ban",
       key: "department",
     },
     {
-      header: "",
+      header: "Danh sách nhân viên",
       key: "employee",
     },
     {
-      header: "",
+      header: "Bảng chấm công",
       key: "workLog",
     },
+    {
+      header: "Zalo OA",
+      key: "zalo-oa",
+    },
   ];
-  headerTitle: any
+  headerTitle: any;
   public config$: Observable<ConfigState>;
 
   constructor(
@@ -66,12 +70,19 @@ export class HeaderComponent implements OnInit {
 
   isActive = false;
   ngOnInit(): void {
-    let extraParameter = this.activatedRoute.snapshot.firstChild?.data['extraParameter']
-    this.headerTitle = this.listMenus.find(item => item.key === extraParameter)?.header || ''
-    this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(() => {
-      extraParameter = this.activatedRoute.snapshot.firstChild?.data['extraParameter']
-      this.headerTitle = this.listMenus.find(item => item.key === extraParameter)?.header || ''
-    })
+    let extraParameter =
+      this.activatedRoute.snapshot.firstChild?.data["extraParameter"];
+    this.headerTitle =
+      this.listMenus.find((item) => item.key === extraParameter)?.header || "";
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        extraParameter =
+          this.activatedRoute.snapshot.firstChild?.data["extraParameter"];
+        this.headerTitle =
+          this.listMenus.find((item) => item.key === extraParameter)?.header ||
+          "";
+      });
   }
   toggleSidebar() {
     this.globals.toggleSidebar = !this.globals.toggleSidebar;

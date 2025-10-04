@@ -27,3 +27,17 @@ export const LOG_WORK_STATUS = {
   VALID: "VALID",
   EXPLANATION: "EXPLANATION"
 }
+export const OPERATIONS = {
+  DELETE: "/delete",
+  SEARCH: "/search",
+  UPDATE: "/update",
+  DETAILS: "/details",
+  CREATE: "/create",
+  ADD: "/add",
+  UPLOAD: "/upload",
+  DOWNLOAD: "/download",
+  UPDATELOGO: "/updatelogo",
+};
+
+export const API_V1 = "api/v1/"
+export const USER_CONTROLLER = "user"

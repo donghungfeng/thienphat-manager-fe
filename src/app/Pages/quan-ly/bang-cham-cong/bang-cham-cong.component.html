@@ -101,16 +101,16 @@
         </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let item of listDatas; index as i" class="fw-light">
-        <td>{{ i + 1 }}</td>
-        <td>{{ item.fullName }}</td>
-        <td>{{ item.checkIn }}</td>
-        <td>{{ item.checkOut }}</td>
-        <td>{{ item.device }}</td>
-        <td>{{ item.deviceCode }}</td>
-        <td>{{ item.checkInPosition }}</td>
-        <td>{{ item.checkOutPosition }}</td>
-        <td>
+      <tr *ngFor="let item of listDatas; index as i" class="fw-light" (dblclick)="detailLogWorkModal()">
+        <td style="user-select: none;">{{ i + 1 }}</td>
+        <td style="user-select: none;">{{ item.fullName }}</td>
+        <td style="user-select: none;">{{ item.checkIn }}</td>
+        <td style="user-select: none;">{{ item.checkOut }}</td>
+        <td style="user-select: none;">{{ item.device }}</td>
+        <td style="user-select: none;">{{ item.deviceCode }}</td>
+        <td style="user-select: none;">{{ item.checkInPosition }}</td>
+        <td style="user-select: none;">{{ item.checkOutPosition }}</td>
+        <td style="user-select: none;">
           <div [class]="svShare.getColorStatusLogWorkByCode(item.status)" class="text-white text-center rounded py-1">
             {{svShare.getStatusLogWorkNamByCode(item.status)}}
           </div>

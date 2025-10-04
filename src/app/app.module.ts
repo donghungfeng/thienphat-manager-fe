@@ -11,7 +11,7 @@ import { environment } from '../environments/environment';
 import {AppRoutingModule} from './app-routing.module';
 
 import {CommonModule} from '@angular/common';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AppComponent} from './app.component';
 
 // BOOTSTRAP COMPONENTS
@@ -56,6 +56,9 @@ import { LoginModule } from './Pages/login/login.module';
 import { DashboardHomeModule } from './Pages/dashboard/dashboard.module';
 import { CongTyModule } from './Pages/cong-ty/cong-ty.module';
 import { QuanLyModule } from './Pages/quan-ly/quan-ly.module';
+import { CongViecModule } from './Pages/cong-viec/cong-viec.module';
+import { ZaloOAModule } from './Pages/zalo-oa/zalo-oa.component.module';
+import { HeadersInterceptor } from './headers-intercepter';
 
 @NgModule({
   declarations: [
@@ -113,12 +116,15 @@ import { QuanLyModule } from './Pages/quan-ly/quan-ly.module';
     LoginModule,
     DashboardHomeModule,
     CongTyModule,
-    QuanLyModule
+    QuanLyModule,
+    CongViecModule,
+    ZaloOAModule,
   ],
   providers: [
     ConfigService,
     ThemeOptions,
     provideCharts(withDefaultRegisterables()),
+    { provide: HTTP_INTERCEPTORS, useClass: HeadersInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

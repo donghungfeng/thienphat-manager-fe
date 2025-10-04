@@ -1,0 +1,57 @@
+.card-hover {
+  transition: all 0.3s;
+}
+.card-hover:hover {
+  background: #f3f3f3;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.chat-bg {
+  background-color: #EEEEEE;
+  height: calc(100% - 92px - 56px);
+  max-height: 100%;
+  overflow-y: auto;
+}
+.timeline-chat {
+  background-color: #D0CACA;
+  color: #16151C;
+  font-size: 12px;
+  font-weight: 300;
+  padding: 4px 12px;
+  border-radius: 27px;
+}
+.chat-content {
+  font-size: 14px;
+  font-weight: 300;
+  color: #16151C;
+}
+.answer-chat {
+  background-color: #9FE5FF;
+  font-size: 14px;
+  font-weight: 300;
+  color: #16151C;
+}
+.sent-time-q {
+  font-size: 12px;
+  font-weight: 300;
+  color: #8E8E8E;
+  margin-left: 20%;
+  margin-top: 2px;
+}
+.sent-time-a {
+  font-size: 12px;
+  font-weight: 300;
+  color: #8E8E8E;
+  margin-left: 16px;
+  margin-top: 2px;
+}
+.chat-type {
+  outline: none;
+  width: 100%;
+  border: none;
+  padding: 16px;
+}
+.chat-type::placeholder {
+  font-weight: lighter;
+  font-size: 16px;
+}
