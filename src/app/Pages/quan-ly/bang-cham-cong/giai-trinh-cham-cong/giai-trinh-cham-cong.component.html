@@ -1,0 +1,27 @@
+<div class="modal-header">
+  <h4 class="modal-title text-primary-1">Giải trình chấm công</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="closeModal(false)">
+  </button>
+</div>
+<div class="modal-body">
+  <div class="text-primary-1 fw-bold mb-2">
+    Thông tin giải trình
+  </div>
+  <form [formGroup]="form" class="d-flex flex-column gap-4">
+    <div class="col">
+      <div>Nội dung giải trình <span class="text-danger">*</span></div>
+      <textarea rows="5" class="w-100" placeholder="Nhập nội dung giải trình" type="text" class="form-control"
+        formControlName="content">
+      </textarea>
+      <div class="text-danger fw-light mt-1" *ngIf="form.get('content')?.touched && form.get('content')?.invalid">
+        <div *ngIf="form.get('content')?.errors?.['required']">
+          Vui lòng nhập nội dung giải trình
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="closeModal(false)">Hủy</button>
+  <button type="button" class="btn btn-primary-1">Gửi giải trình</button>
+</div>
