@@ -1,6 +1,9 @@
 import { Component } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ShareService } from "src/app/shared/service/shareService.service";
+import { ThongTinChamCongModal } from "./thong-tin-cham-cong/thong-tin-cham-cong.component";
+import { GiaiTrinhChamCongModal } from "./giai-trinh-cham-cong/giai-trinh-cham-cong.component";
+import { BaoCaoCongViecModal } from "./bao-cao-cong-viec/bao-cao-cong-viec.component";
 
 @Component({
   selector: "bang-cham-cong",
@@ -98,24 +101,31 @@ export class BangChamCongComponent {
     },
   ];
   constructor(private modalService: NgbModal, public svShare: ShareService) {}
-  addEditEmployee(data = null) {
-    // if (!data) {
-    //   const modal = this.modalService.open(ThemSuaNhanVienModal, {
-    //     centered: true,
-    //     size: "lg",
-    //     backdrop: "static",
-    //     keyboard: false,
-    //   });
-    //   modal.result.then((result) => {});
-    // } else {
-    //   const modal = this.modalService.open(ThemSuaNhanVienModal, {
-    //     centered: true,
-    //     size: "lg",
-    //     backdrop: "static",
-    //     keyboard: false,
-    //   });
-    //   modal.componentInstance.data = data;
-    //   modal.result.then((result) => {});
-    // }
+  detailLogWorkModal(data = null) {
+    const modal = this.modalService.open(ThongTinChamCongModal, {
+      centered: true,
+      size: "md",
+      backdrop: "static",
+      keyboard: false,
+    });
+    modal.result.then((result) => {});
+  }
+  explanationLogWorkModal(data = null) {
+    const modal = this.modalService.open(GiaiTrinhChamCongModal, {
+      centered: true,
+      size: "md",
+      backdrop: "static",
+      keyboard: false,
+    });
+    modal.result.then((result) => {});
+  }
+  reportLogWorkModal(data = null) {
+    const modal = this.modalService.open(BaoCaoCongViecModal, {
+      centered: true,
+      size: "md",
+      backdrop: "static",
+      keyboard: false,
+    });
+    modal.result.then((result) => {});
   }
 }
