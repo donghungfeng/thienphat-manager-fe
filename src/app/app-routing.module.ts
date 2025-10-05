@@ -64,7 +64,7 @@ const routes: Routes = [
   {
     path: "",
     component: BaseLayoutComponent,
-    canActivate: [UserRouteAccessService],
+    canActivate: [UserRouteAccessService],  
     children: [
       { path: "", redirectTo: "/dashboard", pathMatch: "full" },
       {

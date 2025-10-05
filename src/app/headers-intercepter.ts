@@ -21,7 +21,8 @@ export class HeadersInterceptor implements HttpInterceptor {
       request = request.clone({
         setHeaders: {
           Authorization: header,
-          'Accept-Language': 'vi',
+          "Accept-Language": "vi",
+          // "Access-Control-Allow-Origin": "*",
         },
       });
     } else {
@@ -29,7 +30,8 @@ export class HeadersInterceptor implements HttpInterceptor {
         request = request.clone({
           setHeaders: {
             Authorization: header,
-            'Accept-Language': 'vi',
+            "Accept-Language": "vi",
+            // "Access-Control-Allow-Origin": "*",
           },
         });
       }
