@@ -1,6 +1,13 @@
-import { Component } from "@angular/core";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { Component, OnInit } from "@angular/core";
+import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 import { ThemSuaCongTyModal } from "./them-sua-cong-ty/them-sua-cong-ty.component";
+import { CompanyRequestServices } from "src/app/shared/service/request/cong-ty/cong-ty-request.service";
+import { HttpResponse } from "@angular/common/http";
+import { ShareService } from "src/app/shared/service/shareService.service";
+import { CongTyModel } from "src/app/shared/model/cong-ty/cong-ty.model";
+import { SpinnerService } from "src/app/shared/service/spinner.service";
+import { ToastService } from "src/app/shared/service/toast.service";
+import { DeleteConfirmModal } from "src/app/Layout/Components/common/delete-cofirm-modal/delete-cofirm-modal.component";
 
 @Component({
   selector: "cong-ty-component",
@@ -8,7 +15,14 @@ import { ThemSuaCongTyModal } from "./them-sua-cong-ty/them-sua-cong-ty.componen
   styleUrls: ["cong-ty.component.scss"],
   standalone: false,
 })
-export class CongTyComponent {
+export class CongTyComponent implements OnInit {
+  page = 1
+  size = 10
+  totalItems = 0
+  name: any
+  taxCode: any
+  address: any
+  phone: any
   headers: any[] = [
     {
       name: "ID",
@@ -41,116 +55,21 @@ export class CongTyComponent {
       style: "width: 350px",
     },
   ];
-  listDatas: any[] = [
-    {
-      companyName: "Công ty Cổ phần Công nghệ Sao Mai",
-      taxNumber: "0201234567",
-      phone: "0901 234 567",
-      address: "78 Bạch Đằng, Đà Nẵng",
-    },
-    {
-      companyName: "Công ty Cổ phần Công nghệ Sao Mai",
-      taxNumber: "0201234567",
-      phone: "0901 234 567",
-      address: "78 Bạch Đằng, Đà Nẵng",
-    },
-    {
-      companyName: "Công ty Cổ phần Công nghệ Sao Mai",
-      taxNumber: "0201234567",
-      phone: "0901 234 567",
-      address: "78 Bạch Đằng, Đà Nẵng",
-    },
-    {
-      companyName: "Công ty Cổ phần Công nghệ Sao Mai",
-      taxNumber: "0201234567",
-      phone: "0901 234 567",
-      address: "78 Bạch Đằng, Đà Nẵng",
-    },
-    {
-      companyName: "Công ty Cổ phần Công nghệ Sao Mai",
-      taxNumber: "0201234567",
-      phone: "0901 234 567",
-      address: "78 Bạch Đằng, Đà Nẵng",
-    },
-    {
-      companyName: "Công ty Cổ phần Công nghệ Sao Mai",
-      taxNumber: "0201234567",
-      phone: "0901 234 567",
-      address: "78 Bạch Đằng, Đà Nẵng",
-    },
-    {
-      companyName: "Công ty Cổ phần Công nghệ Sao Mai",
-      taxNumber: "0201234567",
-      phone: "0901 234 567",
-      address: "78 Bạch Đằng, Đà Nẵng",
-    },
-    {
-      companyName: "Công ty Cổ phần Công nghệ Sao Mai",
-      taxNumber: "0201234567",
-      phone: "0901 234 567",
-      address: "78 Bạch Đằng, Đà Nẵng",
-    },
-    {
-      companyName: "Công ty Cổ phần Công nghệ Sao Mai",
-      taxNumber: "0201234567",
-      phone: "0901 234 567",
-      address: "78 Bạch Đằng, Đà Nẵng",
-    },
-    {
-      companyName: "Công ty Cổ phần Công nghệ Sao Mai",
-      taxNumber: "0201234567",
-      phone: "0901 234 567",
-      address: "78 Bạch Đằng, Đà Nẵng",
-    },
-    {
-      companyName: "Công ty Cổ phần Công nghệ Sao Mai",
-      taxNumber: "0201234567",
-      phone: "0901 234 567",
-      address: "78 Bạch Đằng, Đà Nẵng",
-    },
-    {
-      companyName: "Công ty Cổ phần Công nghệ Sao Mai",
-      taxNumber: "0201234567",
-      phone: "0901 234 567",
-      address: "78 Bạch Đằng, Đà Nẵng",
-    },
-    {
-      companyName: "Công ty Cổ phần Công nghệ Sao Mai",
-      taxNumber: "0201234567",
-      phone: "0901 234 567",
-      address: "78 Bạch Đằng, Đà Nẵng",
-    },
-    {
-      companyName: "Công ty Cổ phần Công nghệ Sao Mai",
-      taxNumber: "0201234567",
-      phone: "0901 234 567",
-      address: "78 Bạch Đằng, Đà Nẵng",
-    },
-    {
-      companyName: "Công ty Cổ phần Công nghệ Sao Mai",
-      taxNumber: "0201234567",
-      phone: "0901 234 567",
-      address: "78 Bạch Đằng, Đà Nẵng",
-    },
-    {
-      companyName: "Công ty Cổ phần Công nghệ Sao Mai",
-      taxNumber: "0201234567",
-      phone: "0901 234 567",
-      address: "78 Bạch Đằng, Đà Nẵng",
-    },
-    {
-      companyName: "Công ty Cổ phần Công nghệ Sao Mai",
-      taxNumber: "0201234567",
-      phone: "0901 234 567",
-      address: "78 Bạch Đằng, Đà Nẵng",
-    },
+  listDatas: CongTyModel[] = [
   ];
   constructor(
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private apiCompany: CompanyRequestServices,
+    public svShare: ShareService,
+    private spinner: SpinnerService,
+    private toast: ToastService
   ) {
     
   }
-  addEditComany(data = null) {
+  ngOnInit(): void {
+    this.getListDataByFilter()
+  }
+  addEditComany(data = null, mode = 'add') {
     if (!data) {
       const modal = this.modalService.open(ThemSuaCongTyModal, {
         centered: true,
@@ -159,7 +78,10 @@ export class CongTyComponent {
         keyboard: false,
       });
       modal.result.then((result) => {
-
+        if (result) {
+          this.page = 1
+          this.getListDataByFilter()
+        }
       })
     } else {
       const modal = this.modalService.open(ThemSuaCongTyModal, {
@@ -169,9 +91,87 @@ export class CongTyComponent {
         keyboard: false,
       });
       modal.componentInstance.data = data
+      modal.componentInstance.mode = mode
       modal.result.then((result) => {
-        
+        if (result) {
+          this.getListDataByFilter()
+        }
       })
     }
+  }
+  getListDataByFilter() {
+    const filterString = () => {
+      let filter = []
+      filter.push("id>0")
+      if (this.name) {
+        filter.push(`name==*${this.name}*`)
+      }
+      if (this.taxCode) {
+        filter.push(`taxCode==*${this.taxCode}*`);
+      }
+      if (this.phone) {
+        filter.push(`phone==*${this.phone}*`);
+      }
+      if (this.address) {
+        filter.push(`address==*${this.address}*`);
+      }
+      return filter.join(";")
+    }
+    const params = {
+      page: this.page - 1,
+      size: this.size,
+      filter: filterString(),
+      sort: ["id", "desc"],
+    };
+    this.spinner.show()
+    this.apiCompany.search(params).then((res: HttpResponse<any>) => {
+      if (res.body.code === 200) {
+        this.listDatas = res.body.result.content
+        this.totalItems = res.body.result.totalElements
+      } else {
+        this.listDatas = [];
+        this.totalItems = 0
+      }
+    })
+    .catch(() => {
+      this.toast.error('Có lỗi trong khi tải dữ liệu')
+    })
+    .finally(() => {
+      this.spinner.hide()
+    })
+  }
+  handleFilter() {
+    this.page = 1
+    this.getListDataByFilter()
+  }
+  resetData() {
+    this.page = 1
+    this.name = ''
+    this.taxCode = ''
+    this.phone = ''
+    this.address = ''
+    this.getListDataByFilter()
+  }
+  deleleItem(id: any) {
+    const modal: NgbModalRef = this.modalService.open(DeleteConfirmModal)
+    modal.result.then((result) => {
+      if (result) {
+        this.spinner.show()
+        this.apiCompany.delete(id).then((res: HttpResponse<any>) => {
+          if (res.body.code === 200) {
+            this.toast.success('Xóa bản ghi thành công')
+            this.getListDataByFilter()
+          }
+        })
+        .catch(err => {
+          this.toast.error(err.error.message)  
+        })
+        .finally(() => this.spinner.hide())
+      }
+    });
+  }
+  changePage(event: any) {
+    this.page = event
+    this.getListDataByFilter()
   }
 }

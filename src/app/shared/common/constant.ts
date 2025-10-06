@@ -41,3 +41,5 @@ export const OPERATIONS = {
 
 export const API_V1 = "api/v1/"
 export const USER_CONTROLLER = "user"
+export const COMPANY_CONTROLLER = "company"
+export const DEPARTMENT_CONTROLLER = "department"

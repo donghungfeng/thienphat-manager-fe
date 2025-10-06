@@ -1,7 +1,13 @@
-import { Component } from "@angular/core";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { Component, OnInit } from "@angular/core";
+import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 import { ShareService } from "src/app/shared/service/shareService.service";
 import { ThemSuaNhanVienModal } from "./them-sua-nhan-vien/them-sua-nhan-vien.component";
+import { SpinnerService } from "src/app/shared/service/spinner.service";
+import { ToastService } from "src/app/shared/service/toast.service";
+import { AuthRequestServices } from "src/app/shared/service/request/auth/auth-request.service";
+import { HttpResponse } from "@angular/common/http";
+import { NhanVienModel } from "src/app/shared/model/nhan-vien/nhan-vien.model";
+import { DeleteConfirmModal } from "src/app/Layout/Components/common/delete-cofirm-modal/delete-cofirm-modal.component";
 
 @Component({
   selector: "nhan-vien",
@@ -9,7 +15,15 @@ import { ThemSuaNhanVienModal } from "./them-sua-nhan-vien/them-sua-nhan-vien.co
   styleUrls: ["nhan-vien.component.scss"],
   standalone: false,
 })
-export class NhanVienComponent {
+export class NhanVienComponent implements OnInit {
+  page = 1;
+  size = 10;
+  totalItems = 0;
+  username: any
+  fullName: any
+  phone: any
+  address: any
+  status = ''
   headers: any[] = [
     {
       name: "ID",
@@ -78,49 +92,18 @@ export class NhanVienComponent {
       style: "width: 150px; max-width: 200px",
     },
   ];
-  listDatas: any[] = [
-    {
-      username: "vutramz9x",
-      fullName: "Vũ Ngọc Trâm",
-      phone: "0912345678",
-      address: "Số 5 Hoàn Kiếm, Trung Hòa",
-      cccd: "001202043292",
-      department: "Marketing",
-      device: "Iphone",
-      deviceCode: "Iphonex9291",
-      status: "ON_HOLD",
-      note: "Off thứ 7",
-    },
-    {
-      username: "vutramz9x",
-      fullName: "Vũ Ngọc Trâm",
-      phone: "0912345678",
-      address: "Số 5 Hoàn Kiếm, Trung Hòa",
-      cccd: "001202043292",
-      department: "Marketing",
-      device: "Iphone",
-      deviceCode: "Iphonex9291",
-      status: "IN_PROGRESS",
-      note: "Off thứ 7",
-    },
-    {
-      username: "vutramz9x",
-      fullName: "Vũ Ngọc Trâm",
-      phone: "0912345678",
-      address: "Số 5 Hoàn Kiếm, Trung Hòa",
-      cccd: "001202043292",
-      department: "Marketing",
-      device: "Iphone",
-      deviceCode: "Iphonex9291",
-      status: "COMPLETED",
-      note: "Off thứ 7",
-    },
-  ];
+  listDatas: NhanVienModel[] = [];
   constructor(
     private modalService: NgbModal,
+    private spinner: SpinnerService,
+    private toast: ToastService,
+    private apiUser: AuthRequestServices,
     public svShare: ShareService
-  ) { }
-  addEditEmployee(data = null) {
+  ) {}
+  ngOnInit(): void {
+    this.getListDataByFilter();
+  }
+  addEditEmployee(data = null, mode = 'add') {
     if (!data) {
       const modal = this.modalService.open(ThemSuaNhanVienModal, {
         centered: true,
@@ -128,7 +111,11 @@ export class NhanVienComponent {
         backdrop: "static",
         keyboard: false,
       });
-      modal.result.then((result) => {});
+      modal.result.then((result) => {
+        if (result) {
+          this.getListDataByFilter()
+        }
+      });
     } else {
       const modal = this.modalService.open(ThemSuaNhanVienModal, {
         centered: true,
@@ -137,7 +124,94 @@ export class NhanVienComponent {
         keyboard: false,
       });
       modal.componentInstance.data = data;
-      modal.result.then((result) => {});
+      modal.componentInstance.mode = mode
+      modal.result.then((result) => {
+        if (result) {
+          this.getListDataByFilter();
+        }
+      });
     }
+  }
+  getListDataByFilter() {
+    const filterString = () => {
+      let filter = [];
+      filter.push("id>0");
+      if (this.username) {
+        filter.push(`username==*${this.username}*`);
+      }
+      if (this.fullName) {
+        filter.push(`fullName==*${this.fullName}*`);
+      }
+      if (this.phone) {
+        filter.push(`phone==*${this.phone}*`);
+      }
+      if (this.address) {
+        filter.push(`address==*${this.address}*`);
+      }
+      if (this.status) {
+        filter.push(`status==${this.status}`);
+      }
+      return filter.join(";");
+    };
+    const params = {
+      page: this.page - 1,
+      size: this.size,
+      filter: filterString(),
+      sort: ["id", "desc"],
+    };
+    this.spinner.show();
+    this.apiUser
+      .search(params)
+      .then((res: HttpResponse<any>) => {
+        if (res.body.code === 200) {
+          this.listDatas = res.body.result.content;
+          this.totalItems = res.body.result.totalElements;
+        } else {
+          this.listDatas = [];
+          this.totalItems = 0;
+        }
+      })
+      .catch(() => {
+        this.toast.error("Có lỗi trong khi tải dữ liệu");
+      })
+      .finally(() => {
+        this.spinner.hide();
+      });
+  }
+  handleFilter() {
+    this.page = 1
+    this.getListDataByFilter()
+  }
+  resetData() {
+    this.username = ''
+    this.fullName = ''
+    this.status = null
+    this.phone = ''
+    this.page = 1
+    this.address = ''
+    this.getListDataByFilter()
+  }
+  deleleItem(id: any) {
+    const modal: NgbModalRef = this.modalService.open(DeleteConfirmModal)
+
+    modal.result.then((result) => {
+      if (result) {
+        this.spinner.show()
+        this.apiUser.delete(id).then((res: HttpResponse<any>) => {
+          if (res.body.code === 200) {
+            this.toast.success('Xóa bản ghi thành công')
+            this.getListDataByFilter()
+          }
+        })
+        .catch(err => {
+          this.toast.error(err.error.message)  
+        })
+        .finally(() => this.spinner.hide())
+      }
+    });
+  }
+  changePage(event: any) {
+    this.page = event
+    this.getListDataByFilter()
   }
 }

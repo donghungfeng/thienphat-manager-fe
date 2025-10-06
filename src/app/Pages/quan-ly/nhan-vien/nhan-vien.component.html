@@ -1,21 +1,17 @@
 <div class="bg-white p-4 d-flex flex-column container-body">
-  <div class="d-flex justify-content-between align-items-center gap-2 mb-4">
+  <div class="d-flex gap-2 mb-4">
     <button class="btn btn-primary-1" (click)="addEditEmployee()">
       <i class="fa-solid fa-plus"></i>
       Thêm nhân viên
     </button>
-    <div class="d-flex align-items-center gap-2">
-      <button class="btn btn-outline-secondary">
-        <i class="fa-solid fa-sliders"></i>
-        Bộ lọc
-      </button>
-      <div class="d-flex align-items-center">
-        <div class="form-control-icon">
-          <img src="../../../../assets/images/icon/search-normal.png" alt="">
-        </div>
-        <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
-      </div>
-    </div>
+    <button class="btn btn-outline-secondary" (click)="getListDataByFilter()">
+      <i class="fa-solid fa-refresh"></i>
+      Làm mới
+    </button>
+    <button class="btn btn-outline-secondary" (click)="resetData()">
+      <i class="fa-solid fa-refresh"></i>
+      Xóa lọc
+    </button>
   </div>
   <div class="card card-body d-flex flex-column flex-grow-1 mb-4 overflow-y-auto container-scroll horizontal-scroll-first-column">
     <table class="table table-striped overflow-x-auto " style="min-width: 2000px;">
@@ -34,7 +30,39 @@
               <div class="form-control-icon">
                 <img src="../../../../assets/images/icon/search-normal.png" alt="">
               </div>
-              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm" (keyup.enter)="handleFilter()" [(ngModel)]="username">
+            </div>
+          </th>
+          <th scope="col">
+            <div class="d-flex align-items-center">
+              <div class="form-control-icon">
+                <img src="../../../../assets/images/icon/search-normal.png" alt="">
+              </div>
+              <input type="text" class="form form-control form-control-custom" placeholder="Tìm kiếm" (keyup.enter)="handleFilter()" [(ngModel)]="fullName">
+            </div>
+          </th>
+          <th scope="col">
+            <div class="d-flex align-items-center">
+              <div class="form-control-icon">
+                <img src="../../../../assets/images/icon/search-normal.png" alt="">
+              </div>
+              <input type="text" class="form form-control form-control-custom" placeholder="Tìm kiếm" (keyup.enter)="handleFilter()" [(ngModel)]="phone">
+            </div>
+          </th>
+          <th scope="col">
+            <div class="d-flex align-items-center">
+              <div class="form-control-icon">
+                <img src="../../../../assets/images/icon/search-normal.png" alt="">
+              </div>
+              <input type="text" class="form form-control form-control-custom" placeholder="Tìm kiếm" (keyup.enter)="handleFilter()" [(ngModel)]="address">
+            </div>
+          </th>
+          <th scope="col">
+            <div class="d-flex align-items-center">
+              <div class="form-control-icon">
+                <img src="../../../../assets/images/icon/search-normal.png" alt="">
+              </div>
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm" >
             </div>
           </th>
           <th scope="col">
@@ -62,44 +90,11 @@
             </div>
           </th>
           <th scope="col">
-            <div class="d-flex align-items-center">
-              <div class="form-control-icon">
-                <img src="../../../../assets/images/icon/search-normal.png" alt="">
-              </div>
-              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
-            </div>
-          </th>
-          <th scope="col">
-            <div class="d-flex align-items-center">
-              <div class="form-control-icon">
-                <img src="../../../../assets/images/icon/search-normal.png" alt="">
-              </div>
-              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
-            </div>
-          </th>
-          <th scope="col">
-            <div class="d-flex align-items-center">
-              <div class="form-control-icon">
-                <img src="../../../../assets/images/icon/search-normal.png" alt="">
-              </div>
-              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
-            </div>
-          </th>
-          <th scope="col">
-            <div class="d-flex align-items-center">
-              <div class="form-control-icon">
-                <img src="../../../../assets/images/icon/search-normal.png" alt="">
-              </div>
-              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
-            </div>
-          </th>
-          <th scope="col">
-            <div class="d-flex align-items-center">
-              <div class="form-control-icon">
-                <img src="../../../../assets/images/icon/search-normal.png" alt="">
-              </div>
-              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
-            </div>
+            <select class="form-select" [(ngModel)]="status" (ngModelChange)="getListDataByFilter()">
+              <option value="">Chọn trạng thái</option>
+              <option value="1">Hoạt động</option>
+              <option value="0">Ngừng hoạt động</option>
+            </select>
           </th>
           <th scope="col">
             <div class="d-flex align-items-center">
@@ -121,21 +116,21 @@
         <td>{{ item.fullName }}</td>
         <td>{{ item.phone }}</td>
         <td>{{ item.address }}</td>
-        <td>{{ item.cccd }}</td>
-        <td>{{ item.department }}</td>
-        <td>{{ item.device }}</td>
-        <td>{{ item.deviceCode }}</td>
+        <td>{{ '' }}</td>
+        <td>{{ '' }}</td>
+        <td>{{ '' }}</td>
+        <td>{{ '' }}</td>
         <td>
-          <div [class]="svShare.getColorStatusByCode(item.status)" class="text-white text-center rounded py-1">
-            {{svShare.getStatusNameByCode(item.status)}}
+          <div [class]="svShare.getColorStatusCommonByCode(item.status)" class="text-white text-center rounded py-1">
+            {{svShare.getStatusNameCommonByCode(item.status)}}
           </div>
         </td>
-        <td>{{ item.note }}</td>
+        <td>{{ '' }}</td>
         <td>
           <div class="d-flex gap-2">
-            <img src="../../../../assets/images/icon/Eye.png" alt="">
-            <img src="../../../../assets/images/icon/PencilSimpleLine.png" alt="">
-            <img src="../../../../assets/images/icon/Trash.png" alt="">
+            <img src="../../../../assets/images/icon/Eye.png" alt="" (click)="addEditEmployee(item, 'view')">
+            <img src="../../../../assets/images/icon/PencilSimpleLine.png" alt="" (click)="addEditEmployee(item, 'edit')">
+            <img src="../../../../assets/images/icon/Trash.png" alt="" (click)="deleleItem(item.id)">
           </div>
         </td>
       </tr>
@@ -143,6 +138,6 @@
     </table>
   </div>
   <div class="d-flex justify-content-end">
-    <ngb-pagination class="d-flex justify-content-start" [collectionSize]="70" [page]="1"></ngb-pagination>
+    <ngb-pagination class="d-flex justify-content-start" [collectionSize]="totalItems" [page]="page" (pageChange)="changePage($event)"></ngb-pagination>
   </div>
 </div>

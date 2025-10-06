@@ -55,4 +55,24 @@ export class ShareService {
         return "Hợp lệ";
     }
   }
+  getStatusNameCommonByCode(statusCode: any) {
+    switch (statusCode) {
+      case 1:
+        return "Hoạt động";
+      case 2:
+        return "Không hoạt động";
+      default:
+        return "Hoạt động";
+    }
+  }
+  getColorStatusCommonByCode(statusCode: any) {
+    switch (statusCode) {
+      case 1:
+        return "btn-status-success";
+      case 2:
+        return "btn-status-danger";
+      default:
+        return "btn-status-success";
+    }
+  }
 }

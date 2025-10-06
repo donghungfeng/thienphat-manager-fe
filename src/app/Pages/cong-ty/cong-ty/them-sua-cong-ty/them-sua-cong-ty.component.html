@@ -1,32 +1,32 @@
 <div class="modal-header">
-  <h4 class="modal-title text-primary-1">{{data ? 'Sửa thông tin công ty' : 'Thêm mới công ty'}}</h4>
+  <h4 class="modal-title text-primary-1">{{data ? mode === 'view' ? 'Xem chi tiết' : 'Sửa thông tin công ty' : 'Thêm mới công ty'}}</h4>
   <button type="button" class="btn-close" aria-label="Close" (click)="closeModal(false)">
   </button>
 </div>
 <div class="modal-body">
   <div class="text-primary-1 fw-bold">
-    Thông tin đăng nhập
+    Thông tin công ty
   </div>
   <form [formGroup]="form" class="d-flex flex-column gap-4">
     <div class="row">
       <div class="col">
         <div>Tên công ty <span class="text-danger">*</span></div>
-        <input placeholder="Nhập tên công ty" type="text" class="form-control" formControlName="fullName" required>
-        <div class="text-danger fw-light mt-1" *ngIf="form.get('fullName')?.touched && form.get('fullName')?.invalid">
-          <div *ngIf="form.get('fullName')?.errors?.['required']">
-            Vui lòng nhập tên đăng nhập
+        <input placeholder="Nhập tên công ty" type="text" class="form-control" formControlName="name" required>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+          <div *ngIf="form.get('name')?.errors?.['required']">
+            Vui lòng nhập tên công ty
           </div>
         </div>
       </div>
       <div class="col">
         <div>Mã số thuế <span class="text-danger">*</span></div>
-        <input placeholder="Nhập mã số thuế" type="text" class="form-control" formControlName="taxNumber" required>
-        <div class="text-danger fw-light mt-1" *ngIf="form.get('taxNumber')?.touched && form.get('taxNumber')?.invalid">
-          <div *ngIf="form.get('taxNumber')?.errors?.['required']">
+        <input placeholder="Nhập mã số thuế" type="text" class="form-control" formControlName="taxCode" required>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('taxCode')?.touched && form.get('taxCode')?.invalid">
+          <div *ngIf="form.get('taxCode')?.errors?.['required']">
             Vui lòng nhập mã số thuế
           </div>
-          <div *ngIf="form.get('taxNumber')?.errors?.['pattern']">
-            Mã số thuế chỉ nhập số
+          <div *ngIf="form.get('taxCode')?.errors?.['pattern']">
+            Mã số thuế chỉ bao gồm số
           </div>
         </div>
       </div>
@@ -39,6 +39,9 @@
           <div *ngIf="form.get('phone')?.errors?.['required']">
             Vui lòng nhập số điện thoại
           </div>
+          <div *ngIf="form.get('phone')?.errors?.['pattern']">
+            Số điện thoại chỉ bao gồm số
+          </div>
         </div>
       </div>
       <div class="col">
@@ -48,7 +51,7 @@
     </div>
   </form>
 </div>
-<div class="modal-footer">
+<div class="modal-footer" *ngIf="mode !== 'view'">
   <button type="button" class="btn btn-secondary" (click)="closeModal(false)">Hủy</button>
-  <button type="button" class="btn btn-primary-1">{{data ? 'Lưu thay đổi' : 'Thêm công ty'}}</button>
+  <button type="button" class="btn btn-primary-1" (click)="submitForm()">{{data ? 'Lưu thay đổi' : 'Thêm công ty'}}</button>
 </div>

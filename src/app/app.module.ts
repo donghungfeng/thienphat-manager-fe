@@ -59,6 +59,9 @@ import { QuanLyModule } from './Pages/quan-ly/quan-ly.module';
 import { CongViecModule } from './Pages/cong-viec/cong-viec.module';
 import { ZaloOAModule } from './Pages/zalo-oa/zalo-oa.component.module';
 import { HeadersInterceptor } from './headers-intercepter';
+import { ToastModule } from './Layout/Components/common/toast/toast.module';
+import { SpinnerModule } from './Layout/Components/common/spinner/spinner.module';
+import { DeleteConfirmModalModule } from './Layout/Components/common/delete-cofirm-modal/delete-cofirm-modal.module';
 
 @NgModule({
   declarations: [
@@ -119,6 +122,9 @@ import { HeadersInterceptor } from './headers-intercepter';
     QuanLyModule,
     CongViecModule,
     ZaloOAModule,
+    ToastModule,
+    SpinnerModule,
+    DeleteConfirmModalModule
   ],
   providers: [
     ConfigService,
