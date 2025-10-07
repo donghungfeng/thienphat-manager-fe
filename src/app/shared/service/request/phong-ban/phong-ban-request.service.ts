@@ -67,4 +67,18 @@ export class DepartmentRequestServices {
         );
     });
   }
+  getAll() {
+    return new Promise((resolve: any, reject: any) => {
+      this.apiService
+        .get(API_V1 + DEPARTMENT_CONTROLLER + '/get-all')
+        .subscribe(
+          (res: HttpResponse<any>) => {
+            resolve(res);
+          },
+          (err) => {
+            reject(err);
+          }
+        );
+    });
+  }
 }

@@ -30,7 +30,7 @@
               <div class="form-control-icon">
                 <img src="../../../../assets/images/icon/search-normal.png" alt="">
               </div>
-              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm" (keyup.enter)="handleFilter()" [(ngModel)]="name">
             </div>
           </th>
           <th scope="col">
@@ -38,23 +38,22 @@
               <div class="form-control-icon">
                 <img src="../../../../assets/images/icon/search-normal.png" alt="">
               </div>
-              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm" (keyup.enter)="handleFilter()" [(ngModel)]="factoryName">
             </div>
+          </th>
+          <th scope="col">
+            <select class="form-select" [(ngModel)]="status" (ngModelChange)="getListDataByFilter()">
+              <option value="">Chọn trạng thái</option>
+              <option value="1">Hoạt động</option>
+              <option value="0">Ngừng hoạt động</option>
+            </select>
           </th>
           <th scope="col">
             <div class="d-flex align-items-center">
               <div class="form-control-icon">
                 <img src="../../../../assets/images/icon/search-normal.png" alt="">
               </div>
-              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
-            </div>
-          </th>
-          <th scope="col">
-            <div class="d-flex align-items-center">
-              <div class="form-control-icon">
-                <img src="../../../../assets/images/icon/search-normal.png" alt="">
-              </div>
-              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm" (keyup.enter)="handleFilter()" [(ngModel)]="note">
             </div>
           </th>
           <th></th>
@@ -67,18 +66,21 @@
           {{item.name}}
         </td>
         <td>
+          {{item.factoryName ? item.factoryName : ''}}
         </td>
         <td>
           <div [class]="svShare.getColorStatusCommonByCode(item.isActive)" class="text-white text-center rounded py-1">
             {{svShare.getStatusNameCommonByCode(item.isActive)}}
           </div>
         </td>
-        <td></td>
+        <td>
+          {{ item.note ? item.note : '' }}
+        </td>
         <td>
           <div class="d-flex gap-2">
-            <img src="../../../../assets/images/icon/Eye.png" alt="">
-            <img src="../../../../assets/images/icon/PencilSimpleLine.png" alt="">
-            <img src="../../../../assets/images/icon/Trash.png" alt="">
+            <img src="../../../../assets/images/icon/Eye.png" alt="" (click)="addEditDepartment(item, 'view')">
+            <img src="../../../../assets/images/icon/PencilSimpleLine.png" alt="" (click)="addEditDepartment(item, 'edit')">
+            <img src="../../../../assets/images/icon/Trash.png" alt="" (click)="deleleItem(item.id)">
           </div>
         </td>
       </tr>

@@ -19,6 +19,10 @@ export class PhongBanComponent implements OnInit{
   page = 1
   size = 10
   totalItems = 0
+  name: any
+  factoryName: any
+  status: any
+  note: any
   headers: any[] = [
     {
       name: "ID",
@@ -63,7 +67,7 @@ export class PhongBanComponent implements OnInit{
   ngOnInit(): void {
     this.getListDataByFilter()
   }
-  addEditDepartment(data = null) {
+  addEditDepartment(data = null, mode = 'add') {
     if (!data) {
       const modal = this.modalService.open(ThemSuaPhongBanModal, {
         centered: true,
@@ -71,7 +75,12 @@ export class PhongBanComponent implements OnInit{
         backdrop: "static",
         keyboard: false,
       });
+      modal.componentInstance.mode = mode;
       modal.result.then((result) => {
+        if (result) {
+          this.page = 1
+          this.getListDataByFilter();
+        }
       })
     } else {
       const modal = this.modalService.open(ThemSuaPhongBanModal, {
@@ -81,7 +90,11 @@ export class PhongBanComponent implements OnInit{
         keyboard: false,
       });
       modal.componentInstance.data = data
+      modal.componentInstance.mode = mode
       modal.result.then((result) => {
+        if (result) {
+          this.getListDataByFilter()
+        }
       })
     }
   }
@@ -89,6 +102,18 @@ export class PhongBanComponent implements OnInit{
     const filterString = () => {
       let filter = []
       filter.push("id>0")
+      if (this.name) {
+        filter.push(`name==*${this.name}*`);
+      }
+      if (this.factoryName) {
+        filter.push(`factoryName==*${this.factoryName}*`);
+      }
+      if (this.note) {
+        filter.push(`note==*${this.note}*`);
+      }
+      if (this.status) {
+        filter.push(`status==${this.status}`);
+      }
       return filter.join(";")
     }
     const params = {

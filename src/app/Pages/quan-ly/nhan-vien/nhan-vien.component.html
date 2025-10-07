@@ -62,7 +62,7 @@
               <div class="form-control-icon">
                 <img src="../../../../assets/images/icon/search-normal.png" alt="">
               </div>
-              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm" >
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm" (keyup.enter)="handleFilter()" [(ngModel)]="identityCardNumber">
             </div>
           </th>
           <th scope="col">
@@ -70,7 +70,7 @@
               <div class="form-control-icon">
                 <img src="../../../../assets/images/icon/search-normal.png" alt="">
               </div>
-              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm" (keyup.enter)="handleFilter()" [(ngModel)]="department">
             </div>
           </th>
           <th scope="col">
@@ -78,7 +78,7 @@
               <div class="form-control-icon">
                 <img src="../../../../assets/images/icon/search-normal.png" alt="">
               </div>
-              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm" (keyup.enter)="handleFilter()" [(ngModel)]="deviceName">
             </div>
           </th>
           <th scope="col">
@@ -86,7 +86,7 @@
               <div class="form-control-icon">
                 <img src="../../../../assets/images/icon/search-normal.png" alt="">
               </div>
-              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm" (keyup.enter)="handleFilter()" [(ngModel)]="deviceCode">
             </div>
           </th>
           <th scope="col">
@@ -116,10 +116,10 @@
         <td>{{ item.fullName }}</td>
         <td>{{ item.phone }}</td>
         <td>{{ item.address }}</td>
-        <td>{{ '' }}</td>
-        <td>{{ '' }}</td>
-        <td>{{ '' }}</td>
-        <td>{{ '' }}</td>
+        <td>{{ item.identityCardNumber }}</td>
+        <td>{{ item.department.name }}</td>
+        <td>{{ item.deviceName ? item.deviceName : '' }}</td>
+        <td>{{ item.deviceCode ? item.deviceCode : '' }}</td>
         <td>
           <div [class]="svShare.getColorStatusCommonByCode(item.status)" class="text-white text-center rounded py-1">
             {{svShare.getStatusNameCommonByCode(item.status)}}

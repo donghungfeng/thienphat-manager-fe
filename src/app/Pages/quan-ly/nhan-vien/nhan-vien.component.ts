@@ -24,6 +24,10 @@ export class NhanVienComponent implements OnInit {
   phone: any
   address: any
   status = ''
+  identityCardNumber: any
+  department: any
+  deviceName: any
+  deviceCode: any
   headers: any[] = [
     {
       name: "ID",
@@ -113,6 +117,7 @@ export class NhanVienComponent implements OnInit {
       });
       modal.result.then((result) => {
         if (result) {
+          this.page = 1
           this.getListDataByFilter()
         }
       });
@@ -150,6 +155,18 @@ export class NhanVienComponent implements OnInit {
       }
       if (this.status) {
         filter.push(`status==${this.status}`);
+      }
+      if (this.deviceName) {
+        filter.push(`deviceName==*${this.deviceName}*`);
+      }
+      if (this.deviceCode) {
+        filter.push(`deviceCode==*${this.deviceCode}*`);
+      }
+      if (this.identityCardNumber) {
+        filter.push(`identityCardNumber==*${this.identityCardNumber}*`);
+      }
+      if (this.department) {
+        filter.push(`department.name==*${this.department}*`);
       }
       return filter.join(";");
     };
