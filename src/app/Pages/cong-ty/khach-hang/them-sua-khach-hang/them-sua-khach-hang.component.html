@@ -11,9 +11,9 @@
     <div class="row">
       <div class="col">
         <div>Họ và tên <span class="text-danger">*</span></div>
-        <input placeholder="Nhập họ và tên" type="text" class="form-control" formControlName="fullName" required>
-        <div class="text-danger fw-light mt-1" *ngIf="form.get('fullName')?.touched && form.get('fullName')?.invalid">
-          <div *ngIf="form.get('fullName')?.errors?.['required']">
+        <input placeholder="Nhập họ và tên" type="text" class="form-control" formControlName="name" required>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+          <div *ngIf="form.get('name')?.errors?.['required']">
             Vui lòng nhập họ và tên
           </div>
         </div>
@@ -43,15 +43,12 @@
       </div>
       <div class="col">
         <div>Công ty</div>
-        <select formControlName="companyName" class="form-select">
+        <select formControlName="companyId" class="form-select">
           <option value="">Chọn công ty</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
+          <option *ngFor="let item of companyList" [value]="item.id">{{item.name}}</option>
         </select>
-        <div class="text-danger fw-light mt-1" *ngIf="form.get('companyName')?.touched && form.get('companyName')?.invalid">
-          <div *ngIf="form.get('companyName')?.errors?.['required']">
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('companyId')?.touched && form.get('companyId')?.invalid">
+          <div *ngIf="form.get('companyId')?.errors?.['required']">
             Vui lòng chọn công ty
           </div>
         </div>
@@ -60,9 +57,9 @@
     <div class="row">
       <div class="col">
         <div>Zalo ID <span class="text-danger">*</span></div>
-        <input placeholder="Nhập Zalo ID" type="text" class="form-control" formControlName="zaloId" required>
-        <div class="text-danger fw-light mt-1" *ngIf="form.get('zaloId')?.touched && form.get('zaloId')?.invalid">
-          <div *ngIf="form.get('zaloId')?.errors?.['required']">
+        <input placeholder="Nhập Zalo ID" type="text" class="form-control" formControlName="userId" required>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('userId')?.touched && form.get('userId')?.invalid">
+          <div *ngIf="form.get('userId')?.errors?.['required']">
             Vui lòng nhập Zalo ID
           </div>
         </div>
@@ -70,11 +67,9 @@
       <div class="col">
         <div>Trạng thái</div>
         <select formControlName="status" class="form-select">
-          <option value="">Chọn Trạng thái</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
+          <option value="">Chọn trạng thái</option>
+          <option value="1">Hoạt động</option>
+          <option value="0">Ngừng hoạt động</option>
         </select>
         <div class="text-danger fw-light mt-1" *ngIf="form.get('status')?.touched && form.get('status')?.invalid">
           <div *ngIf="form.get('status')?.errors?.['required']">
@@ -86,12 +81,12 @@
     <div class="row">
       <div class="col-12">
         <div>Ghi chú</div>
-        <input placeholder="Ghi chú" type="text" class="form-control" formControlName="note" required>
+        <input placeholder="Ghi chú" type="text" class="form-control" formControlName="notes" required>
       </div>
     </div>
   </form>
 </div>
-<div class="modal-footer">
+<div *ngIf="mode !== 'view'" class="modal-footer">
   <button type="button" class="btn btn-secondary" (click)="closeModal(false)">Hủy</button>
-  <button type="button" class="btn btn-primary-1">{{data ? 'Lưu thay đổi' : 'Thêm khách  hàng'}}</button>
+  <button type="button" class="btn btn-primary-1" (click)="submitForm()">{{data ? 'Lưu thay đổi' : 'Thêm khách  hàng'}}</button>
 </div>
