@@ -10,6 +10,8 @@ import { BangChamCongComponent } from "./bang-cham-cong/bang-cham-cong.component
 import { BaoCaoCongViecModal } from "./bang-cham-cong/bao-cao-cong-viec/bao-cao-cong-viec.component";
 import { GiaiTrinhChamCongModal } from "./bang-cham-cong/giai-trinh-cham-cong/giai-trinh-cham-cong.component";
 import { ThongTinChamCongModal } from "./bang-cham-cong/thong-tin-cham-cong/thong-tin-cham-cong.component";
+import { DoiMatKhauModal } from "./nhan-vien/doi-mat-khau/doi-mat-khau.component";
+import { PhanQuyenModal } from "./nhan-vien/phan-quyen/phan-quyen.component";
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { ThongTinChamCongModal } from "./bang-cham-cong/thong-tin-cham-cong/thon
     BangChamCongComponent,
     BaoCaoCongViecModal,
     GiaiTrinhChamCongModal,
-    ThongTinChamCongModal
+    ThongTinChamCongModal,
+    DoiMatKhauModal,
+    PhanQuyenModal,
   ],
   imports: [SharedModule, CommonModule],
   exports: [
@@ -31,7 +35,9 @@ import { ThongTinChamCongModal } from "./bang-cham-cong/thong-tin-cham-cong/thon
     BangChamCongComponent,
     BaoCaoCongViecModal,
     GiaiTrinhChamCongModal,
-    ThongTinChamCongModal
+    ThongTinChamCongModal,
+    DoiMatKhauModal,
+    PhanQuyenModal,
   ],
 })
 export class QuanLyModule {}

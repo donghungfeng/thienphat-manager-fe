@@ -1,0 +1,30 @@
+<div class="modal-header">
+  <h4 class="modal-title text-primary-1">Phân quyền</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="closeModal(false)">
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="form" class="d-flex flex-column">
+    <div class="mb-4">
+      <div>Mật khẩu cũ <span class="text-danger">*</span></div>
+      <select formControlName="role" class="form-select">
+        <option value="">Chọn quyền</option>
+        <option value="user">
+          User
+        </option>
+        <option value="admin">
+          Admin
+        </option>
+      </select>
+      <div class="text-danger fw-light mt-1" *ngIf="form.get('role')?.touched && form.get('role')?.invalid">
+        <div *ngIf="form.get('role')?.errors?.['required']">
+          Vui lòng chọn quyền
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="closeModal(false)">Hủy</button>
+  <button type="button" class="btn btn-primary-1" (click)="submitForm()">Lưu thay đổi</button>
+</div>

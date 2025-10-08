@@ -35,7 +35,7 @@
   font-size: 12px;
   font-weight: 300;
   color: #8E8E8E;
-  margin-left: 20%;
+  margin-left: 15%;
   margin-top: 2px;
 }
 .sent-time-a {
@@ -54,4 +54,22 @@
 .chat-type::placeholder {
   font-weight: lighter;
   font-size: 16px;
+}
+.chat-photo {
+  width: 100%;
+}
+::ng-deep .modal-auto-size .modal-dialog {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto !important; /* co giãn theo nội dung */
+  max-width: 90vw; /* không vượt quá chiều rộng màn hình */
+  height: auto;
+  max-height: 90vh;
+}
+
+::ng-deep .modal-auto-size .modal-content {
+  width: auto !important;
+  height: auto !important;
+  display: inline-block;
 }

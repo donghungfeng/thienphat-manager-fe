@@ -8,6 +8,8 @@ import { AuthRequestServices } from "src/app/shared/service/request/auth/auth-re
 import { HttpResponse } from "@angular/common/http";
 import { NhanVienModel } from "src/app/shared/model/nhan-vien/nhan-vien.model";
 import { DeleteConfirmModal } from "src/app/Layout/Components/common/delete-cofirm-modal/delete-cofirm-modal.component";
+import { DoiMatKhauModal } from "./doi-mat-khau/doi-mat-khau.component";
+import { PhanQuyenModal } from "./phan-quyen/phan-quyen.component";
 
 @Component({
   selector: "nhan-vien",
@@ -19,15 +21,15 @@ export class NhanVienComponent implements OnInit {
   page = 1;
   size = 10;
   totalItems = 0;
-  username: any
-  fullName: any
-  phone: any
-  address: any
-  status = ''
-  identityCardNumber: any
-  department: any
-  deviceName: any
-  deviceCode: any
+  username: any;
+  fullName: any;
+  phone: any;
+  address: any;
+  status = "";
+  identityCardNumber: any;
+  department: any;
+  deviceName: any;
+  deviceCode: any;
   headers: any[] = [
     {
       name: "ID",
@@ -107,7 +109,7 @@ export class NhanVienComponent implements OnInit {
   ngOnInit(): void {
     this.getListDataByFilter();
   }
-  addEditEmployee(data = null, mode = 'add') {
+  addEditEmployee(data = null, mode = "add") {
     if (!data) {
       const modal = this.modalService.open(ThemSuaNhanVienModal, {
         centered: true,
@@ -117,8 +119,8 @@ export class NhanVienComponent implements OnInit {
       });
       modal.result.then((result) => {
         if (result) {
-          this.page = 1
-          this.getListDataByFilter()
+          this.page = 1;
+          this.getListDataByFilter();
         }
       });
     } else {
@@ -129,7 +131,7 @@ export class NhanVienComponent implements OnInit {
         keyboard: false,
       });
       modal.componentInstance.data = data;
-      modal.componentInstance.mode = mode
+      modal.componentInstance.mode = mode;
       modal.result.then((result) => {
         if (result) {
           this.getListDataByFilter();
@@ -196,39 +198,59 @@ export class NhanVienComponent implements OnInit {
       });
   }
   handleFilter() {
-    this.page = 1
-    this.getListDataByFilter()
+    this.page = 1;
+    this.getListDataByFilter();
   }
   resetData() {
-    this.username = ''
-    this.fullName = ''
-    this.status = null
-    this.phone = ''
-    this.page = 1
-    this.address = ''
-    this.getListDataByFilter()
+    this.username = "";
+    this.fullName = "";
+    this.status = null;
+    this.phone = "";
+    this.page = 1;
+    this.address = "";
+    this.getListDataByFilter();
   }
   deleleItem(id: any) {
-    const modal: NgbModalRef = this.modalService.open(DeleteConfirmModal)
+    const modal: NgbModalRef = this.modalService.open(DeleteConfirmModal);
 
     modal.result.then((result) => {
       if (result) {
-        this.spinner.show()
-        this.apiUser.delete(id).then((res: HttpResponse<any>) => {
-          if (res.body.code === 200) {
-            this.toast.success('Xóa bản ghi thành công')
-            this.getListDataByFilter()
-          }
-        })
-        .catch(err => {
-          this.toast.error(err.error.message)  
-        })
-        .finally(() => this.spinner.hide())
+        this.spinner.show();
+        this.apiUser
+          .delete(id)
+          .then((res: HttpResponse<any>) => {
+            if (res.body.code === 200) {
+              this.toast.success("Xóa bản ghi thành công");
+              this.getListDataByFilter();
+            }
+          })
+          .catch((err) => {
+            this.toast.error(err.error.message);
+          })
+          .finally(() => this.spinner.hide());
       }
     });
   }
   changePage(event: any) {
-    this.page = event
-    this.getListDataByFilter()
+    this.page = event;
+    this.getListDataByFilter();
+  }
+  changePassword(data: any) {
+    const modal = this.modalService.open(DoiMatKhauModal, {
+      centered: true,
+      size: "md",
+      backdrop: "static",
+      keyboard: false,
+    });
+    modal.componentInstance.data = data;
+  }
+  changeRole(data: any) {
+    const modal = this.modalService.open(PhanQuyenModal, {
+      centered: true,
+      size: "md",
+      backdrop: "static",
+      keyboard: false,
+    });
+    modal.componentInstance.data = data;
   }
 }

@@ -18,6 +18,11 @@ export class HeadersInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
+    if (request.headers.has("Skip-Auth")) {
+      const newHeaders = request.headers.delete("Skip-Auth");
+      const cloned = request.clone({ headers: newHeaders });
+      return next.handle(cloned);
+    }
     const token = localStorage.getItem("token");
     var header = "Bearer " + token;
     if (token) {

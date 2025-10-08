@@ -39,7 +39,14 @@ export const OPERATIONS = {
   UPDATELOGO: "/updatelogo",
 };
 
+export const ROLE = {
+  USER: 'USER',
+  ADMIN: 'ADMIN'
+}
+
 export const API_V1 = "api/v1/"
+export const ZALO_VER = "v2.0/"
+export const ZALO_OA = "oa"
 export const USER_CONTROLLER = "user"
 export const COMPANY_CONTROLLER = "company"
 export const DEPARTMENT_CONTROLLER = "department"

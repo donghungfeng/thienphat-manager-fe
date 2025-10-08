@@ -62,6 +62,7 @@ import { HeadersInterceptor } from './headers-intercepter';
 import { ToastModule } from './Layout/Components/common/toast/toast.module';
 import { SpinnerModule } from './Layout/Components/common/spinner/spinner.module';
 import { DeleteConfirmModalModule } from './Layout/Components/common/delete-cofirm-modal/delete-cofirm-modal.module';
+import { ViewImageModalModule } from './Layout/Components/common/view-image/view-image.component.module';
 
 @NgModule({
   declarations: [
@@ -124,7 +125,8 @@ import { DeleteConfirmModalModule } from './Layout/Components/common/delete-cofi
     ZaloOAModule,
     ToastModule,
     SpinnerModule,
-    DeleteConfirmModalModule
+    DeleteConfirmModalModule,
+    ViewImageModalModule
   ],
   providers: [
     ConfigService,

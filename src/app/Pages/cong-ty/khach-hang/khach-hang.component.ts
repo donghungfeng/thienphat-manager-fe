@@ -10,6 +10,7 @@ import { HttpResponse } from "@angular/common/http";
 import { KhachHangModel } from "src/app/shared/model/khach-hang/khach-hang.model";
 import { CompanyRequestServices } from "src/app/shared/service/request/cong-ty/cong-ty-request.service";
 import { CongTyModel } from "src/app/shared/model/cong-ty/cong-ty.model";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "khach-hang-cmp",
@@ -21,12 +22,12 @@ export class KhachHangComponent implements OnInit {
   page = 1;
   size = 10;
   totalItems = 0;
-  name: any
-  phone: any
-  companyName: any
-  address: any
-  userId: any
-  status: any
+  name: any;
+  phone: any;
+  companyName: any;
+  address: any;
+  userId: any;
+  status: any;
   headers: any[] = [
     {
       name: "ID",
@@ -71,20 +72,20 @@ export class KhachHangComponent implements OnInit {
       style: "width: 200px",
     },
   ];
-  listDatas: KhachHangModel[] = [
-  ];
+  listDatas: KhachHangModel[] = [];
   constructor(
     private modalService: NgbModal,
     private apiCustomer: CustomerRequestServices,
     public svShare: ShareService,
     private spinner: SpinnerService,
     private toast: ToastService,
-    private apiCongTy: CompanyRequestServices
+    private apiCongTy: CompanyRequestServices,
+    private router: Router
   ) {}
   ngOnInit(): void {
     this.getListDataByFilter();
   }
-  addEditCustomer(data = null, mode = 'add') {
+  addEditCustomer(data = null, mode = "add") {
     if (!data) {
       const modal = this.modalService.open(ThemSuaKhachHangModal, {
         centered: true,
@@ -95,8 +96,8 @@ export class KhachHangComponent implements OnInit {
       modal.componentInstance.mode = mode;
       modal.result.then((result) => {
         if (result) {
-          this.page = 1
-          this.getListDataByFilter()
+          this.page = 1;
+          this.getListDataByFilter();
         }
       });
     } else {
@@ -107,7 +108,7 @@ export class KhachHangComponent implements OnInit {
         keyboard: false,
       });
       modal.componentInstance.data = data;
-      modal.componentInstance.mode = mode
+      modal.componentInstance.mode = mode;
       modal.result.then((result) => {
         if (result) {
           this.getListDataByFilter();
@@ -169,12 +170,12 @@ export class KhachHangComponent implements OnInit {
     this.getListDataByFilter();
   }
   resetData() {
-    this.name = ''
-    this.phone = ''
-    this.address = ''
-    this.companyName = ''
-    this.userId = ''
-    this.status = ''
+    this.name = "";
+    this.phone = "";
+    this.address = "";
+    this.companyName = "";
+    this.userId = "";
+    this.status = "";
     this.getListDataByFilter();
   }
   deleleItem(id: any) {
@@ -200,5 +201,12 @@ export class KhachHangComponent implements OnInit {
   changePage(event: any) {
     this.page = event;
     this.getListDataByFilter();
+  }
+  redirectZaloOa(id: any) {
+    this.router.navigate(['/zalo-oa'], {
+      queryParams: {
+        id
+      }
+    })
   }
 }

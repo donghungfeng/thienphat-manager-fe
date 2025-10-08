@@ -23,59 +23,86 @@ export class AuthRequestServices {
     })
   }
   create(payload: any) {
-      return new Promise((resolve: any, reject: any) => {
-        this.apiService
-          .postOption(API_V1 + USER_CONTROLLER, payload, "/create")
-          .subscribe(
-            (res: HttpResponse<any>) => {
-              resolve(res);
-            },
-            (err) => {
-              reject(err);
-            }
-          );
-      });
-    }
-    update(payload: any) {
-      return new Promise((resolve: any, reject: any) => {
-        this.apiService
-          .put(API_V1 + USER_CONTROLLER, payload, "/update")
-          .subscribe(
-            (res: HttpResponse<any>) => {
-              resolve(res);
-            },
-            (err) => {
-              reject(err);
-            }
-          );
-      });
-    }
-    search(params: any) {
-      return new Promise((resolve: any, reject: any) => {
-        this.apiService
-          .getOption(API_V1 + USER_CONTROLLER, params, "/search")
-          .subscribe(
-            (res: HttpResponse<any>) => {
-              resolve(res);
-            },
-            (err) => {
-              reject(err);
-            }
-          );
-      });
-    }
-    delete(id: any) {
-      return new Promise((resolve: any, reject: any) => {
-        this.apiService
-          .delete(API_V1 + USER_CONTROLLER + OPERATIONS.DELETE , id)
-          .subscribe(
-            (res: HttpResponse<any>) => {
-              resolve(res);
-            },
-            (err) => {
-              reject(err);
-            }
-          );
-      });
-    }
+    return new Promise((resolve: any, reject: any) => {
+      this.apiService
+        .postOption(API_V1 + USER_CONTROLLER, payload, "/create")
+        .subscribe(
+          (res: HttpResponse<any>) => {
+            resolve(res);
+          },
+          (err) => {
+            reject(err);
+          }
+        );
+    });
+  }
+  update(payload: any) {
+    return new Promise((resolve: any, reject: any) => {
+      this.apiService
+        .put(API_V1 + USER_CONTROLLER, payload, "/update")
+        .subscribe(
+          (res: HttpResponse<any>) => {
+            resolve(res);
+          },
+          (err) => {
+            reject(err);
+          }
+        );
+    });
+  }
+  search(params: any) {
+    return new Promise((resolve: any, reject: any) => {
+      this.apiService
+        .getOption(API_V1 + USER_CONTROLLER, params, "/search")
+        .subscribe(
+          (res: HttpResponse<any>) => {
+            resolve(res);
+          },
+          (err) => {
+            reject(err);
+          }
+        );
+    });
+  }
+  delete(id: any) {
+    return new Promise((resolve: any, reject: any) => {
+      this.apiService.delete(API_V1 + USER_CONTROLLER + OPERATIONS.DELETE , id)
+      .subscribe(
+        (res: HttpResponse<any>) => {
+          resolve(res);
+        },
+        (err) => {
+          reject(err);
+        }
+      );
+    });
+  }
+  changeRole(payload: any) {
+    return new Promise((resolve: any, reject: any) => {
+      this.apiService
+        .postOption(API_V1 + USER_CONTROLLER, payload, "/change-role")
+        .subscribe(
+          (res: HttpResponse<any>) => {
+            resolve(res);
+          },
+          (err) => {
+            reject(err);
+          }
+        );
+    });
+  }
+  changePassword(payload: any) {
+    return new Promise((resolve: any, reject: any) => {
+      this.apiService
+        .postOption(API_V1 + USER_CONTROLLER, payload, "/change-password")
+        .subscribe(
+          (res: HttpResponse<any>) => {
+            resolve(res);
+          },
+          (err) => {
+            reject(err);
+          }
+        );
+    });
+  }
 }

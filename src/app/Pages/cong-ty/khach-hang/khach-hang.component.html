@@ -92,9 +92,10 @@
         </td>
         <td>
           <div class="d-flex gap-2">
-            <img src="../../../../assets/images/icon/Eye.png" alt="" (click)="addEditCustomer(item, 'view')">
-            <img src="../../../../assets/images/icon/PencilSimpleLine.png" alt="" (click)="addEditCustomer(item, 'edit')">
-            <img src="../../../../assets/images/icon/Trash.png" alt="" (click)="deleleItem(item.id)">
+            <img src="../../../../assets/images/icon/Eye.png" alt="" style="cursor: pointer;" (click)="addEditCustomer(item, 'view')">
+            <img src="../../../../assets/images/icon/PencilSimpleLine.png" alt="" style="cursor: pointer;" (click)="addEditCustomer(item, 'edit')">
+            <img src="../../../../assets/images/icon/Trash.png" alt="" style="cursor: pointer;" (click)="deleleItem(item.id)">
+            <img src="../../../../assets/images/icon/chat.png" alt="" style="cursor: pointer;" (click)="redirectZaloOa(item.userId)">
           </div>
         </td>
       </tr>

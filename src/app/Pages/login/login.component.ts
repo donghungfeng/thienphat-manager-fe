@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
     this.apiAuth.login(payload).then((res: any) => {
       if (res.body.code === 200) {
         localStorage.setItem('token', res.body.result.token)
+        localStorage.setItem("zalo_access_token", res.body.result.zaloAccessToken);
         localStorage.setItem("infoUser", JSON.stringify(res.body.result));
         this.router.navigate(["/"]);
         this.toast.success('Đăng nhập thành công')

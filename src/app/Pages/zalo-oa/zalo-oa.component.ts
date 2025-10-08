@@ -1,4 +1,11 @@
-import { Component } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ViewImageModal } from "src/app/Layout/Components/common/view-image/view-image.component";
+import { ZaloOARequestServices } from "src/app/shared/service/request/zalo-oa/zalo-oa-request.service";
+import { ShareService } from "src/app/shared/service/shareService.service";
+import { ApiZaloOAServices } from "src/app/shared/service/zalo-api.services";
 
 @Component({
   selector: "zalo-oa",
@@ -6,7 +13,7 @@ import { Component } from "@angular/core";
   styleUrls: ["zalo-oa.component.scss"],
   standalone: false,
 })
-export class ZaloOAComponent {
+export class ZaloOAComponent implements OnInit {
   listTemplate: any[] = [
     {
       templateName: "Mẫu 1",
@@ -39,49 +46,83 @@ export class ZaloOAComponent {
         "Xin chào [Tên khách hàng], <br/>Mình là [Tên bạn] từ [Công ty]. Cảm ơn anh/chị đã quan tâm. Mình có thể hỗ trợ tư vấn về [vấnđề/sản phẩm] vào [ngày giờ] không ạ? Nếu được, anh/chị trả lời “OK” hoặc chọn khung giờ phù hợp.",
     },
   ];
-  messengerList: any[] = [
-    {
-      type: 1,
-      time: "20:53",
-      contents: [
-        "Chào bạn, bên mình muốn hỏi về tiến độ triển khai website đến đâu rồi?",
-      ],
-    },
-    {
-      type: 2,
-      time: "20:53",
-      contents: [
-        "Chào anh/chị, hiện tại team đã hoàn thành 70% giao diện và đang tích hợp tính năng giỏ hàng. Dự kiến cuối tuần này sẽ có bản demo để anh/chị xem trước.",
-      ],
-    },
-    {
-      type: 1,
-      time: "20:53",
-      contents: [
-        "Ok, vậy bản demo có bao gồm phần thanh toán online chưa?",
-        "Nếu thanh toán tôi có thể thanh toán như nào?",
-      ],
-    },
-    {
-      type: 2,
-      time: "20:53",
-      contents: [
-        "Bản demo đầu tiên sẽ có giao diện thanh toán, nhưng chức năng kết nối cổng thanh toán sẽ hoàn thiện ở giai đoạn tiếp theo, khoảng giữa tuần sau ạ.",
-      ],
-    },
-    {
-      type: 1,
-      time: "20:53",
-      contents: [
-        "Rồi, bên mình muốn review sớm để kịp góp ý. Khi nào có link demo nhớ gửi qua cho tôi nhé.",
-      ],
-    },
-    {
-      type: 2,
-      time: "20:53",
-      contents: [
-        "Vâng, chắc chắn rồi ạ. Mình sẽ gửi ngay khi bản demo sẵn sàng, dự kiến chiều thứ Sáu.",
-      ],
-    },
-  ];
+  messengerList: any[] = [];
+  customerId: any;
+  private http: HttpClient;
+  constructor(
+    public svShare: ShareService,
+    private apiZalo: ZaloOARequestServices,
+    private route: ActivatedRoute,
+    private modalService: NgbModal
+  ) {
+    this.route.queryParams.subscribe((param: any) => {
+      if (param && param.id) {
+        this.customerId = param.id;
+      }
+    });
+  }
+  ngOnInit(): void {
+    if (this.customerId) {
+      this.getConversation();
+    }
+  }
+  getConversation() {
+    const params = {
+      // user_id: this.customerId,
+      user_id: "8981838908298308976",
+      offset: 0,
+      count: 10,
+    };
+    this.apiZalo.getConversation(params.user_id).then((res: any) => {
+      if (res && res.data && res.data.length) {
+        this.messengerList = this.convertZaloToMessengerList(res);
+      }
+    });
+  }
+  convertZaloToMessengerList(zaloData: any): any[] {
+    if (!zaloData || !Array.isArray(zaloData.data)) return [];
+
+    const messages = zaloData.data
+      .filter((item) => item.type === "text" || item.type === "photo")
+      .sort((a, b) => a.time - b.time);
+
+    const messengerList: any[] = [];
+    let currentGroup: any = null;
+
+    for (const msg of messages) {
+      const type = msg.src;
+      const time = msg.sent_time;
+      const avatar = msg.src === 1 ? msg.from_avatar : msg.to_avatar;
+      const displayName =
+        msg.src === 1 ? msg.from_display_name : msg.to_display_name;
+      const content = {
+        type: msg.type,
+        message: msg.type === "photo" ? msg.url : msg.message,
+        time: msg.sent_time,
+      };
+      if (currentGroup && currentGroup.type === type) {
+        currentGroup.contents.push(content);
+        currentGroup.time = msg.sent_time;
+      } else {
+        if (currentGroup) messengerList.push(currentGroup);
+        currentGroup = {
+          displayName,
+          avatar,
+          type,
+          time: msg.sent_time,
+          contents: [content],
+        };
+      }
+    }
+    if (currentGroup) messengerList.push(currentGroup);
+
+    return messengerList;
+  }
+  viewImage(src: any) {
+    const modal = this.modalService.open(ViewImageModal, {
+      centered: true,
+      windowClass: "modal-auto-size",
+    });
+    modal.componentInstance.src = src;
+  }
 }
