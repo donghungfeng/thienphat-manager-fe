@@ -152,6 +152,14 @@ export class ThemSuaMauTinComponent {
         this.toast.warning("Vui lòng nhập đầy đủ thông tin bảng");
         return;
       }
+      if (this.listButton.some((item) => !item.title || !item.payload.url)) {
+        this.toast.warning("Vui lòng nhập đầy đủ thông tin nút");
+        return;
+      }
+      if (this.listTable.some((item) => !item.key.includes("Mã"))) {
+        this.toast.warning("Bảng phải có ít nhất 1 dòng với Key là 'Mã...'");
+        return;
+      }
       payload = {
         recipient: {
           user_id: this.form.value.user_id,
@@ -194,6 +202,19 @@ export class ThemSuaMauTinComponent {
         this.form.value.template_type === TYPE_TEMPLATE.PROMOTION
           ? "promotion"
           : "transaction";
+      if (this.form.value.template_type === TYPE_TEMPLATE.PROMOTION) {
+        const currentHour = new Date().getHours();
+        if (currentHour >= 22 || currentHour < 6) {
+          this.toast.warning(
+            "Mẫu tin truyền thông không thể gửi vào khung giờ từ 22:00 - 06:00"
+          );
+          return;
+        }
+      }
+      if (this.listButton.some((item) => !/^https?:\/\/.+/.test(item.payload.url))) {
+        this.toast.warning("Link không đúng định dạng");
+        return;
+      }
       this.spinner.show();
       this.apiZalo
         .messageTemplate(payload, type)
@@ -201,7 +222,16 @@ export class ThemSuaMauTinComponent {
           if (res.error === 0 && res.message === "Success") {
             this.toast.success("Gửi mẫu tin thành công");
             this.closeModal(true);
+          } else {
+            if (res.message === "the first table.content item must be 'Mã...' or 'Tên khách hàng'") {
+              this.toast.warning("Bảng phải có ít nhất 1 dòng với Key là 'Mã...' hoặc 'Tên khách hàng'");
+              return;
+            }
+            console.log('res :>> ', res);
           }
+        })
+        .catch(err => {
+          console.log('err :>> ', err);
         })
         .finally(() => {
           this.spinner.hide();
