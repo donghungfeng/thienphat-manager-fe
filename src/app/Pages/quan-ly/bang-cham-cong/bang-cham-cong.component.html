@@ -38,7 +38,7 @@
               <div class="form-control-icon">
                 <img src="../../../../assets/images/icon/search-normal.png" alt="">
               </div>
-              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm" (keyup.enter)="handleFilter()" [(ngModel)]="date">
             </div>
           </th>
           <th scope="col">
@@ -46,7 +46,7 @@
               <div class="form-control-icon">
                 <img src="../../../../assets/images/icon/search-normal.png" alt="">
               </div>
-              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm" (keyup.enter)="handleFilter()" [(ngModel)]="username">
             </div>
           </th>
           <th scope="col">
@@ -54,7 +54,7 @@
               <div class="form-control-icon">
                 <img src="../../../../assets/images/icon/search-normal.png" alt="">
               </div>
-              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm" (keyup.enter)="handleFilter()" [(ngModel)]="timeCheckIn">
             </div>
           </th>
           <th scope="col">
@@ -101,15 +101,15 @@
         </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let item of listDatas; index as i" class="fw-light" (dblclick)="detailLogWorkModal()">
+      <tr *ngFor="let item of listDatas; index as i" class="fw-light" (dblclick)="detailLogWorkModal(item)">
         <td style="user-select: none;">{{ i + 1 }}</td>
-        <td style="user-select: none;">{{ item.fullName }}</td>
-        <td style="user-select: none;">{{ item.checkIn }}</td>
-        <td style="user-select: none;">{{ item.checkOut }}</td>
-        <td style="user-select: none;">{{ item.device }}</td>
-        <td style="user-select: none;">{{ item.deviceCode }}</td>
-        <td style="user-select: none;">{{ item.checkInPosition }}</td>
-        <td style="user-select: none;">{{ item.checkOutPosition }}</td>
+        <td style="user-select: none;">{{ item.date }}</td>
+        <td style="user-select: none;">{{ item.username }}</td>
+        <td style="user-select: none;">{{ item.timeCheckin }}</td>
+        <td style="user-select: none;">{{ item.timeCheckout }}</td>
+        <td style="user-select: none;">{{ item.minCheckinLate }}</td>
+        <td style="user-select: none;">{{ item.minCheckoutEarly }}</td>
+        <td style="user-select: none;">{{ item.reason }}</td>
         <td style="user-select: none;">
           <div [class]="svShare.getColorStatusLogWorkByCode(item.status)" class="text-white text-center rounded py-1">
             {{svShare.getStatusLogWorkNamByCode(item.status)}}
@@ -118,8 +118,6 @@
         <td>
           <div class="d-flex gap-2">
             <img src="../../../../assets/images/icon/Eye.png" alt="">
-            <img src="../../../../assets/images/icon/PencilSimpleLine.png" alt="">
-            <img src="../../../../assets/images/icon/Trash.png" alt="">
           </div>
         </td>
       </tr>
@@ -127,6 +125,6 @@
     </table>
   </div>
   <div class="d-flex justify-content-end">
-    <ngb-pagination class="d-flex justify-content-start" [collectionSize]="70" [page]="1"></ngb-pagination>
+    <ngb-pagination class="d-flex justify-content-start" [collectionSize]="totalItems" [page]="page" (pageChange)="changePage($event)"></ngb-pagination>
   </div>
 </div>
