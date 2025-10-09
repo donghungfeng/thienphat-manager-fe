@@ -44,10 +44,33 @@ export const ROLE = {
   ADMIN: 'ADMIN'
 }
 
+export const TYPE_TEMPLATE_LIST = [
+  {
+    code: "text",
+    name: "Văn bản"
+  },
+  {
+    code: "transaction_order",
+    name: "Tin giao dịch",
+  },
+  {
+    code: "promotion",
+    name: "Tin truyền thông",
+  }
+]
+
+export const TYPE_TEMPLATE = {
+  TEXT: "text",
+  TRANSACTION_ORDER: "transaction_order",
+  PROMOTION: "promotion"
+}
+
 export const API_V1 = "api/v1/"
 export const ZALO_VER = "v2.0/"
+export const ZALO_VER_03 = "v3.0/"
 export const ZALO_OA = "oa"
 export const USER_CONTROLLER = "user"
 export const COMPANY_CONTROLLER = "company"
 export const DEPARTMENT_CONTROLLER = "department"
 export const CUSTOMER_CONTROLLER = "customer"
+export const TEMPLATE_COMTROLLER = "template"

@@ -55,6 +55,13 @@ export class ThemSuaCongTyModal implements OnInit{
     }
   }
   submitForm() {
+    if (this.form.invalid) {
+      Object.values(this.form.controls).forEach((control) => {
+        control.markAsDirty();
+        control.updateValueAndValidity();
+      });
+      return;
+    }
     const payload: any = {
       ...this.form.value
     }

@@ -104,6 +104,13 @@ export class ThemSuaKhachHangModal implements OnInit {
       .finally(() => this.spinner.hide());
   }
   submitForm() {
+    if (this.form.invalid) {
+      Object.values(this.form.controls).forEach((control) => {
+        control.markAsDirty();
+        control.updateValueAndValidity();
+      });
+      return;
+    }
     const payload: any = {
       ...this.form.value
     }

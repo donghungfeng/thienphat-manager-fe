@@ -50,6 +50,14 @@ export class HeaderComponent implements OnInit {
       header: "Zalo OA",
       key: "zalo-oa",
     },
+    {
+      header: "Mẫu tin",
+      key: "template",
+    },
+    {
+      header: "Chiến dịch",
+      key: "campaign",
+    },
   ];
   headerTitle: any;
   public config$: Observable<ConfigState>;

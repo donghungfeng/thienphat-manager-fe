@@ -53,8 +53,10 @@ import { PhongBanComponent } from './Pages/quan-ly/phong-ban/phong-ban.component
 import { NhanVienComponent } from './Pages/quan-ly/nhan-vien/nhan-vien.component';
 import { BangChamCongComponent } from './Pages/quan-ly/bang-cham-cong/bang-cham-cong.component';
 import { XuLyCongViecComponent } from './Pages/cong-viec/xu-ly-cong-viec/xu-ly-cong-viec.component';
-import { ZaloOAComponent } from './Pages/zalo-oa/zalo-oa.component';
+import { ZaloOAComponent } from './Pages/zalo-oa/chat-oa/zalo-oa.component';
 import { UserRouteAccessService } from './user-route-access-service';
+import { MauTinComponent } from './Pages/zalo-oa/mau-tin/mau-tin.component';
+import { ChienDichComponent } from './Pages/zalo-oa/chien-dich/chien-dich.component';
 
 const routes: Routes = [
   {
@@ -64,7 +66,7 @@ const routes: Routes = [
   {
     path: "",
     component: BaseLayoutComponent,
-    canActivate: [UserRouteAccessService],  
+    canActivate: [UserRouteAccessService],
     children: [
       { path: "", redirectTo: "/dashboard", pathMatch: "full" },
       {
@@ -106,6 +108,16 @@ const routes: Routes = [
         path: "zalo-oa",
         component: ZaloOAComponent,
         data: { extraParameter: "zalo-oa" },
+      },
+      {
+        path: "mau-tin",
+        component: MauTinComponent,
+        data: { extraParameter: "template" },
+      },
+      {
+        path: "chien-dich",
+        component: ChienDichComponent,
+        data: { extraParameter: "campaign" },
       },
     ],
   },

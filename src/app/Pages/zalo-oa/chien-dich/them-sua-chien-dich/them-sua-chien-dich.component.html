@@ -1,26 +1,30 @@
 <div class="modal-header">
-  <h4 class="modal-title text-primary-1">{{data ? 'Sửa thông tin khách hàng' : 'Thêm mới khách hàng'}}</h4>
+  <h4 class="modal-title text-primary-1">{{data ? 'Sửa thông tin chiến dịch' : 'Thêm mới chiến dịch'}}</h4>
   <button type="button" class="btn-close" aria-label="Close" (click)="closeModal(false)">
   </button>
 </div>
 <div class="modal-body">
   <div class="text-primary-1 fw-bold">
-    Thông tin khách hàng
+    Thông tin chiến dịch
   </div>
   <form [formGroup]="form" class="d-flex flex-column gap-4">
     <div class="row">
       <div class="col">
-        <div>Họ và tên <span class="text-danger">*</span></div>
-        <input placeholder="Nhập họ và tên" type="text" class="form-control" formControlName="name" required>
+        <div>Tên chiến dịch <span class="text-danger">*</span></div>
+        <input placeholder="Nhập tên chiến dịch" type="text" class="form-control" formControlName="name" required>
         <div class="text-danger fw-light mt-1" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
           <div *ngIf="form.get('name')?.errors?.['required']">
-            Vui lòng nhập họ và tên
+            Vui lòng nhập tên chiến dịch
           </div>
         </div>
       </div>
       <div class="col">
         <div>Số điện thoại <span class="text-danger">*</span></div>
-        <input placeholder="Nhập số điện thoại" type="text" class="form-control" formControlName="phone" required>
+        <select formControlName="status" class="form-select">
+          <option value="">Chọn loại chiến dịch</option>
+          <option value="1">Hoạt động</option>
+          <option value="0">Ngừng hoạt động</option>
+        </select>
         <div class="text-danger fw-light mt-1" *ngIf="form.get('phone')?.touched && form.get('phone')?.invalid">
           <div *ngIf="form.get('phone')?.errors?.['required']">
             Vui lòng nhập số điện thoại
@@ -33,7 +37,7 @@
     </div>
     <div class="row">
       <div class="col">
-        <div>Địa chỉ <span class="text-danger">*</span></div>
+        <div>Ngày bắt đầu <span class="text-danger">*</span></div>
         <input placeholder="Địa chỉ" type="text" class="form-control" formControlName="address" required>
         <div class="text-danger fw-light mt-1" *ngIf="form.get('address')?.touched && form.get('address')?.invalid">
           <div *ngIf="form.get('address')?.errors?.['required']">
@@ -42,10 +46,10 @@
         </div>
       </div>
       <div class="col">
-        <div>Công ty</div>
+        <div>Ngày kết thúc</div>
         <select formControlName="companyId" class="form-select">
           <option value="">Chọn công ty</option>
-          <option *ngFor="let item of companyList" [value]="item.id">{{item.name}}</option>
+          <option *ngFor="let item of customerList" [value]="item.id">{{item.name}}</option>
         </select>
         <div class="text-danger fw-light mt-1" *ngIf="form.get('companyId')?.touched && form.get('companyId')?.invalid">
           <div *ngIf="form.get('companyId')?.errors?.['required']">
@@ -56,7 +60,7 @@
     </div>
     <div class="row">
       <div class="col">
-        <div>Zalo ID <span class="text-danger">*</span></div>
+        <div>Ngày lặp <span class="text-danger">*</span></div>
         <input placeholder="Nhập Zalo ID" type="text" class="form-control" formControlName="userId" required>
         <div class="text-danger fw-light mt-1" *ngIf="form.get('userId')?.touched && form.get('userId')?.invalid">
           <div *ngIf="form.get('userId')?.errors?.['required']">
@@ -65,7 +69,7 @@
         </div>
       </div>
       <div class="col">
-        <div>Trạng thái</div>
+        <div>Khách hàng áp dụng <span class="text-danger">*</span></div>
         <select formControlName="status" class="form-select">
           <option value="">Chọn trạng thái</option>
           <option value="1">Hoạt động</option>
@@ -79,9 +83,17 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-12">
+      <div class="col">
+        <div>Trạng thái <span class="text-danger">*</span></div>
+        <select formControlName="status" class="form-select">
+          <option value="">Chọn trạng thái</option>
+          <option value="1">Hoạt động</option>
+          <option value="0">Ngừng hoạt động</option>
+        </select>
+      </div>
+      <div class="col">
         <div>Ghi chú</div>
-        <input placeholder="Ghi chú" type="text" class="form-control" formControlName="notes" required>
+        <input placeholder="Nhập ghi chú" type="text" class="form-control" formControlName="name">
       </div>
     </div>
   </form>

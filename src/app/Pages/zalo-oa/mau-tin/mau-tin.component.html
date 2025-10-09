@@ -1,0 +1,107 @@
+<div class="bg-white p-4 d-flex flex-column container-body">
+  <div class="d-flex gap-2 mb-4">
+    <button class="btn btn-primary-1" (click)="addEditTemplate()">
+      <i class="fa-solid fa-plus"></i>
+      Thêm mẫu tin
+    </button>
+    <button class="btn btn-outline-secondary" (click)="getListDataByFilter()">
+      <i class="fa-solid fa-refresh"></i>
+      Làm mới
+    </button>
+    <button class="btn btn-outline-secondary" (click)="resetData()">
+      <i class="fa-solid fa-refresh"></i>
+      Xóa lọc
+    </button>
+  </div>
+  <div class="card card-body d-flex flex-column flex-grow-1 mb-4 overflow-y-auto container-scroll horizontal-scroll-first-column">
+    <table class="table table-striped overflow-x-auto " style="min-width: 2000px;">
+      <thead>
+        <tr>
+          <th scope="col" *ngFor="let header of headers" class="fw-lighter" [style]="header.style">
+            {{ header.name }}
+          </th>
+          <th scope="col" class="fw-lighter" style="width: 150px;">Thao tác</th>
+        </tr>
+        <tr>
+          <th scope="col">
+          </th>
+          <th scope="col">
+            <div class="d-flex align-items-center">
+              <div class="form-control-icon">
+                <img src="../../../../assets/images/icon/search-normal.png" alt="">
+              </div>
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
+            </div>
+          </th>
+          <th scope="col">
+            <div class="d-flex align-items-center">
+              <div class="form-control-icon">
+                <img src="../../../../assets/images/icon/search-normal.png" alt="">
+              </div>
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
+            </div>
+          </th>
+          <th scope="col">
+            <div class="d-flex align-items-center">
+              <div class="form-control-icon">
+                <img src="../../../../assets/images/icon/search-normal.png" alt="">
+              </div>
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
+            </div>
+          </th>
+          <th scope="col">
+            <div class="d-flex align-items-center">
+              <div class="form-control-icon">
+                <img src="../../../../assets/images/icon/search-normal.png" alt="">
+              </div>
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
+            </div>
+          </th>
+          <th scope="col">
+            <div class="d-flex align-items-center">
+              <div class="form-control-icon">
+                <img src="../../../../assets/images/icon/search-normal.png" alt="">
+              </div>
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
+            </div>
+          </th>
+          <th scope="col">
+            <select class="form-select" (ngModelChange)="getListDataByFilter()">
+              <option value="">Chọn trạng thái</option>
+              <option value="1">Hoạt động</option>
+              <option value="0">Ngừng hoạt động</option>
+            </select>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of listDatas; index as i" class="fw-light">
+        <td>{{ i + 1 }}</td>
+        <td>
+          {{item.name}}
+        </td>
+        <td>{{ item.phone }}</td>
+        <td>{{ item.company ? item.company.name : '' }}</td>
+        <td>{{ item.address }}</td>
+        <td>{{ item.userId }}</td>
+        <td>
+          <div [class]="svShare.getColorStatusCommonByCode(item.status)" class="text-white text-center rounded py-1">
+            {{svShare.getStatusNameCommonByCode(item.status)}}
+          </div>
+        </td>
+        <td>
+          <div class="d-flex gap-2">
+            <img src="../../../../assets/images/icon/Eye.png" alt="" style="cursor: pointer;" (click)="addEditTemplate(item, 'view')">
+            <img src="../../../../assets/images/icon/PencilSimpleLine.png" alt="" style="cursor: pointer;" (click)="addEditTemplate(item, 'edit')">
+            <img src="../../../../assets/images/icon/Trash.png" alt="" style="cursor: pointer;" (click)="deleleItem(item.id)">
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="d-flex justify-content-end">
+    <ngb-pagination class="d-flex justify-content-start" [collectionSize]="totalItems" [page]="page" (pageChange)="changePage($event)"></ngb-pagination>
+  </div>
+</div>

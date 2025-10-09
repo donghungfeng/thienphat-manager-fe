@@ -154,13 +154,30 @@ export class SidebarComponent implements OnInit {
       ],
     },
     {
-      header: "Zalo OA",
+      header: "",
       key: "zalo-oa",
-      path: "/zalo-oa",
+      path: "",
       parent: "",
       name: "Zalo OA",
       icon: "pe-7s-headphones",
-      children: [],
+      children: [
+        {
+          header: "",
+          key: "template",
+          path: "/mau-tin",
+          parent: "zalo-oa",
+          name: "Mẫu tin",
+          icon: "",
+        },
+        {
+          header: "",
+          key: "campaign",
+          path: "/chien-dich",
+          parent: "zalo-oa",
+          name: "Chiến dịch",
+          icon: "",
+        },
+      ],
     },
   ];
   toggleSidebar() {

@@ -1,0 +1,115 @@
+<div class="modal-header">
+  <h4 class="modal-title text-primary-1">{{data ? 'Sửa thông tin mẫu tin' : 'Thêm mới mẫu tin'}}</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="closeModal(false)">
+  </button>
+</div>
+<div class="modal-body">
+  <div class="text-primary-1 fw-bold">
+    Thông tin mẫu tin
+  </div>
+  <form [formGroup]="form" class="d-flex flex-column gap-4">
+    <div class="row">
+      <!-- <div class="col">
+        <div>Tên mẫu tin <span class="text-danger">*</span></div>
+        <input placeholder="Nhập tên mẫu tin" type="text" class="form-control" formControlName="name" required>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+          <div *ngIf="form.get('name')?.errors?.['required']">
+            Vui lòng nhập tên mẫu tin
+          </div>
+        </div>
+      </div> -->
+      <div class="col">
+        <div>Loại mẫu tin <span class="text-danger">*</span></div>
+        <select formControlName="template_type" class="form-select" (change)="onTemplateTypeChange($event)">
+          <option value="">Chọn loại mẫu tin</option>
+          <option *ngFor="let item of templateTypeList" [value]="item.code">{{item.name}}</option>
+        </select>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('template_type')?.touched && form.get('template_type')?.invalid">
+          <div *ngIf="form.get('template_type')?.errors?.['required']">
+            Vui lòng chọn loại mẫu tin
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="row">
+      <div class="col">
+        <div>Trạng thái <span class="text-danger">*</span></div>
+        <select formControlName="status" class="form-select">
+          <option value="">Chọn trạng thái</option>
+          <option value="1">Hoạt động</option>
+          <option value="0">Ngừng hoạt động</option>
+        </select>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('address')?.touched && form.get('address')?.invalid">
+          <div *ngIf="form.get('address')?.errors?.['required']">
+            Vui lòng chọn trạng thái
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="col-12">
+        <div>Ghi chú</div>
+          <input placeholder="Ghi chú" type="text" class="form-control" formControlName="notes" required>
+        </div>
+      </div>
+    </div> -->
+    <div class="text-primary-1 fw-bold">
+      Nội dung mẫu tin
+    </div>
+    <div *ngIf="form.value.template_type && form.value.template_type === typeTemplate.TEXT">
+      <div>Nội dung <span class="text-danger">*</span></div>
+      <textarea formControlName="text" placeholder="Nhập nội dung" type="text" class="form-control" rows="5"></textarea>
+    </div>
+    <div *ngIf="form.value.template_type && form.value.template_type !== typeTemplate.TEXT" class="row">
+      <div class="col">
+        <div class="mb-4 position-relative">
+          <div>Ảnh bìa <span class="text-danger">*</span></div>
+          <label *ngIf="!attachmentImagePreview" for="backdrop" class="backdrop d-flex justify-content-center align-items-center">
+            <img src="../../../../../assets/images/icon/link.png" alt="">
+          </label>
+          <div *ngIf="attachmentImagePreview">
+            <img [src]="attachmentImagePreview" alt="" class="w-100 rounded" style="max-height: 200px; object-fit: cover; cursor: pointer;" (click)="previewImage(attachmentImagePreview)">
+          </div>
+          <input type="file" style="opacity: 0;" id="backdrop" (change)="onFileChange($event, 'backdrop')" accept="image/*" class="position-absolute">
+        </div>
+        <div class="mb-4">
+          <div>Tiêu đề <span class="text-danger">*</span></div>
+          <input placeholder="Tiêu đề" type="text" class="form-control" formControlName="header">
+        </div>
+        <div class="mb-4">
+          <div>Nội dung <span class="text-danger">*</span></div>
+          <textarea placeholder="Nhập nội dung" type="text" class="form-control" rows="5" formControlName="text"></textarea>
+        </div>
+      </div>
+      <div class="col">
+        <div class="mb-4">
+          <div>Table <span class="text-danger">*</span></div>
+          <div *ngFor="let item of listTable" class="d-flex gap-2 mb-2">
+            <input [(ngModel)]="item.key" [ngModelOptions]="{standalone: true}" placeholder="Key" type="text" class="form-control" required style="width: 40%;">
+            <input  [(ngModel)]="item.value" [ngModelOptions]="{standalone: true}" placeholder="Value" type="text" class="form-control" required>
+          </div>
+          <div *ngIf="listTable.length <= 5">
+            <button class="btn btn-sm btn-primary-1" (click)="addNewTable()">
+              <img src="../../../../../assets/images/icon/add-circle.png" alt="">
+            </button>
+          </div>
+        </div>
+        <div class="mb-4">
+          <div>Button <span class="text-danger">*</span></div>
+          <div *ngFor="let item of listButton" class="d-flex gap-2 mb-2">
+            <input [(ngModel)]="item.title" placeholder="Nội dung" [ngModelOptions]="{standalone: true}" type="text" class="form-control" required style="width: 40%;">
+            <input [(ngModel)]="item.payload.url" placeholder="Link" type="text" [ngModelOptions]="{standalone: true}" class="form-control" required>
+          </div>
+          <div *ngIf="listButton.length <= 4">
+            <button class="btn btn-sm btn-primary-1">
+              <img src="../../../../../assets/images/icon/add-circle.png" alt="">
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div *ngIf="mode !== 'view'" class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="closeModal(false)">Hủy</button>
+  <button type="button" class="btn btn-primary-1" (click)="submitForm()">{{data ? 'Lưu thay đổi' : 'Lưu mẫu tin'}}</button>
+</div>
