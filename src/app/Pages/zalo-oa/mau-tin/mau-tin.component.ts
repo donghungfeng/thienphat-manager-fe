@@ -77,7 +77,7 @@ export class MauTinComponent {
     if (!data) {
       const modal = this.modalService.open(ThemSuaMauTinComponent, {
         centered: true,
-        size: "lg",
+        size: "xl",
         backdrop: "static",
         keyboard: false,
       });
@@ -91,7 +91,7 @@ export class MauTinComponent {
     } else {
       const modal = this.modalService.open(ThemSuaMauTinComponent, {
         centered: true,
-        size: "lg",
+        size: "xl",
         backdrop: "static",
         keyboard: false,
       });
