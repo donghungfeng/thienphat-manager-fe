@@ -6,6 +6,7 @@ import { SpinnerService } from "src/app/shared/service/spinner.service";
 import { ToastService } from "src/app/shared/service/toast.service";
 import { HttpResponse } from "@angular/common/http";
 import { IssueRequestServices } from "src/app/shared/service/request/phong-ban/issue-request.service";
+import { IssueModel } from "src/app/shared/model/issue/issue.model";
 
 @Component({
   selector: "issue",
@@ -17,76 +18,127 @@ export class IssueComponent {
   page = 1
   size = 10
   totalItems = 0
-  username: any
-  date:any
-  reason:any
-  factoryName: any
+  createDate: any
+  updatedDate: any
+  code: any
+  createName: any
+  assignName: any
+  resolveDate: any
+  dueDate: any
+  estimate: any
+  title: any
+  description: any
+  url: any
+  type: any
+  priority: any
   status: any
   note: any
   headers: any[] = [
     {
       name: "STT",
-      key: "index",
+      key: "id",
       class: "",
       style: "width: 50px",
     },
     {
-      name: "Ngày",
-      key: "date",
+      name: "Code",
+      key: "code",
       class: "",
       style: "width: 350px",
     },
     {
-      name: "Username",
-      key: "taxNumber",
-      class: "",
-      style: "width: 150px; max-width: 200px",
-    },
-    {
-      name: "Giờ vào",
-      key: "phone",
-      class: "",
-      style: "width: 150px",
-    },
-    {
-      name: "Giờ ra",
-      key: "address",
+      name: "Người giao",
+      key: "assignName",
       class: "",
       style: "width: 350px",
     },
     {
-      name: "Vào muộn (phút)",
-      key: "address",
+      name: "Người tạo",
+      key: "createName",
       class: "",
       style: "width: 350px",
     },
     {
-      name: "Về sớm (phút)",
-      key: "address",
+      name: "Thời gian tạo",
+      key: "createDate",
+      class: "",
+      style: "width: 350px",
+    },
+    // {
+    //   name: "Thời gian cập nhật",
+    //   key: "updatedDate",
+    //   class: "",
+    //   style: "width: 450px",
+    // },
+    {
+      name: "Thời hạn",
+      key: "dueDate",
       class: "",
       style: "width: 350px",
     },
     {
-      name: "Giải trình",
-      key: "address",
+      name: "Số giờ",
+      key: "estimate",
+      class: "",
+      style: "width: 50px",
+    },
+    {
+      name: "Thời gian hoàn thành",
+      key: "resolveDate",
+      class: "",
+      style: "width: 500px",
+    },
+    {
+      name: "Tiêu đề",
+      key: "title",
+      class: "",
+      style: "width: 350px",
+    },
+    {
+      name: "Mô tả",
+      key: "description",
+      class: "",
+      style: "width: 350px",
+    },
+    {
+      name: "url",
+      key: "url",
+      class: "",
+      style: "width: 350px",
+    },
+    {
+      name: "Loại",
+      key: "type",
+      class: "",
+      style: "width: 350px",
+    },
+    {
+      name: "Độ ưu tiên",
+      key: "priority",
       class: "",
       style: "width: 350px",
     },
     {
       name: "Trạng thái",
-      key: "address",
+      key: "status",
+      class: "",
+      style: "width: 350px",
+    },
+    {
+      name: "Ghi chú",
+      key: "note",
       class: "",
       style: "width: 350px",
     },
   ];
-  listDatas: any[] = [];
+  listDatas: IssueModel[] = [];
   constructor(
-    private modalService: NgbModal, 
+    private modalService: NgbModal,
     public svShare: ShareService,
     private spinner: SpinnerService,
     private toast: ToastService,
     private apiService: IssueRequestServices,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getListDataByFilter()
@@ -96,20 +148,50 @@ export class IssueComponent {
     const filterString = () => {
       let filter = []
       filter.push("id>0")
-      if (this.username) {
-        filter.push(`username==*${this.username}*`);
+      if (this.createDate) {
+        filter.push(`createdDate==${this.createDate}`);
       }
-      if (this.date) {
-        filter.push(`date>${this.date}`);
+      if (this.updatedDate) {
+        filter.push(`updatedDate==${this.updatedDate}`);
       }
-      if (this.reason) {
-        filter.push(`reason==*${this.reason}*`);
+      if (this.code) {
+        filter.push(`code==*${this.code}*`);
+      }
+      if (this.createName) {
+        filter.push(`create.username==*${this.createName}*`)
+      }
+      if (this.assignName) {
+        filter.push(`create.username==*${this.assignName}*`);
+      }
+      if (this.resolveDate) {
+        filter.push(`resolveDate==${this.resolveDate}`);
+      }
+      if (this.dueDate) {
+        filter.push(`dueDate==${this.dueDate}`)
+      }
+      if (this.resolveDate) {
+        filter.push(`resolveDate==${this.resolveDate}`)
+      }
+      if (this.estimate) {
+        filter.push(`estimate==${this.estimate}`)
+      }
+      if (this.title) {
+        filter.push(`title==*${this.title}*`);
+      }
+      if (this.url) {
+        filter.push(`url==*${this.url}*`);
+      }
+      if (this.type) {
+        filter.push(`type==${this.type}`)
+      }
+      if (this.priority) {
+        filter.push(`priority==${this.priority}`)
+      }
+      if (this.status) {
+        filter.push(`status==${this.status}`)
       }
       if (this.note) {
         filter.push(`note==*${this.note}*`);
-      }
-      if (this.status) {
-        filter.push(`status==${this.status}`);
       }
       return filter.join(";")
     }
@@ -129,12 +211,12 @@ export class IssueComponent {
         this.totalItems = 0
       }
     })
-    .catch(() => {
-      this.toast.error('Có lỗi trong khi tải dữ liệu')
-    })
-    .finally(() => {
-      this.spinner.hide()
-    })
+      .catch(() => {
+        this.toast.error('Có lỗi trong khi tải dữ liệu')
+      })
+      .finally(() => {
+        this.spinner.hide()
+      })
   }
   handleFilter() {
     this.page = 1
@@ -149,7 +231,7 @@ export class IssueComponent {
     this.getListDataByFilter()
   }
 
-  
+
   detailModal(data = null) {
     const modal = this.modalService.open(ThongTinIssueModal, {
       centered: true,
@@ -158,6 +240,38 @@ export class IssueComponent {
       keyboard: false,
     });
     modal.componentInstance.data = data;
-    modal.result.then((result) => {});
+    modal.result.then((result) => { });
+  }
+
+  addEditComany(data = null, mode = 'add') {
+    if (!data) {
+      const modal = this.modalService.open(ThongTinIssueModal, {
+        centered: true,
+        size: "lg",
+        backdrop: "static",
+        keyboard: false,
+      });
+      modal.componentInstance.mode = mode;
+      modal.result.then((result) => {
+        if (result) {
+          this.page = 1
+          this.getListDataByFilter()
+        }
+      })
+    } else {
+      const modal = this.modalService.open(ThongTinIssueModal, {
+        centered: true,
+        size: "lg",
+        backdrop: "static",
+        keyboard: false,
+      });
+      modal.componentInstance.data = data
+      modal.componentInstance.mode = mode
+      modal.result.then((result) => {
+        if (result) {
+          this.getListDataByFilter()
+        }
+      })
+    }
   }
 }

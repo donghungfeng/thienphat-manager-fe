@@ -105,4 +105,16 @@ export class AuthRequestServices {
         );
     });
   }
+    getAll() {
+      return new Promise((resolve: any, reject: any) => {
+        this.apiService.get(API_V1 + USER_CONTROLLER + "/get-all").subscribe(
+          (res: HttpResponse<any>) => {
+            resolve(res);
+          },
+          (err) => {
+            reject(err);
+          }
+        );
+      });
+    }
 }
