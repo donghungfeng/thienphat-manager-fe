@@ -33,23 +33,23 @@ export class ShareService {
   }
   getColorStatusLogWorkByCode(statusCode: any) {
     switch (statusCode) {
-      case LOG_WORK_STATUS.VALID:
+      case 1:
         return "btn-status-success";
-      case LOG_WORK_STATUS.INVALID:
+      case 2:
         return "btn-status-danger";
-      case LOG_WORK_STATUS.EXPLANATION:
+      case 3:
         return "btn-status-warning";
       default:
-        return "btn-status-primary";
+        return "btn-status-success";
     }
   }
   getStatusLogWorkNamByCode(statusCode: any) {
     switch (statusCode) {
-      case LOG_WORK_STATUS.VALID:
+      case 1:
         return "Hợp lệ";
-      case LOG_WORK_STATUS.INVALID:
+      case 2:
         return "Không hợp lệ";
-      case LOG_WORK_STATUS.EXPLANATION:
+      case 3:
         return "Đã gửi giải trình";
       default:
         return "Hợp lệ";

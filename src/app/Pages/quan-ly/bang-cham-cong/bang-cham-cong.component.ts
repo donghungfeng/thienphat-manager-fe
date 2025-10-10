@@ -70,6 +70,12 @@ export class BangChamCongComponent {
       style: "width: 350px",
     },
     {
+      name: "Ghi chú",
+      key: "note",
+      class: "",
+      style: "width: 350px",
+    },
+    {
       name: "Giải trình",
       key: "address",
       class: "",

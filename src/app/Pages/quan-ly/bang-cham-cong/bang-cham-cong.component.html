@@ -66,6 +66,14 @@
               <div class="form-control-icon">
                 <img src="../../../../assets/images/icon/search-normal.png" alt="">
               </div>
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm" (keyup.enter)="handleFilter()" [(ngModel)]="note">
+            </div>
+          </th>
+          <th scope="col">
+            <div class="d-flex align-items-center">
+              <div class="form-control-icon">
+                <img src="../../../../assets/images/icon/search-normal.png" alt="">
+              </div>
               <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm" (keyup.enter)="handleFilter()" [(ngModel)]="reason">
             </div>
           </th>
@@ -89,6 +97,7 @@
         <td style="user-select: none;">{{ item.timeCheckout }}</td>
         <td style="user-select: none;">{{ item.minCheckinLate }}</td>
         <td style="user-select: none;">{{ item.minCheckoutEarly }}</td>
+        <td style="user-select: none;">{{ item.note }}</td>
         <td style="user-select: none;">{{ item.reason }}</td>
         <td style="user-select: none;">
           <div [class]="svShare.getColorStatusLogWorkByCode(item.status)" class="text-white text-center rounded py-1">
