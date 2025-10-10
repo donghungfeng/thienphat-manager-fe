@@ -1,112 +1,174 @@
 <div class="modal-header">
-  <h4 class="modal-title text-primary-1">Theo dõi chấm công</h4>
+  <h4 class="modal-title text-primary-1">{{data ? 'Sửa thông tin Issue' : 'Thêm mới Issue'}}</h4>
   <button type="button" class="btn-close" aria-label="Close" (click)="closeModal(false)">
   </button>
 </div>
 <div class="modal-body">
-  <div class="text-primary-1 fw-bold mb-2">
-    Thông tin chấm công
+  <div class="text-primary-1 fw-bold">
+    Thông tin Issue
   </div>
-  <div class="d-flex flex-column gap-4">
+  <form [formGroup]="form" class="d-flex flex-column gap-4">
     <div class="row">
       <div class="col">
-        <div>
-          Ngày chấm công
-        </div>
-        <div>
-          <input type="text" disabled class="form-control">
+        <div>Code <span class="text-danger">*</span></div>
+        <input placeholder="Nhập code" type="text" class="form-control" formControlName="code" required>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('code')?.touched && form.get('code')?.invalid">
+          <div *ngIf="form.get('code')?.errors?.['required']">
+            Vui lòng nhập code
+          </div>
         </div>
       </div>
       <div class="col">
-        <div>
-          Username
-        </div>
-        <div>
-          <input type="text" disabled class="form-control" value="{{data.username}}">
+        <div>Tiêu đề <span class="text-danger">*</span></div>
+        <input placeholder="Nhập tiêu đề" type="text" class="form-control" formControlName="title" required>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('title')?.touched && form.get('title')?.invalid">
+          <div *ngIf="form.get('title')?.errors?.['required']">
+            Vui lòng nhập tiêu đề
+          </div>
         </div>
       </div>
     </div>
+
     <div class="row">
       <div class="col">
-        <div>
-          Ngày chấm công
-        </div>
-        <div>
-          <input type="text" disabled class="form-control">
+        <div>Url <span class="text-danger">*</span></div>
+        <input placeholder="Nhập Url" type="text" class="form-control" formControlName="url" required>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('url')?.touched && form.get('url')?.invalid">
+          <div *ngIf="form.get('url')?.errors?.['required']">
+            Vui lòng nhập url
+          </div>
         </div>
       </div>
+
       <div class="col">
-        <div>
-          Username
+        <div>Nhân sự</div>
+        <select formControlName="assignId" class="form-select">
+          <option value="">Chọn nhân sự</option>
+          <option *ngFor="let item of assignList" [value]="item.id">{{item.username}}</option>
+        </select>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('assignId')?.touched && form.get('assignId')?.invalid">
+          <div *ngIf="form.get('assignId')?.errors?.['required']">
+            Vui lòng chọn nhân sự
+          </div>
         </div>
-        <div>
-          <input type="text" disabled class="form-control">
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div>Ngày hết hạn</div>
+
+        <div class="input-group">
+          <input class="form-control" placeholder="Chọn ngày" name="dueDate" ngbDatepicker
+            #dueDatePicker="ngbDatepicker" formControlName="dueDate" [readonly]="true"
+            (click)="dueDatePicker.toggle()" />
+          <button class="btn btn-outline-secondary" type="button" (click)="dueDatePicker.toggle()">
+            <i class="fa-solid fa-calendar"></i>
+          </button>
+
+        </div>
+      </div>
+
+      <div class="col">
+        <div>Ngày hoàn thành</div>
+
+        <div class="input-group">
+          <input class="form-control" placeholder="Chọn ngày" name="resolveDate" ngbDatepicker
+            #resolveDatePicker="ngbDatepicker" formControlName="resolveDate" [readonly]="true"
+            (click)="resolveDatePicker.toggle()" />
+          <button class="btn btn-outline-secondary" type="button" (click)="resolveDatePicker.toggle()">
+            <i class="fa-solid fa-calendar"></i>
+          </button>
+
         </div>
       </div>
     </div>
+
     <div class="row">
       <div class="col">
-        <div>
-          Giờ vào
-        </div>
-        <div>
-          <input type="text" disabled class="form-control">
+        <div class="row">
+          <div class="col">
+            <div>Số giờ <span class="text-danger">*</span></div>
+            <input placeholder="Nhập số giờ" type="text" class="form-control" formControlName="estimate" required>
+            <div class="text-danger fw-light mt-1"
+              *ngIf="form.get('estimate')?.touched && form.get('estimate')?.invalid">
+              <div *ngIf="form.get('estimate')?.errors?.['required']">
+                Vui lòng nhập số giờ
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div>Loại <span class="text-danger">*</span></div>
+            <select formControlName="type" class="form-select">
+              <option value="">Chọn loại</option>
+              <option value="0">Loại 1</option>
+              <option value="1">Loại 2</option>
+            </select>
+            <div class="text-danger fw-light mt-1" *ngIf="form.get('type')?.touched && form.get('type')?.invalid">
+              <div *ngIf="form.get('type')?.errors?.['required']">
+                Vui lòng chọn loại
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
       <div class="col">
-        <div>
-          Giờ ra
-        </div>
-        <div>
-          <input type="text" disabled class="form-control">
+        <div class="row">
+          <div class="col">
+            <div>Độ ưu tiên <span class="text-danger">*</span></div>
+            <select formControlName="priority" class="form-select">
+              <option value="">Độ ưu tiên</option>
+              <option value="1">Thấp</option>
+              <option value="2">Trung bình</option>
+              <option value="3">Cao</option>
+            </select>
+            <div class="text-danger fw-light mt-1"
+              *ngIf="form.get('priority')?.touched && form.get('priority')?.invalid">
+              <div *ngIf="form.get('priority')?.errors?.['required']">
+                Vui lòng chọn độ ưu tiên
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div>Trạng thái <span class="text-danger">*</span></div>
+            <select formControlName="status" class="form-select">
+              <option value="">Chọn trạng thái</option>
+              <option value="0">Đã tạo</option>
+              <option value="1">Đã giao</option>
+              <option value="2">Đang xử lý</option>
+              <option value="3">Đã hoàn thành</option>
+              <option value="4">Đã đóng</option>
+            </select>
+            <div class="text-danger fw-light mt-1" *ngIf="form.get('status')?.touched && form.get('status')?.invalid">
+              <div *ngIf="form.get('status')?.errors?.['required']">
+                Vui lòng chọn trạng thái
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
     <div class="row">
       <div class="col">
-        <div>
-          Số phút vào muộn
-        </div>
-        <div>
-          <input type="text" disabled class="form-control">
-        </div>
-      </div>
-      <div class="col">
-        <div>
-          Số phút về sớm
-        </div>
-        <div>
-          <input type="text" disabled class="form-control">
-        </div>
+        <div>Ghi chú</div>
+        <input placeholder="Nhập ghi chú" type="text" class="form-control" formControlName="note">
       </div>
     </div>
+
     <div class="row">
       <div class="col">
-        <div>
-          Địa điểm chấm công
-        </div>
-        <div>
-          <input type="text" disabled class="form-control">
-        </div>
-      </div>
-      <div class="col">
-        <div>
-          IP
-        </div>
-        <div>
-          <input type="text" disabled class="form-control">
-        </div>
+        <div>Mô tả </div>
+        <textarea placeholder="Nhập mô tả" type="a" class="form-control" formControlName="description"></textarea>
       </div>
     </div>
-    <div class="row">
-      <div class="col">
-        <div>
-          Trạng thái
-        </div>
-        <div>
-          <input type="text" disabled class="form-control">
-        </div>
-      </div>
-    </div>
-  </div>
+  </form>
+</div>
+<div *ngIf="mode !== 'view'" class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="closeModal(false)">Hủy</button>
+  <button type="button" class="btn btn-primary-1" (click)="submitForm()">{{data ? 'Lưu thay đổi' : 'Thêm
+    Issue'}}</button>
 </div>
