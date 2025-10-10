@@ -57,6 +57,7 @@ import { ZaloOAComponent } from './Pages/zalo-oa/chat-oa/zalo-oa.component';
 import { UserRouteAccessService } from './user-route-access-service';
 import { MauTinComponent } from './Pages/zalo-oa/mau-tin/mau-tin.component';
 import { ChienDichComponent } from './Pages/zalo-oa/chien-dich/chien-dich.component';
+import { IssueComponent } from './Pages/quan-ly/issue/issue.component';
 
 const routes: Routes = [
   {
@@ -98,6 +99,11 @@ const routes: Routes = [
         path: "bang-cham-cong",
         component: BangChamCongComponent,
         data: { extraParameter: "workLog" },
+      },
+      {
+        path: "issue",
+        component: IssueComponent,
+        data: { extraParameter: "issue" },
       },
       {
         path: "xu-ly-cong-viec",

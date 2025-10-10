@@ -104,7 +104,7 @@ export class SidebarComponent implements OnInit {
         {
           header: "",
           key: "jobProcess",
-          path: "/xu-ly-cong-viec",
+          path: "/issue",
           parent: "job",
           name: "Xử lý công việc",
           icon: "",

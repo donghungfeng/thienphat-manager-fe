@@ -1,22 +1,19 @@
 import { Component } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ShareService } from "src/app/shared/service/shareService.service";
-import { ThongTinChamCongModal } from "./thong-tin-cham-cong/thong-tin-cham-cong.component";
-import { GiaiTrinhChamCongModal } from "./giai-trinh-cham-cong/giai-trinh-cham-cong.component";
-import { BaoCaoCongViecModal } from "./bao-cao-cong-viec/bao-cao-cong-viec.component";
+import { ThongTinIssueModal } from "./thong-tin-issue/thong-tin-issue.component";
 import { SpinnerService } from "src/app/shared/service/spinner.service";
 import { ToastService } from "src/app/shared/service/toast.service";
 import { HttpResponse } from "@angular/common/http";
-import { ApiServices } from "src/app/shared/service/api.services";
-import { WorkRequestServices } from "src/app/shared/service/request/phong-ban/work-request.service";
+import { IssueRequestServices } from "src/app/shared/service/request/phong-ban/issue-request.service";
 
 @Component({
-  selector: "bang-cham-cong",
-  templateUrl: "./bang-cham-cong.component.html",
-  styleUrls: ["bang-cham-cong.component.scss"],
+  selector: "issue",
+  templateUrl: "./issue.component.html",
+  styleUrls: ["issue.component.scss"],
   standalone: false,
 })
-export class BangChamCongComponent {
+export class IssueComponent {
   page = 1
   size = 10
   totalItems = 0
@@ -88,7 +85,7 @@ export class BangChamCongComponent {
     public svShare: ShareService,
     private spinner: SpinnerService,
     private toast: ToastService,
-    private apiService: WorkRequestServices,
+    private apiService: IssueRequestServices,
   ) {}
 
   ngOnInit(): void {
@@ -153,32 +150,14 @@ export class BangChamCongComponent {
   }
 
   
-  detailLogWorkModal(data = null) {
-    const modal = this.modalService.open(ThongTinChamCongModal, {
+  detailModal(data = null) {
+    const modal = this.modalService.open(ThongTinIssueModal, {
       centered: true,
       size: "xl",
       backdrop: "static",
       keyboard: false,
     });
     modal.componentInstance.data = data;
-    modal.result.then((result) => {});
-  }
-  explanationLogWorkModal(data = null) {
-    const modal = this.modalService.open(GiaiTrinhChamCongModal, {
-      centered: true,
-      size: "md",
-      backdrop: "static",
-      keyboard: false,
-    });
-    modal.result.then((result) => {});
-  }
-  reportLogWorkModal(data = null) {
-    const modal = this.modalService.open(BaoCaoCongViecModal, {
-      centered: true,
-      size: "md",
-      backdrop: "static",
-      keyboard: false,
-    });
     modal.result.then((result) => {});
   }
 }

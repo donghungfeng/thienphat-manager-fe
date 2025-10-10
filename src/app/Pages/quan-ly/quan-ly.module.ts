@@ -12,6 +12,8 @@ import { GiaiTrinhChamCongModal } from "./bang-cham-cong/giai-trinh-cham-cong/gi
 import { ThongTinChamCongModal } from "./bang-cham-cong/thong-tin-cham-cong/thong-tin-cham-cong.component";
 import { DoiMatKhauModal } from "./nhan-vien/doi-mat-khau/doi-mat-khau.component";
 import { PhanQuyenModal } from "./nhan-vien/phan-quyen/phan-quyen.component";
+import { ThongTinIssueModal } from "./issue/thong-tin-issue/thong-tin-issue.component";
+import { IssueComponent } from "./issue/issue.component";
 
 @NgModule({
   declarations: [
@@ -20,9 +22,11 @@ import { PhanQuyenModal } from "./nhan-vien/phan-quyen/phan-quyen.component";
     NhanVienComponent,
     ThemSuaNhanVienModal,
     BangChamCongComponent,
+    IssueComponent,
     BaoCaoCongViecModal,
     GiaiTrinhChamCongModal,
     ThongTinChamCongModal,
+    ThongTinIssueModal,
     DoiMatKhauModal,
     PhanQuyenModal,
   ],
@@ -33,9 +37,11 @@ import { PhanQuyenModal } from "./nhan-vien/phan-quyen/phan-quyen.component";
     NhanVienComponent,
     ThemSuaNhanVienModal,
     BangChamCongComponent,
+    IssueComponent,
     BaoCaoCongViecModal,
     GiaiTrinhChamCongModal,
     ThongTinChamCongModal,
+    ThongTinIssueModal,
     DoiMatKhauModal,
     PhanQuyenModal,
   ],
