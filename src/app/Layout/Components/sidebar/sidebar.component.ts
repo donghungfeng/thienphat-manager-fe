@@ -111,10 +111,10 @@ export class SidebarComponent implements OnInit {
         },
         {
           header: "",
-          key: "jobCustomer",
-          path: "/xu-ly-cong-viec-khach-hang",
-          parent: "job",
-          name: "Khách hàng",
+          key: "workLog",
+          path: "/bang-cham-cong",
+          parent: "managemant",
+          name: "Bảng chấm công",
           icon: "",
         },
       ],
@@ -142,15 +142,7 @@ export class SidebarComponent implements OnInit {
           parent: "managemant",
           name: "Nhân viên",
           icon: "",
-        },
-        {
-          header: "",
-          key: "workLog",
-          path: "/bang-cham-cong",
-          parent: "managemant",
-          name: "Bảng chấm công",
-          icon: "",
-        },
+        }
       ],
     },
     {
