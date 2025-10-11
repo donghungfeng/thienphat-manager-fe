@@ -155,12 +155,26 @@ export class ShareService {
   }
   getRoleByCode(role: any) {
     switch (role) {
-      case 'admin':
+      case "admin":
         return "Quản trị viên";
-      case 'user':
+      case "user":
         return "Người dùng";
       default:
         return "";
     }
+  }
+  getRoleByCodeEn(role: any) {
+    switch (role) {
+      case "admin":
+        return "Admin";
+      case "user":
+        return "User";
+      default:
+        return "";
+    }
+  }
+  truncateString(str: string, maxLength: number): string {
+    if (!str) return "";
+    return str.length > maxLength ? str.slice(0, maxLength) + "..." : str;
   }
 }

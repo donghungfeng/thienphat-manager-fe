@@ -140,7 +140,7 @@ export class ThemSuaMauTinComponent {
         title: this.form.value.header,
         status: this.form.value.status,
         note: this.form.value.notes,
-        description: "",
+        description: this.form.value.description,
       };
       this.spinner.show();
       if (!this.data) {
@@ -258,7 +258,7 @@ export class ThemSuaMauTinComponent {
         title: this.form.value.header,
         status: this.form.value.status,
         note: this.form.value.notes,
-        description: "",
+        description: this.form.value.description,
       };
       this.spinner.show();
       if (!this.data) {

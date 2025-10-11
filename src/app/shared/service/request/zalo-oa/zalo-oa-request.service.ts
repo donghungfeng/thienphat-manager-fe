@@ -153,4 +153,12 @@ export class ZaloOARequestServices {
       )
       .toPromise();
   }
+  renderTemplate(params: any) {
+    const headers = new HttpHeaders({
+      access_token: this.accessToken,
+      "Content-Type": "application/json",
+      "Authorization": 'Bearer ' + localStorage.getItem("token")
+    });
+    return this.http.get(environment.BASE_API + API_V1 + TEMPLATE_COMTROLLER + "/render?customerId=" + params.customerId + "&templateId=" + params.templateId, { headers }).toPromise();
+  }
 }
