@@ -17,12 +17,13 @@
     <table class="table table-striped overflow-x-auto " style="min-width: 2000px;">
       <thead>
         <tr>
+          <th scope="col" class="fw-lighter" style="width: 150px;">Thao tác</th>
           <th scope="col" *ngFor="let header of headers" class="fw-lighter" [style]="header.style">
             {{ header.name }}
           </th>
-          <th scope="col" class="fw-lighter" style="width: 150px;">Thao tác</th>
         </tr>
         <tr>
+          <th scope="col"></th>
           <th scope="col">
           </th>
           <th scope="col">
@@ -74,6 +75,13 @@
             </div>
           </th>
           <th scope="col">
+            <select class="form-select" [(ngModel)]="status" (ngModelChange)="getListDataByFilter()">
+              <option value="">Chọn quyền</option>
+              <option value="admin">Quản trị viên</option>
+              <option value="user">Người dùng</option>
+            </select>
+          </th>
+          <th scope="col">
             <div class="d-flex align-items-center">
               <div class="form-control-icon">
                 <img src="../../../../assets/images/icon/search-normal.png" alt="">
@@ -104,11 +112,18 @@
               <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
             </div>
           </th>
-          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
       <tr *ngFor="let item of listDatas; index as i" class="fw-light">
+        <td>
+          <div class="d-flex gap-2">
+            <img src="../../../../assets/images/icon/Eye.png" alt="" (click)="addEditEmployee(item, 'view')">
+            <img src="../../../../assets/images/icon/PencilSimpleLine.png" alt="" (click)="addEditEmployee(item, 'edit')">
+            <img src="../../../../assets/images/icon/key.png" alt="" (click)="changePassword(item)">
+            <img src="../../../../assets/images/icon/repeat.png" alt="" (click)="changeRole(item)">
+          </div>
+        </td>
         <td>{{ i + 1 }}</td>
         <td>
           {{item.username}}
@@ -118,6 +133,7 @@
         <td>{{ item.address }}</td>
         <td>{{ item.identityCardNumber }}</td>
         <td>{{ item.department.name }}</td>
+        <td>{{ svShare.getRoleByCode(item.role) }}</td>
         <td>{{ item.deviceName ? item.deviceName : '' }}</td>
         <td>{{ item.deviceCode ? item.deviceCode : '' }}</td>
         <td>
@@ -126,14 +142,6 @@
           </div>
         </td>
         <td>{{ '' }}</td>
-        <td>
-          <div class="d-flex gap-2">
-            <img src="../../../../assets/images/icon/Eye.png" alt="" (click)="addEditEmployee(item, 'view')">
-            <img src="../../../../assets/images/icon/PencilSimpleLine.png" alt="" (click)="addEditEmployee(item, 'edit')">
-            <img src="../../../../assets/images/icon/key.png" alt="" (click)="changePassword(item)">
-            <img src="../../../../assets/images/icon/repeat.png" alt="" (click)="changeRole(item)">
-          </div>
-        </td>
       </tr>
       </tbody>
     </table>

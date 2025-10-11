@@ -57,12 +57,12 @@
     <div class="row">
       <div class="col">
         <div>Zalo ID <span class="text-danger">*</span></div>
-        <input placeholder="Nhập Zalo ID" type="text" class="form-control" formControlName="userId" required>
-        <div class="text-danger fw-light mt-1" *ngIf="form.get('userId')?.touched && form.get('userId')?.invalid">
+        <input placeholder="Nhập Zalo ID" type="text" class="form-control" formControlName="userId">
+        <!-- <div class="text-danger fw-light mt-1" *ngIf="form.get('userId')?.touched && form.get('userId')?.invalid">
           <div *ngIf="form.get('userId')?.errors?.['required']">
             Vui lòng nhập Zalo ID
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="col">
         <div>Trạng thái</div>
@@ -81,7 +81,7 @@
     <div class="row">
       <div class="col-12">
         <div>Ghi chú</div>
-        <input placeholder="Ghi chú" type="text" class="form-control" formControlName="notes" required>
+        <input placeholder="Ghi chú" type="text" class="form-control" formControlName="notes">
       </div>
     </div>
   </form>

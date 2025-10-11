@@ -30,6 +30,46 @@
     </div>
     <div class="row">
       <div class="col">
+        <div>Kinh độ <span class="text-danger">*</span></div>
+        <input placeholder="Nhập kinh độ" type="text" class="form-control" formControlName="longtitude" required>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('longtitude')?.touched && form.get('longtitude')?.invalid">
+          <div *ngIf="form.get('longtitude')?.errors?.['required']">
+            Vui lòng nhập kinh độ
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div>Tên vĩ độ<span class="text-danger">*</span></div>
+        <input placeholder="Nhập vĩ độ" type="text" class="form-control" formControlName="latitude" required>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('latitude')?.touched && form.get('latitude')?.invalid">
+          <div *ngIf="form.get('latitude')?.errors?.['required']">
+            Vui lòng nhập vĩ độ
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div>Địa chỉ IP <span class="text-danger">*</span></div>
+        <input placeholder="Nhập tên địa chỉ IP" type="text" class="form-control" formControlName="ip" required>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('ip')?.touched && form.get('ip')?.invalid">
+          <div *ngIf="form.get('ip')?.errors?.['required']">
+            Vui lòng nhập địa chỉ IP
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div>Ngưỡng <span class="text-danger">*</span></div>
+        <input placeholder="Nhập ngưỡng" type="text" class="form-control" formControlName="threshold" required>
+        <div class="text-danger fw-light mt-1" *ngIf="form.get('threshold')?.touched && form.get('threshold')?.invalid">
+          <div *ngIf="form.get('threshold')?.errors?.['required']">
+            Vui lòng nhập ngưỡng
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
         <div>Trạng thái <span class="text-danger">*</span></div>
         <select formControlName="status" class="form-select">
           <option value="">Chọn trạng thái</option>

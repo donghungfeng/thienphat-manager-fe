@@ -42,6 +42,38 @@
             </div>
           </th>
           <th scope="col">
+            <div class="d-flex align-items-center">
+              <div class="form-control-icon">
+                <img src="../../../../assets/images/icon/search-normal.png" alt="">
+              </div>
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm" (keyup.enter)="handleFilter()" [(ngModel)]="longtitude">
+            </div>
+          </th>
+          <th scope="col">
+            <div class="d-flex align-items-center">
+              <div class="form-control-icon">
+                <img src="../../../../assets/images/icon/search-normal.png" alt="">
+              </div>
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm" (keyup.enter)="handleFilter()" [(ngModel)]="latitude">
+            </div>
+          </th>
+          <th scope="col">
+            <div class="d-flex align-items-center">
+              <div class="form-control-icon">
+                <img src="../../../../assets/images/icon/search-normal.png" alt="">
+              </div>
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm" (keyup.enter)="handleFilter()" [(ngModel)]="ip">
+            </div>
+          </th>
+          <th scope="col">
+            <div class="d-flex align-items-center">
+              <div class="form-control-icon">
+                <img src="../../../../assets/images/icon/search-normal.png" alt="">
+              </div>
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm" (keyup.enter)="handleFilter()" [(ngModel)]="threshold">
+            </div>
+          </th>
+          <th scope="col">
             <select class="form-select" [(ngModel)]="status" (ngModelChange)="getListDataByFilter()">
               <option value="">Chọn trạng thái</option>
               <option value="1">Hoạt động</option>
@@ -67,6 +99,18 @@
         </td>
         <td>
           {{item.factoryName ? item.factoryName : ''}}
+        </td>
+        <td>
+          {{item.longtitude ? item.longtitude : ''}}
+        </td>
+        <td>
+          {{item.latitude ? item.latitude : ''}}
+        </td>
+        <td>
+          {{item.ip ? item.ip : ''}}
+        </td>
+        <td>
+          {{item.threshold ? item.threshold : ''}}
         </td>
         <td>
           <div [class]="svShare.getColorStatusCommonByCode(item.isActive)" class="text-white text-center rounded py-1">

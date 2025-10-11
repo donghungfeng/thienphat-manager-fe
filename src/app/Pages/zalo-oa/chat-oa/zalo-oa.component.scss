@@ -73,3 +73,25 @@
   height: auto !important;
   display: inline-block;
 }
+
+.quote-notice {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 48px;
+  background: #F5FFF0;
+  z-index: 1;
+  bottom: 56px;
+  padding: 12px 12px;
+  color: #7D7C83;
+  font-size: 16px;
+  font-weight: 400;
+}
+.hide-quote {
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+.show-quote {
+  opacity: 1;
+  transition: opacity 0.1s ease-in-out;
+}

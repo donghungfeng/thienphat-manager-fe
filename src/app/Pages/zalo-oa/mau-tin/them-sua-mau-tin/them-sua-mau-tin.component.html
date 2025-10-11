@@ -11,7 +11,7 @@
       </div>
       <form [formGroup]="form" class="d-flex flex-column gap-4">
         <div class="row">
-          <!-- <div class="col">
+          <div class="col">
             <div>Tên mẫu tin <span class="text-danger">*</span></div>
             <input placeholder="Nhập tên mẫu tin" type="text" class="form-control" formControlName="name" required>
             <div class="text-danger fw-light mt-1" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
@@ -19,7 +19,7 @@
                 Vui lòng nhập tên mẫu tin
               </div>
             </div>
-          </div> -->
+          </div>
           <div class="col">
             <div>Loại mẫu tin <span class="text-danger">*</span></div>
             <select formControlName="template_type" class="form-select" (change)="onTemplateTypeChange($event)">
@@ -33,7 +33,7 @@
             </div>
           </div>
         </div>
-        <!-- <div class="row">
+        <div class="row">
           <div class="col">
             <div>Trạng thái <span class="text-danger">*</span></div>
             <select formControlName="status" class="form-select">
@@ -53,7 +53,7 @@
               <input placeholder="Ghi chú" type="text" class="form-control" formControlName="notes" required>
             </div>
           </div>
-        </div> -->
+        </div>
         <div class="text-primary-1 fw-bold">
           Nội dung mẫu tin
         </div>

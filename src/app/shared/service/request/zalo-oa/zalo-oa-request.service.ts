@@ -98,4 +98,59 @@ export class ZaloOARequestServices {
         );
     });
   }
+  create(payload: any) {
+    return new Promise((resolve: any, reject: any) => {
+      this.apiService
+        .postOption(API_V1 + TEMPLATE_COMTROLLER, payload, "/create")
+        .subscribe(
+          (res: HttpResponse<any>) => {
+            resolve(res);
+          },
+          (err) => {
+            reject(err);
+          }
+        );
+    });
+  }
+  update(payload: any) {
+    return new Promise((resolve: any, reject: any) => {
+      this.apiService
+        .put(API_V1 + TEMPLATE_COMTROLLER, payload, "/update")
+        .subscribe(
+          (res: HttpResponse<any>) => {
+            resolve(res);
+          },
+          (err) => {
+            reject(err);
+          }
+        );
+    });
+  }
+  delete(id: any) {
+    return new Promise((resolve: any, reject: any) => {
+      this.apiService
+        .delete(API_V1 + TEMPLATE_COMTROLLER + OPERATIONS.DELETE, id)
+        .subscribe(
+          (res: HttpResponse<any>) => {
+            resolve(res);
+          },
+          (err) => {
+            reject(err);
+          }
+        );
+    });
+  }
+  getQuota(payload: any) {
+    const headers = new HttpHeaders({
+      access_token: this.accessToken,
+      "Content-Type": "application/json",
+    });
+    return this.http
+      .post(
+        environment.ZALO_URL_API + ZALO_VER_03 + ZALO_OA + "/quota/message",
+        payload,
+        { headers }
+      )
+      .toPromise();
+  }
 }

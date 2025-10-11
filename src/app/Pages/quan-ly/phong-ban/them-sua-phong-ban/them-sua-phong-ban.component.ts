@@ -36,6 +36,22 @@ export class ThemSuaPhongBanModal implements OnInit {
         updateOn: 'change'
       }],
       note: [""],
+      latitude: ["", {
+        validators: [Validators.required],
+        updateOn: 'change'
+      }],
+      longtitude: ["", {
+        validators: [Validators.required],
+        updateOn: 'change'
+      }],
+      ip: ["", {
+        validators: [Validators.required],
+        updateOn: 'change'
+      }],
+      threshold: ["", {
+        validators: [Validators.required],
+        updateOn: 'change'
+      }],
     });
   }
   ngOnInit(): void {
@@ -44,7 +60,11 @@ export class ThemSuaPhongBanModal implements OnInit {
         name: this.data.name,
         factoryName: this.data.factoryName,
         status: this.data.status,
-        note: this.data.note
+        note: this.data.note,
+        latitude: this.data.latitude,
+        longtitude: this.data.longtitude,
+        ip: this.data.ip,
+        threshold: this.data.threshold,
       })
       if (this.mode === 'view') {
         this.form.disable()
@@ -65,12 +85,6 @@ export class ThemSuaPhongBanModal implements OnInit {
     const payload = {
       ...this.form.value,
       status: +this.form.value.status,
-      latitude: "string",
-      longtitude: "string",
-      factoryName: "string",
-      ntoe: "string",
-      ip: "string",
-      threshold: 0,
     };
     if (!this.data) {
       this.spinner.show()

@@ -10,6 +10,8 @@ import { NhanVienModel } from "src/app/shared/model/nhan-vien/nhan-vien.model";
 import { DeleteConfirmModal } from "src/app/Layout/Components/common/delete-cofirm-modal/delete-cofirm-modal.component";
 import { DoiMatKhauModal } from "./doi-mat-khau/doi-mat-khau.component";
 import { PhanQuyenModal } from "./phan-quyen/phan-quyen.component";
+import { DepartmentRequestServices } from "src/app/shared/service/request/phong-ban/phong-ban-request.service";
+import { PhongBanModel } from "src/app/shared/model/phong-ban/phong-ban.model";
 
 @Component({
   selector: "nhan-vien",
@@ -30,6 +32,8 @@ export class NhanVienComponent implements OnInit {
   department: any;
   deviceName: any;
   deviceCode: any;
+  role: any;
+  departmentList: PhongBanModel[] = [];
   headers: any[] = [
     {
       name: "ID",
@@ -59,7 +63,7 @@ export class NhanVienComponent implements OnInit {
       name: "Địa chỉ",
       key: "address",
       class: "",
-      style: "width: 350px",
+      style: "width: 150px; max-width: 200px",
     },
     {
       name: "CCCD",
@@ -69,6 +73,12 @@ export class NhanVienComponent implements OnInit {
     },
     {
       name: "Phòng ban",
+      key: "phone",
+      class: "",
+      style: "width: 150px; max-width: 200px",
+    },
+    {
+      name: "Quyền",
       key: "phone",
       class: "",
       style: "width: 150px; max-width: 200px",
@@ -104,7 +114,8 @@ export class NhanVienComponent implements OnInit {
     private spinner: SpinnerService,
     private toast: ToastService,
     private apiUser: AuthRequestServices,
-    public svShare: ShareService
+    public svShare: ShareService,
+    private apiDeartment: DepartmentRequestServices
   ) {}
   ngOnInit(): void {
     this.getListDataByFilter();
@@ -170,6 +181,9 @@ export class NhanVienComponent implements OnInit {
       if (this.department) {
         filter.push(`department.name==*${this.department}*`);
       }
+      if (this.role) {
+        filter.push(`role==${this.role}`);
+      }
       return filter.join(";");
     };
     const params = {
@@ -208,6 +222,11 @@ export class NhanVienComponent implements OnInit {
     this.phone = "";
     this.page = 1;
     this.address = "";
+    this.identityCardNumber = "";
+    this.department = "";
+    this.deviceName = "";
+    this.deviceCode = "";
+    this.role = "";
     this.getListDataByFilter();
   }
   deleleItem(id: any) {
@@ -252,5 +271,14 @@ export class NhanVienComponent implements OnInit {
       keyboard: false,
     });
     modal.componentInstance.data = data;
+  }
+  getAllDepartment() {
+    this.apiDeartment.getAll().then((res: any) => {
+      if (res && res.body && res.body.code === 200) {
+        this.departmentList = res.body.result;
+      } else {
+        this.departmentList = [];
+      }
+    });
   }
 }

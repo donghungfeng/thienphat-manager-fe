@@ -46,24 +46,45 @@ export const ROLE = {
 
 export const TYPE_TEMPLATE_LIST = [
   {
+    type: 1,
     code: "text",
-    name: "Văn bản"
+    name: "Tin tư vấn"
   },
   {
+    type: 2,
     code: "transaction_order",
     name: "Tin giao dịch",
   },
   {
+    type: 3,
     code: "promotion",
     name: "Tin truyền thông",
   }
 ]
-
+export const TYPE_TEMPLATE_LIST_INT = [
+  {
+    code: 1,
+    name: "Tin tư vấn",
+  },
+  {
+    code: 2,
+    name: "Tin giao dịch",
+  },
+  {
+    code: 3,
+    name: "Tin truyền thông",
+  },
+];
 export const TYPE_TEMPLATE = {
   TEXT: "text",
   TRANSACTION_ORDER: "transaction_order",
   PROMOTION: "promotion"
 }
+export const TYPE_TEMPLATE_INT = {
+  TEXT: 1,
+  TRANSACTION_ORDER: 2,
+  PROMOTION: 3,
+};
 
 export const API_V1 = "api/v1/"
 export const ZALO_VER = "v2.0/"
