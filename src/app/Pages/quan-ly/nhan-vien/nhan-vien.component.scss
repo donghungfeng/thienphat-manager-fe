@@ -1,3 +1,9 @@
 .container-scroll {
   max-height: calc(100vh - 267px);
 }
+.truncate {
+  width: 280px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -45,13 +45,13 @@ export class NhanVienComponent implements OnInit {
       name: "Username",
       key: "userName",
       class: "",
-      style: "width: 350px",
+      style: "width: 150px; max-width: 200px",
     },
     {
       name: "Tên nhân viên",
       key: "taxNumber",
       class: "",
-      style: "width: 150px; max-width: 200px",
+      style: "width: 280px",
     },
     {
       name: "Số điện thoại",
@@ -229,14 +229,14 @@ export class NhanVienComponent implements OnInit {
     this.role = "";
     this.getListDataByFilter();
   }
-  deleleItem(id: any) {
+  deleleItem(item: any) {
     const modal: NgbModalRef = this.modalService.open(DeleteConfirmModal);
 
     modal.result.then((result) => {
       if (result) {
         this.spinner.show();
         this.apiUser
-          .delete(id)
+          .delete(item.id)
           .then((res: HttpResponse<any>) => {
             if (res.body.code === 200) {
               this.toast.success("Xóa bản ghi thành công");

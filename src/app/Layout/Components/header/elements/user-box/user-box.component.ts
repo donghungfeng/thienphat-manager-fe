@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ThemeOptions} from '../../../../../theme-options';
 import { AuthRequestServices } from 'src/app/shared/service/request/auth/auth-request.service';
 import { ShareService } from 'src/app/shared/service/shareService.service';
+import { DoiMatKhauModal } from 'src/app/Pages/quan-ly/nhan-vien/doi-mat-khau/doi-mat-khau.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: "app-user-box",
@@ -13,9 +15,9 @@ export class UserBoxComponent implements OnInit {
   constructor(
     public globals: ThemeOptions,
     private apiUser: AuthRequestServices,
-    public svShare: ShareService
-  ) {
-  }
+    public svShare: ShareService,
+    private modalService: NgbModal
+  ) {}
 
   ngOnInit() {
     const user = JSON.parse(localStorage.getItem("infoUser") || "{}");
@@ -23,19 +25,33 @@ export class UserBoxComponent implements OnInit {
     if (userId) {
       this.getDetailUser(userId);
     }
-   }
+  }
   getDetailUser(userId) {
-    this.apiUser.detail(userId).then((res: any) => {
-      if (res && res.body && res.body.code === 200) {
-        this.infoUser = {
-          ...res.body.result,
-          avatar: res.body.result.avatar ? 'data:image/jpeg;base64,' + res.body.result.avatar : '../../../../assets/images/user/user.png'
+    this.apiUser
+      .detail(userId)
+      .then((res: any) => {
+        if (res && res.body && res.body.code === 200) {
+          this.infoUser = {
+            ...res.body.result,
+            avatar: res.body.result.avatar
+              ? "data:image/jpeg;base64," + res.body.result.avatar
+              : "../../../../assets/images/user/user.png",
+          };
+        } else {
+          this.infoUser = null;
         }
-      } else {
+      })
+      .catch(() => {
         this.infoUser = null;
-      }
-    }).catch(() => {
-      this.infoUser = null;
+      });
+  }
+  changePassword() {
+    const modal = this.modalService.open(DoiMatKhauModal, {
+      centered: true,
+      size: "md",
+      backdrop: "static",
+      keyboard: false,
     });
+    modal.componentInstance.data = this.infoUser;
   }
 }
