@@ -102,17 +102,17 @@
         <div class="h-100">
           <div class="d-flex flex-column gap-2 overflow-auto" style="max-height: calc(100vh - 340px);">
             <div *ngFor="let template of listTemplate" class="card card-hover">
-              <div class="card-body">
+              <div class="card-body" (click)="openTemplateView(template)">
                 <div>
                   <div class="fw-bold">
-                    {{template.templateName}}
+                    {{template.title}}
                   </div>
                   <div class="fw-light text-secondary" style="font-size: 14px;">
-                    {{template.templateTypeName}}
+                    {{svShare.getTemplateTypeNameByCode(template.type)}}
                   </div>
                 </div>
                 <hr />
-                <div class="fw-light text-secondary" style="font-size: 14px;" [innerHTML]="template.content">
+                <div class="fw-light text-secondary" style="font-size: 14px;" [innerHTML]="template.description">
                 </div>
               </div>
             </div>

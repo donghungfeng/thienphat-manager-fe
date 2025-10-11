@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpResponse } from "@angular/common/http";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
@@ -9,7 +9,9 @@ import { CustomerRequestServices } from "src/app/shared/service/request/khach-ha
 import { ZaloOARequestServices } from "src/app/shared/service/request/zalo-oa/zalo-oa-request.service";
 import { ShareService } from "src/app/shared/service/shareService.service";
 import { SpinnerService } from "src/app/shared/service/spinner.service";
+import { ToastService } from "src/app/shared/service/toast.service";
 import { ApiZaloOAServices } from "src/app/shared/service/zalo-api.services";
+import { TemplateViewModal } from "./template-view/template-view.component";
 
 @Component({
   selector: "zalo-oa",
@@ -65,7 +67,8 @@ export class ZaloOAComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private modalService: NgbModal,
     private apiCustomer: CustomerRequestServices,
-    private spinner: SpinnerService
+    private spinner: SpinnerService,
+    private toast: ToastService,
   ) {
     this.route.queryParams.subscribe((param: any) => {
       if (param && param.id) {
@@ -74,6 +77,7 @@ export class ZaloOAComponent implements OnInit, OnDestroy {
     });
   }
   ngOnInit(): void {
+    this.getListTemplate()
     if (this.customerId) {
       this.getDetailCustomer();
     }
@@ -206,13 +210,60 @@ export class ZaloOAComponent implements OnInit, OnDestroy {
     });
   }
   getStringQuote() {
-    let str = ""
+    let str = "";
     if (this.zaloQuota.promotion.daily_remain) {
       str += `Bạn còn ${this.zaloQuota.promotion.daily_remain} số lượt gửi tin truyền thông còn lại trong ngày. `;
     }
     if (this.zaloQuota.promotion.monthly_remain) {
       str += `Bạn còn ${this.zaloQuota.promotion.monthly_remain} số lượt gửi tin truyền thông còn lại trong tháng này.`;
     }
-    return str
+    return str;
+  }
+  getListTemplate() {
+    const filterString = () => {
+      let filter = [];
+      filter.push("id>0");
+      return filter.join(";");
+    };
+    const params = {
+      page: 0,
+      size: 10,
+      filter: filterString(),
+      sort: ["id", "desc"],
+    };
+    this.spinner.show();
+    this.apiZalo
+      .search(params)
+      .then((res: HttpResponse<any>) => {
+        if (res.body.code === 200) {
+          this.listTemplate = res.body.result.content;
+          // this.totalItems = res.body.result.totalElements;
+        } else {
+          // this.listDatas = [];
+          // this.totalItems = 0;
+        }
+      })
+      .catch(() => {
+        this.toast.error("Có lỗi trong khi tải dữ liệu");
+      })
+      .finally(() => {
+        this.spinner.hide();
+      });
+  }
+  openTemplateView(template: any) {
+    const modal = this.modalService.open(TemplateViewModal, {
+      centered: true,
+      size: "lg",
+      backdrop: "static",
+      keyboard: false,
+    });
+    modal.componentInstance.data = template;
+    modal.componentInstance.customerId = this.customerId;
+    modal.componentInstance.userId = this.zaloUserId;
+    modal.result.then((rs: any) => {
+      if (rs) {
+        this.getConversation(this.zaloUserId)
+      }
+    })
   }
 }
