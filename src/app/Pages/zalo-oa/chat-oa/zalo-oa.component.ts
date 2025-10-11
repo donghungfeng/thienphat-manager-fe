@@ -1,10 +1,14 @@
 import { HttpClient } from "@angular/common/http";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ViewImageModal } from "src/app/Layout/Components/common/view-image/view-image.component";
+import { KhachHangModel } from "src/app/shared/model/khach-hang/khach-hang.model";
+import { ZaloOaQuoteModel } from "src/app/shared/model/zalo-oa/zalo-oa.model";
+import { CustomerRequestServices } from "src/app/shared/service/request/khach-hang/khach-hang-request.service";
 import { ZaloOARequestServices } from "src/app/shared/service/request/zalo-oa/zalo-oa-request.service";
 import { ShareService } from "src/app/shared/service/shareService.service";
+import { SpinnerService } from "src/app/shared/service/spinner.service";
 import { ApiZaloOAServices } from "src/app/shared/service/zalo-api.services";
 
 @Component({
@@ -13,7 +17,7 @@ import { ApiZaloOAServices } from "src/app/shared/service/zalo-api.services";
   styleUrls: ["zalo-oa.component.scss"],
   standalone: false,
 })
-export class ZaloOAComponent implements OnInit {
+export class ZaloOAComponent implements OnInit, OnDestroy {
   listTemplate: any[] = [
     {
       templateName: "Mẫu 1",
@@ -48,12 +52,20 @@ export class ZaloOAComponent implements OnInit {
   ];
   messengerList: any[] = [];
   customerId: any;
+  customerDetail: KhachHangModel | null = null;
+  zaloUserId: any;
+  message: any;
+  zaloQuota: ZaloOaQuoteModel = new ZaloOaQuoteModel();
+  isShowQuote = false;
+  intervalId: any;
   private http: HttpClient;
   constructor(
     public svShare: ShareService,
     private apiZalo: ZaloOARequestServices,
     private route: ActivatedRoute,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private apiCustomer: CustomerRequestServices,
+    private spinner: SpinnerService
   ) {
     this.route.queryParams.subscribe((param: any) => {
       if (param && param.id) {
@@ -63,21 +75,32 @@ export class ZaloOAComponent implements OnInit {
   }
   ngOnInit(): void {
     if (this.customerId) {
-      this.getConversation();
+      this.getDetailCustomer();
     }
   }
-  getConversation() {
+  ngOnDestroy(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
+  getConversation(userId) {
     const params = {
-      // user_id: this.customerId,
-      user_id: "8981838908298308976",
+      user_id: userId,
+      // user_id: "8981838908298308976",
       offset: 0,
       count: 10,
     };
-    this.apiZalo.getConversation(params.user_id).then((res: any) => {
-      if (res && res.data && res.data.length) {
-        this.messengerList = this.convertZaloToMessengerList(res);
-      }
-    });
+    this.apiZalo
+      .getConversation(params.user_id)
+      .then((res: any) => {
+        if (res && res.data && res.data.length) {
+          this.messengerList = this.convertZaloToMessengerList(res);
+          // setTimeout(() => {
+          //   this.getConversation(userId);
+          // }, 1500)
+        }
+      })
+      .catch((err) => {});
   }
   convertZaloToMessengerList(zaloData: any): any[] {
     if (!zaloData || !Array.isArray(zaloData.data)) return [];
@@ -124,5 +147,72 @@ export class ZaloOAComponent implements OnInit {
       windowClass: "modal-auto-size",
     });
     modal.componentInstance.src = src;
+  }
+  getDetailCustomer() {
+    this.spinner.show();
+    if (this.customerId) {
+      this.apiCustomer
+        .detail(this.customerId)
+        .then((res: any) => {
+          if (res && res.body && res.body.code === 200) {
+            this.customerDetail = res.body.result;
+            this.zaloUserId = this.customerDetail.userId;
+            this.intervalId = setInterval(() => {
+              this.getConversation(this.zaloUserId);
+            }, 5000);
+            this.getQuota();
+          } else {
+            this.customerDetail = null;
+          }
+        })
+        .finally(() => {
+          this.spinner.hide();
+        });
+    }
+  }
+  sendMessageText() {
+    const payload = {
+      recipient: {
+        user_id: this.zaloUserId,
+      },
+      message: {
+        text: this.message,
+      },
+    };
+    this.apiZalo.messageText(payload).then((res: any) => {
+      if (res && res.message && res.message === "Success") {
+        this.message = null;
+        this.getConversation(this.zaloUserId);
+      }
+    });
+  }
+  getQuota() {
+    const payload = {
+      user_id: this.zaloUserId,
+    };
+    this.apiZalo.getQuota(payload).then((res: any) => {
+      if (res && res.message && res.message === "Success") {
+        this.zaloQuota = res.data;
+        if (
+          this.zaloQuota &&
+          (this.zaloQuota.promotion.daily_remain ||
+            this.zaloQuota.promotion.daily_total ||
+            this.zaloQuota.promotion.monthly_remain ||
+            this.zaloQuota.promotion.monthly_total)
+        ) {
+          this.isShowQuote = true;
+        }
+      }
+    });
+  }
+  getStringQuote() {
+    let str = ""
+    if (this.zaloQuota.promotion.daily_remain) {
+      str += `Bạn còn ${this.zaloQuota.promotion.daily_remain} số lượt gửi tin truyền thông còn lại trong ngày. `;
+    }
+    if (this.zaloQuota.promotion.monthly_remain) {
+      str += `Bạn còn ${this.zaloQuota.promotion.monthly_remain} số lượt gửi tin truyền thông còn lại trong tháng này.`;
+    }
+    return str
   }
 }

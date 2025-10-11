@@ -140,4 +140,17 @@ export class ZaloOARequestServices {
         );
     });
   }
+  getQuota(payload: any) {
+    const headers = new HttpHeaders({
+      access_token: this.accessToken,
+      "Content-Type": "application/json",
+    });
+    return this.http
+      .post(
+        environment.ZALO_URL_API + ZALO_VER_03 + ZALO_OA + "/quota/message",
+        payload,
+        { headers }
+      )
+      .toPromise();
+  }
 }

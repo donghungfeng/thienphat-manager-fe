@@ -15,14 +15,18 @@ import { ShareService } from "src/app/shared/service/shareService.service";
   styleUrls: ["phong-ban.component.scss"],
   standalone: false,
 })
-export class PhongBanComponent implements OnInit{
-  page = 1
-  size = 10
-  totalItems = 0
-  name: any
-  factoryName: any
-  status: any
-  note: any
+export class PhongBanComponent implements OnInit {
+  page = 1;
+  size = 10;
+  totalItems = 0;
+  name: any;
+  factoryName: any;
+  status: any;
+  note: any;
+  longtitude: any;
+  latitude: any;
+  ip: any;
+  threshold: any;
   headers: any[] = [
     {
       name: "ID",
@@ -43,6 +47,30 @@ export class PhongBanComponent implements OnInit{
       style: "width: 150px; max-width: 200px",
     },
     {
+      name: "Kinh độ",
+      key: "taxNumber",
+      class: "",
+      style: "width: 150px; max-width: 200px",
+    },
+    {
+      name: "Vĩ độ",
+      key: "taxNumber",
+      class: "",
+      style: "width: 150px; max-width: 200px",
+    },
+    {
+      name: "Địa chỉ IP",
+      key: "taxNumber",
+      class: "",
+      style: "width: 150px; max-width: 200px",
+    },
+    {
+      name: "Ngưỡng",
+      key: "taxNumber",
+      class: "",
+      style: "width: 150px; max-width: 200px",
+    },
+    {
       name: "Trạng thái",
       key: "phone",
       class: "",
@@ -52,22 +80,21 @@ export class PhongBanComponent implements OnInit{
       name: "Ghi chú",
       key: "address",
       class: "",
-      style: "width: 350px",
+      style: "width: 150px; max-width: 200px",
     },
   ];
-  listDatas: PhongBanModel[] = [
-  ];
+  listDatas: PhongBanModel[] = [];
   constructor(
     private modalService: NgbModal,
     private spinner: SpinnerService,
     private toast: ToastService,
     private apiDepartment: DepartmentRequestServices,
     public svShare: ShareService
-  ) { }
+  ) {}
   ngOnInit(): void {
-    this.getListDataByFilter()
+    this.getListDataByFilter();
   }
-  addEditDepartment(data = null, mode = 'add') {
+  addEditDepartment(data = null, mode = "add") {
     if (!data) {
       const modal = this.modalService.open(ThemSuaPhongBanModal, {
         centered: true,
@@ -78,10 +105,10 @@ export class PhongBanComponent implements OnInit{
       modal.componentInstance.mode = mode;
       modal.result.then((result) => {
         if (result) {
-          this.page = 1
+          this.page = 1;
           this.getListDataByFilter();
         }
-      })
+      });
     } else {
       const modal = this.modalService.open(ThemSuaPhongBanModal, {
         centered: true,
@@ -89,19 +116,19 @@ export class PhongBanComponent implements OnInit{
         backdrop: "static",
         keyboard: false,
       });
-      modal.componentInstance.data = data
-      modal.componentInstance.mode = mode
+      modal.componentInstance.data = data;
+      modal.componentInstance.mode = mode;
       modal.result.then((result) => {
         if (result) {
-          this.getListDataByFilter()
+          this.getListDataByFilter();
         }
-      })
+      });
     }
   }
   getListDataByFilter() {
     const filterString = () => {
-      let filter = []
-      filter.push("id>0")
+      let filter = [];
+      filter.push("id>0");
       if (this.name) {
         filter.push(`name==*${this.name}*`);
       }
@@ -114,59 +141,75 @@ export class PhongBanComponent implements OnInit{
       if (this.status) {
         filter.push(`status==${this.status}`);
       }
-      return filter.join(";")
-    }
+      if (this.latitude) {
+        filter.push(`latitude==*${this.latitude}*`);
+      }
+      if (this.longtitude) {
+        filter.push(`longtitude==*${this.longtitude}*`);
+      }
+      if (this.ip) {
+        filter.push(`ip==*${this.ip}*`);
+      }
+      if (this.threshold) {
+        filter.push(`threshold==*${this.threshold}*`);
+      }
+      return filter.join(";");
+    };
     const params = {
       page: this.page - 1,
       size: this.size,
       filter: filterString(),
       sort: ["id", "desc"],
     };
-    this.spinner.show()
-    this.apiDepartment.search(params).then((res: HttpResponse<any>) => {
-      if (res.body.code === 200) {
-        this.listDatas = res.body.result.content
-        this.totalItems = res.body.result.totalElements
-      } else {
-        this.listDatas = [];
-        this.totalItems = 0
-      }
-    })
-    .catch(() => {
-      this.toast.error('Có lỗi trong khi tải dữ liệu')
-    })
-    .finally(() => {
-      this.spinner.hide()
-    })
+    this.spinner.show();
+    this.apiDepartment
+      .search(params)
+      .then((res: HttpResponse<any>) => {
+        if (res.body.code === 200) {
+          this.listDatas = res.body.result.content;
+          this.totalItems = res.body.result.totalElements;
+        } else {
+          this.listDatas = [];
+          this.totalItems = 0;
+        }
+      })
+      .catch(() => {
+        this.toast.error("Có lỗi trong khi tải dữ liệu");
+      })
+      .finally(() => {
+        this.spinner.hide();
+      });
   }
   handleFilter() {
-    this.page = 1
-    this.getListDataByFilter()
+    this.page = 1;
+    this.getListDataByFilter();
   }
   resetData() {
-    this.getListDataByFilter()
+    this.getListDataByFilter();
   }
   deleleItem(id: any) {
-    const modal: NgbModalRef = this.modalService.open(DeleteConfirmModal)
+    const modal: NgbModalRef = this.modalService.open(DeleteConfirmModal);
 
     modal.result.then((result) => {
       if (result) {
-        this.spinner.show()
-        this.apiDepartment.delete(id).then((res: HttpResponse<any>) => {
-          if (res.body.code === 200) {
-            this.toast.success('Xóa bản ghi thành công')
-            this.getListDataByFilter()
-          }
-        })
-        .catch(err => {
-          this.toast.error(err.error.message)  
-        })
-        .finally(() => this.spinner.hide())
+        this.spinner.show();
+        this.apiDepartment
+          .delete(id)
+          .then((res: HttpResponse<any>) => {
+            if (res.body.code === 200) {
+              this.toast.success("Xóa bản ghi thành công");
+              this.getListDataByFilter();
+            }
+          })
+          .catch((err) => {
+            this.toast.error(err.error.message);
+          })
+          .finally(() => this.spinner.hide());
       }
     });
   }
   changePage(event: any) {
-    this.page = event
-    this.getListDataByFilter()
+    this.page = event;
+    this.getListDataByFilter();
   }
 }

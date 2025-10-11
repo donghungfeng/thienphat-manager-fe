@@ -79,7 +79,7 @@
       <tr *ngFor="let item of listDatas; index as i" class="fw-light">
         <td>{{ i + 1 }}</td>
         <td>
-          {{item.name}}
+          {{item.name ? item.name : item.userAlias}}
         </td>
         <td>{{ item.phone }}</td>
         <td>{{ item.company ? item.company.name : '' }}</td>
@@ -95,7 +95,7 @@
             <img src="../../../../assets/images/icon/Eye.png" alt="" style="cursor: pointer;" (click)="addEditCustomer(item, 'view')">
             <img src="../../../../assets/images/icon/PencilSimpleLine.png" alt="" style="cursor: pointer;" (click)="addEditCustomer(item, 'edit')">
             <img src="../../../../assets/images/icon/Trash.png" alt="" style="cursor: pointer;" (click)="deleleItem(item.id)">
-            <img src="../../../../assets/images/icon/chat.png" alt="" style="cursor: pointer;" (click)="redirectZaloOa(item.userId)">
+            <img src="../../../../assets/images/icon/chat.png" alt="" style="cursor: pointer;" (click)="redirectZaloOa(item.id)">
           </div>
         </td>
       </tr>

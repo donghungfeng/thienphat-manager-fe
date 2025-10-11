@@ -147,4 +147,14 @@ export class ShareService {
         return "Tin tư vấn";
     }
   }
+  getRoleByCode(role: any) {
+    switch (role) {
+      case 'admin':
+        return "Quản trị viên";
+      case 'user':
+        return "Người dùng";
+      default:
+        return "";
+    }
+  }
 }

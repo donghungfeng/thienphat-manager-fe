@@ -54,10 +54,6 @@ export class ThemSuaKhachHangModal implements OnInit {
       ],
       userId: [
         "",
-        {
-          validators: [Validators.required],
-          updateOn: "change",
-        },
       ],
       status: [
         "",
