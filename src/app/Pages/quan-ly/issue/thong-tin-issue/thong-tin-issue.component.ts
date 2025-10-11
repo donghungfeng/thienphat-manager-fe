@@ -8,6 +8,7 @@ import { IssueRequestServices } from "src/app/shared/service/request/phong-ban/i
 import { SpinnerService } from "src/app/shared/service/spinner.service";
 import { ToastService } from "src/app/shared/service/toast.service";
 import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
+import { ShareService } from "src/app/shared/service/shareService.service";
 
 @Component({
   selector: "thong-tin-issue",
@@ -27,7 +28,8 @@ export class ThongTinIssueModal implements OnInit {
     private toast: ToastService,
     private apiAssign: AuthRequestServices,
     private apiIssue: IssueRequestServices,
-    private spinner: SpinnerService
+    private spinner: SpinnerService,
+    public svShare: ShareService,
   ) {
     this.form = this.fb.group({
       code: ["", Validators.required],

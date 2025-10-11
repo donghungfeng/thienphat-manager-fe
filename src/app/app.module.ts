@@ -13,6 +13,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {CommonModule} from '@angular/common';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AppComponent} from './app.component';
+import { provideDaterangepickerLocale } from 'ngx-daterangepicker-bootstrap';
 
 // BOOTSTRAP COMPONENTS
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -63,6 +64,7 @@ import { ToastModule } from './Layout/Components/common/toast/toast.module';
 import { SpinnerModule } from './Layout/Components/common/spinner/spinner.module';
 import { DeleteConfirmModalModule } from './Layout/Components/common/delete-cofirm-modal/delete-cofirm-modal.module';
 import { ViewImageModalModule } from './Layout/Components/common/view-image/view-image.component.module';
+import { ConfirmModalModule } from './Layout/Components/common/cofirm-modal/cofirm-modal.module';
 
 @NgModule({
   declarations: [
@@ -126,6 +128,7 @@ import { ViewImageModalModule } from './Layout/Components/common/view-image/view
     ToastModule,
     SpinnerModule,
     DeleteConfirmModalModule,
+    ConfirmModalModule,
     ViewImageModalModule
   ],
   providers: [
@@ -133,6 +136,10 @@ import { ViewImageModalModule } from './Layout/Components/common/view-image/view
     ThemeOptions,
     provideCharts(withDefaultRegisterables()),
     { provide: HTTP_INTERCEPTORS, useClass: HeadersInterceptor, multi: true },
+    provideDaterangepickerLocale({
+      separator: ' - ',
+      applyLabel: 'Okay',
+    }),
   ],
   bootstrap: [AppComponent],
 })

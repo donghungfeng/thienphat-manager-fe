@@ -1,15 +1,45 @@
 <div class="bg-white p-4 d-flex flex-column container-body">
   <div class="d-flex justify-content-between align-items-center gap-2 mb-4">
     <div class="d-flex gap-2 align-items-center">
-      <button class="btn btn-primary-1" (click)="reportLogWorkModal()">
+      <!-- <button class="btn btn-primary-1" (click)="reportLogWorkModal()">
         Báo cáo công việc
-      </button>
-      <button class="btn btn-warning text-white" (click)="explanationLogWorkModal()">
-        Giải trình
+      </button> -->
+      <button class="btn btn-success text-white" (click)="approveReason()" [disabled] ="!(this.selectedEntity.id > 0 && this.selectedEntity.status == 3)">
+        Xác nhận giải trình
       </button>
     </div>
+     <div class="d-flex gap-2 align-items-center">
+      Ngày:
+      <input
+        type="text"
+        id="rangeCalendarAutoLeft"
+        class="form-control"
+        style="box-shadow: none; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"
+        readonly
+        ngxDaterangepickerBootstrap
+        [(ngModel)]="selectedRangeDate"
+        drops="down"
+        opens="left"
+        [locale]="locale"
+        [ranges]="ranges"
+        [showCustomRangeLabel]="true"
+        [showCancel]="true"
+        [linkedCalendars]="true"
+        [alwaysShowCalendars]="false"
+        [showRangeLabelOnInput]="false"
+        [keepCalendarOpeningWithRange]="false"
+        [closeOnAutoApply]="true"
+        [autoApply]="true"
+        [isTooltipDate]="isTooltipDate"
+        [isCustomDate]="isCustomDate"
+        [isInvalidDate]="isInvalidDate"
+        (datesUpdated)="datesUpdatedRange($event)"
+        aria-describedby="rangeCalendarAutoLeftDesc"
+      />
+     </div>
+    
     <div class="d-flex align-items-center gap-2">
-      <button class="btn btn-outline-secondary">
+      <!-- <button class="btn btn-outline-secondary">
         <i class="fa-solid fa-sliders"></i>
         Bộ lọc
       </button>
@@ -18,7 +48,7 @@
           <img src="../../../../assets/images/icon/search-normal.png" alt="">
         </div>
         <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
-      </div>
+      </div> -->
     </div>
   </div>
   <div class="card card-body d-flex flex-column flex-grow-1 mb-4 overflow-y-auto container-scroll horizontal-scroll-first-column">
@@ -28,18 +58,11 @@
           <th scope="col" *ngFor="let header of headers" class="fw-lighter" [style]="header.style">
             {{ header.name }}
           </th>
-          <th scope="col" class="fw-lighter" style="width: 150px;">Thao tác</th>
         </tr>
         <tr>
           <th scope="col">
           </th>
           <th scope="col">
-            <div class="d-flex align-items-center">
-              <div class="form-control-icon">
-                <img src="../../../../assets/images/icon/search-normal.png" alt="">
-              </div>
-              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm" (keyup.enter)="handleFilter()" [(ngModel)]="date">
-            </div>
           </th>
           <th scope="col">
             <div class="d-flex align-items-center">
@@ -85,11 +108,11 @@
               <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
             </div>
           </th>
-          <th scope="col"></th>
+          
         </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let item of listDatas; index as i" class="fw-light" (dblclick)="detailLogWorkModal(item)">
+      <tr *ngFor="let item of listDatas; index as i" (dblclick)="detailLogWorkModal(item)" (click)="selectRow(item)" [ngClass]="selectedEntity.id === item.id ? 'table-primary' : 'fw-light'">
         <td style="user-select: none;">{{ i + 1 }}</td>
         <td style="user-select: none;">{{ item.date }}</td>
         <td style="user-select: none;">{{ item.username }}</td>
@@ -104,14 +127,11 @@
             {{svShare.getStatusLogWorkNamByCode(item.status)}}
           </div>
         </td>
-        <td>
-          <div class="d-flex gap-2">
-            <img src="../../../../assets/images/icon/Eye.png" alt="">
-          </div>
-        </td>
+      
       </tr>
       </tbody>
     </table>
+
   </div>
   <div class="d-flex justify-content-end">
     <ngb-pagination class="d-flex justify-content-start" [collectionSize]="totalItems" [page]="page" (pageChange)="changePage($event)"></ngb-pagination>

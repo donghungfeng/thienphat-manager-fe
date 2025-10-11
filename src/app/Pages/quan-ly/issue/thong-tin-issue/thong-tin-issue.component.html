@@ -4,14 +4,11 @@
   </button>
 </div>
 <div class="modal-body">
-  <div class="text-primary-1 fw-bold">
-    Thông tin Issue
-  </div>
   <form [formGroup]="form" class="d-flex flex-column gap-4">
     <div class="row">
       <div class="col">
         <div>Code <span class="text-danger">*</span></div>
-        <input placeholder="Nhập code" type="text" class="form-control" formControlName="code" required>
+        <input placeholder="Nhập code" type="text" class="form-control" formControlName="code" required />
         <div class="text-danger fw-light mt-1" *ngIf="form.get('code')?.touched && form.get('code')?.invalid">
           <div *ngIf="form.get('code')?.errors?.['required']">
             Vui lòng nhập code
@@ -41,10 +38,10 @@
       </div>
 
       <div class="col">
-        <div>Nhân sự</div>
+        <div>Nhân sự thực hiện</div>
         <select formControlName="assignId" class="form-select">
           <option value="">Chọn nhân sự</option>
-          <option *ngFor="let item of assignList" [value]="item.id">{{item.username}}</option>
+          <option *ngFor="let item of assignList" [value]="item.id">{{item.fullName}}</option>
         </select>
         <div class="text-danger fw-light mt-1" *ngIf="form.get('assignId')?.touched && form.get('assignId')?.invalid">
           <div *ngIf="form.get('assignId')?.errors?.['required']">
@@ -162,7 +159,7 @@
     <div class="row">
       <div class="col">
         <div>Mô tả </div>
-        <textarea placeholder="Nhập mô tả" type="a" class="form-control" formControlName="description"></textarea>
+        <textarea placeholder="Nhập mô tả" type="a" class="form-control" formControlName="description" rows="5"></textarea>
       </div>
     </div>
   </form>
