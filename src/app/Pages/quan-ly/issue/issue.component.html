@@ -15,7 +15,7 @@
   </div>
   <div
     class="card card-body d-flex flex-column flex-grow-1 mb-4 overflow-y-auto container-scroll horizontal-scroll-first-column">
-    <table class="table table-striped overflow-x-auto " style="min-width: 2000px;">
+    <table class="table  overflow-x-auto " style="min-width: 2000px;">
       <thead>
         <tr>
           <th scope="col" *ngFor="let header of headers" class="fw-lighter" [style]="header.style">
@@ -95,25 +95,7 @@
                 <img src="../../../../assets/images/icon/search-normal.png" alt="">
               </div>
               <input type="text" class="form form-control form-control-custom" placeholder="Tìm kiếm"
-                (keyup.enter)="handleFilter()" [(ngModel)]="resolveDate">
-            </div>
-          </th>
-          <th scope="col">
-            <div class="d-flex align-items-center">
-              <div class="form-control-icon">
-                <img src="../../../../assets/images/icon/search-normal.png" alt="">
-              </div>
-              <input type="text" class="form form-control form-control-custom" placeholder="Tìm kiếm"
                 (keyup.enter)="handleFilter()" [(ngModel)]="title">
-            </div>
-          </th>
-          <th scope="col">
-            <div class="d-flex align-items-center">
-              <div class="form-control-icon">
-                <img src="../../../../assets/images/icon/search-normal.png" alt="">
-              </div>
-              <input type="text" class="form form-control form-control-custom" placeholder="Tìm kiếm"
-                [(ngModel)]="description">
             </div>
           </th>
           <th scope="col">
@@ -135,6 +117,7 @@
           </th>
           <th scope="col">
             <select class="form-select" [(ngModel)]="priority" (ngModelChange)="getListDataByFilter()">
+              <option value="">Tất cả</option>
               <option value="1">Thấp</option>
               <option value="2">Trung bình</option>
               <option value="3">Cao</option>
@@ -142,6 +125,7 @@
           </th>
           <th scope="col">
             <select class="form-select" [(ngModel)]="status" (ngModelChange)="getListDataByFilter()">
+              <option value="">Tất cả</option>
               <option value="0">Đã tạo</option>
               <option value="1">Đã giao</option>
               <option value="2">Đang xử lý</option>
@@ -164,19 +148,17 @@
         <tr *ngFor="let item of listDatas; index as i" class="fw-light" (dblclick)="detailModal(item)">
           <td style="user-select: none;">{{ item.id }}</td>
           <td style="user-select: none;">{{ item.code }}</td>
-          <td style="user-select: none;">{{ item.assign ? item.assign.username : "" }}</td>
-          <td style="user-select: none;">{{ item.create ? item.create.username : "" }}</td>
+          <td style="user-select: none;">{{ item.assign ? item.assign.fullName : "" }}</td>
+          <td style="user-select: none;">{{ item.create ? item.create.fullName : "" }}</td>
           <td style="user-select: none;">{{ item.createdDate }}</td>
           <!-- <td style="user-select: none;">{{ item.updatedDate }}</td> -->
           <td style="user-select: none;">{{ item.dueDate }}</td>
           <td style="user-select: none;">{{ item.estimate }}</td>
-          <td style="user-select: none;">{{ item.resolveDate }}</td>
           <td style="user-select: none;">{{ item.title }}</td>
-          <td style="user-select: none;">{{ item.description }}</td>
           <td style="user-select: none;">{{ item.url }}</td>
           <td style="user-select: none;">{{ item.type }}</td>
           <td style="user-select: none;">
-            <div [class]="svShare.getColorPriorityIssue(item.status)" class="text-white text-center rounded py-1">
+            <div [class]="svShare.getColorPriorityIssue(item.priority)" class="text-white text-center rounded py-1">
               {{svShare.getPriorityIssue(item.priority)}}
             </div>
           </td>

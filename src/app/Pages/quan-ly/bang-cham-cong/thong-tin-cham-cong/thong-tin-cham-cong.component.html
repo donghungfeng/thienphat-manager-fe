@@ -4,17 +4,26 @@
   </button>
 </div>
 <div class="modal-body">
-  <div class="text-primary-1 fw-bold mb-2">
-    Thông tin chấm công
-  </div>
   <div class="d-flex flex-column gap-4">
     <div class="row">
       <div class="col">
         <div>
-          Ngày chấm công
+          Trạng thái
         </div>
         <div>
-          <input type="text" disabled class="form-control">
+          <div [class]="svShare.getColorStatusLogWorkByCode(data.status)" class="text-white text-center rounded py-1">
+            {{svShare.getStatusLogWorkNamByCode(data.status)}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div>
+          Ngày chấm công 
+        </div>
+        <div>
+          <input type="text" disabled class="form-control" value = {{data.date}}>
         </div>
       </div>
       <div class="col">
@@ -29,28 +38,10 @@
     <div class="row">
       <div class="col">
         <div>
-          Ngày chấm công
+          Giờ vào 
         </div>
         <div>
-          <input type="text" disabled class="form-control">
-        </div>
-      </div>
-      <div class="col">
-        <div>
-          Username
-        </div>
-        <div>
-          <input type="text" disabled class="form-control">
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <div>
-          Giờ vào
-        </div>
-        <div>
-          <input type="text" disabled class="form-control">
+          <input type="text" disabled class="form-control" value="{{data.timeCheckin}}">
         </div>
       </div>
       <div class="col">
@@ -58,35 +49,72 @@
           Giờ ra
         </div>
         <div>
-          <input type="text" disabled class="form-control">
+          <input type="text" disabled class="form-control" value="{{data.timeCheckin}}">
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col">
         <div>
-          Số phút vào muộn
+          Vào muộn
         </div>
         <div>
-          <input type="text" disabled class="form-control">
+          <input type="text" disabled class="form-control" value="{{data.minCheckinLate}}">
         </div>
       </div>
       <div class="col">
         <div>
-          Số phút về sớm
+          Ra sớm 
         </div>
         <div>
-          <input type="text" disabled class="form-control">
+          <input type="text" disabled class="form-control" value="{{data.minCheckoutEarly}}">
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col">
         <div>
-          Địa điểm chấm công
+          Địa điểm chấm công vào
+        </div>
+        <div style="border: 1px solid rgb(227, 226, 226);border-radius: 4px;background-color: #e9ecef">
+          <a href="{{data.locationCheckin}}" target="_blank">{{data.locationCheckin}}</a>
+        </div>
+      </div>
+      <div class="col">
+        <div>
+          Địa điểm chấm công ra
+        </div>
+        <div style="border: 1px solid rgb(227, 226, 226);border-radius: 4px;background-color: #e9ecef">
+          <a href="{{data.locationCheckout}}" target="_blank">{{data.locationCheckout}}</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div>
+          Khoảng cách chấm công vào
         </div>
         <div>
-          <input type="text" disabled class="form-control">
+          <input type="text" disabled class="form-control" value="{{data.locationCheckinDis}}">
+        </div>
+      </div>
+      <div class="col">
+        <div>
+          Khoảng cách chấm công ra
+        </div>
+        <div>
+          <input type="text" disabled class="form-control" value="{{data.locationCheckoutDis}}">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div>
+          Tỷ lệ xác thực
+        </div>
+        <div>
+          <input type="text" disabled class="form-control" value="{{data.device}}">
         </div>
       </div>
       <div class="col">
@@ -94,19 +122,56 @@
           IP
         </div>
         <div>
-          <input type="text" disabled class="form-control">
+          <input type="text" disabled class="form-control" value="{{data.ip}}">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div>
+           Ảnh chấm công vào
+        </div>
+        <div>
+          <img src="data:image/jpeg;base64,{{data.checkinImage}}" alt="" width="95%">
+        </div>
+      </div>
+      <div class="col-6">
+        <div>
+          Ảnh chấm công ra
+        </div>
+        <div>
+          <img src="data:image/jpeg;base64,{{data.checkoutImage}}" alt="" width="95%">
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col">
         <div>
-          Trạng thái
+          Ghi chú
         </div>
         <div>
-          <input type="text" disabled class="form-control">
+          <input type="text" disabled class="form-control" value="{{data.note}}">
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col">
+        <div>
+          Giải trình
+        </div>
+        <div>
+          <textarea [disabled] = "data.status == 1" class="form-control" [(ngModel)]="data.reason"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-primary text-white" (click)="explanationLogWork()" [disabled] = "data.status == 1">
+          Gửi giải trình
+        </button>
+      </div>
+    </div>
+
   </div>
 </div>

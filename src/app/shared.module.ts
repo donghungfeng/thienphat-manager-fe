@@ -7,6 +7,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 // Shared Components
 import { PageTitleComponent } from './Layout/Components/page-title/page-title.component';
+import {
+  NgxDaterangepickerBootstrapComponent,
+  NgxDaterangepickerBootstrapDirective,
+} from 'ngx-daterangepicker-bootstrap';
 
 @NgModule({
   declarations: [
@@ -18,7 +22,10 @@ import { PageTitleComponent } from './Layout/Components/page-title/page-title.co
     ReactiveFormsModule,
     RouterModule,
     NgbModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgxDaterangepickerBootstrapComponent,
+    NgxDaterangepickerBootstrapDirective
+    
   ],
   exports: [
     PageTitleComponent,
@@ -28,7 +35,9 @@ import { PageTitleComponent } from './Layout/Components/page-title/page-title.co
     ReactiveFormsModule,
     RouterModule,
     NgbModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgxDaterangepickerBootstrapComponent,
+    NgxDaterangepickerBootstrapDirective
   ]
 })
 export class SharedModule { }

@@ -47,7 +47,7 @@ export class IssueComponent {
       style: "width: 350px",
     },
     {
-      name: "Người giao",
+      name: "Người thực hiện",
       key: "assignName",
       class: "",
       style: "width: 350px",
@@ -83,20 +83,8 @@ export class IssueComponent {
       style: "width: 50px",
     },
     {
-      name: "Thời gian hoàn thành",
-      key: "resolveDate",
-      class: "",
-      style: "width: 500px",
-    },
-    {
       name: "Tiêu đề",
       key: "title",
-      class: "",
-      style: "width: 350px",
-    },
-    {
-      name: "Mô tả",
-      key: "description",
       class: "",
       style: "width: 350px",
     },
@@ -158,10 +146,10 @@ export class IssueComponent {
         filter.push(`code==*${this.code}*`);
       }
       if (this.createName) {
-        filter.push(`create.username==*${this.createName}*`)
+        filter.push(`create.fullName==*${this.createName}*`)
       }
       if (this.assignName) {
-        filter.push(`create.username==*${this.assignName}*`);
+        filter.push(`assign.fullName==*${this.assignName}*`);
       }
       if (this.resolveDate) {
         filter.push(`resolveDate==${this.resolveDate}`);
@@ -240,7 +228,9 @@ export class IssueComponent {
       keyboard: false,
     });
     modal.componentInstance.data = data;
-    modal.result.then((result) => { });
+    modal.result.then((result) => { 
+      this.getListDataByFilter();
+    });
   }
 
   addEditComany(data = null, mode = 'add') {
