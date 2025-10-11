@@ -57,49 +57,59 @@ export class ThemSuaMauTinComponent {
       text: [""],
       attachment_id: [""],
       header: [""],
-      phone: [
-        "",
-        // {
-        //   validators: [Validators.required, Validators.pattern(/^[0-9]+$/)],
-        //   updateOn: "change",
-        // },
-      ],
-      address: [""],
-      companyId: [
-        "",
-        // {
-        //   validators: [Validators.required],
-        //   updateOn: "change",
-        // },
-      ],
-      userId: [
-        "",
-        // {
-        //   validators: [Validators.required],
-        //   updateOn: "change",
-        // },
-      ],
-      status: [
-        "",
-        // {
-        //   validators: [Validators.required],
-        //   updateOn: "change",
-        // },
-      ],
+      name: [""],
+      status: [""],
       notes: [""],
+      description: [""]
     });
   }
   ngOnInit(): void {
     if (this.data) {
       this.form.patchValue({
         name: this.data.name,
-        companyId: this.data.company ? this.data.company.id : "",
-        phone: this.data.phone,
-        address: this.data.address,
-        userId: this.data.userId ? this.data.userId : "",
+        template_type: this.data.type === 1 ? TYPE_TEMPLATE.TEXT : this.data.type === 2 ? TYPE_TEMPLATE.TRANSACTION_ORDER : TYPE_TEMPLATE.PROMOTION,
         status: this.data.status,
-        notes: this.data.notes,
+        notes: this.data.note,
       });
+      if (this.data.type !== 1) {
+        const value = JSON.parse(this.data.value);
+        const header = value.message.attachment.payload.elements.find((item: any) => item.type === "header")
+        if (header) {
+          this.form.patchValue({
+            header: header.content,
+          });
+        }
+        const text = value.message.attachment.payload.elements.find((item: any) => item.type === "text")
+        if (text) {
+          this.form.patchValue({
+            text: text.content,
+          });
+        }
+        const buttons = value.message.attachment.payload.buttons
+        if (buttons && buttons.length) {
+          this.listButton = buttons.map((item: any) => ({
+            title: item.title,
+            type: item.type,
+            payload: {
+              url: item.payload.url,
+            },
+          }))
+        }
+        const table = value.message.attachment.payload.elements.find((item: any) => item.type === "table")
+        if (table && table.content && table.content.length) {
+          this.listTable = table.content.map((item: any) => ({
+            key: item.key,
+            value: item.value,
+          }))
+        }
+      } else {
+        const value = JSON.parse(this.data.value);
+        if (value.message.text) {
+          this.form.patchValue({
+            text: value.message.text,
+          });
+        }
+      }
       if (this.mode === "view") {
         this.form.disable();
       }
@@ -123,18 +133,44 @@ export class ThemSuaMauTinComponent {
           text: this.form.value.text,
         },
       };
+      const body: any = {
+        value: JSON.stringify(payload),
+        name: this.form.value.name,
+        type: this.form.value.template_type  === this.typeTemplate.TEXT ? 1 : this.form.value.template_type === this.typeTemplate.TRANSACTION_ORDER ? 2 : 3,
+        title: this.form.value.header,
+        status: this.form.value.status,
+        note: this.form.value.notes,
+        description: "",
+      };
       this.spinner.show();
-      this.apiZalo
-        .messageText(payload)
-        .then((res: any) => {
-          if (res.error === 0 && res.message === "Success") {
-            this.toast.success("Gửi mẫu tin thành công");
-            this.closeModal(true);
-          }
-        })
-        .finally(() => {
-          this.spinner.hide();
-        });
+      if (!this.data) {
+        this.apiZalo.create(body)
+          .then((res: any) => {
+            if (res.body.code === 200) {
+              this.toast.success("Tạo mẫu tin thành công")
+              this.closeModal(true)
+            } else {
+              this.toast.error("Tạo mẫu tin thất bại")
+            }
+          })
+          .finally(() => {
+            this.spinner.hide();
+          });
+      } else {
+        body.id = this.data.id
+        this.apiZalo.update(body)
+          .then((res: any) => {
+            if (res.body.code === 200) {
+              this.toast.success("Cập nhật mẫu tin thành công")
+              this.closeModal(true)
+            } else {
+              this.toast.error("Cập nhật mẫu tin thất bại")
+            }
+          })
+          .finally(() => {
+            this.spinner.hide();
+          })
+      }
     } else {
       if (!this.form.value.attachment_id) {
         this.toast.warning("Vui lòng chọn ảnh bìa");
@@ -215,27 +251,44 @@ export class ThemSuaMauTinComponent {
         this.toast.warning("Link không đúng định dạng");
         return;
       }
+      const body: any = {
+        value: JSON.stringify(payload),
+        name: this.form.value.name,
+        type: this.form.value.template_type  === this.typeTemplate.TEXT ? 1 : this.form.value.template_type === this.typeTemplate.TRANSACTION_ORDER ? 2 : 3,
+        title: this.form.value.header,
+        status: this.form.value.status,
+        note: this.form.value.notes,
+        description: "",
+      };
       this.spinner.show();
-      this.apiZalo
-        .messageTemplate(payload, type)
-        .then((res: any) => {
-          if (res.error === 0 && res.message === "Success") {
-            this.toast.success("Gửi mẫu tin thành công");
-            this.closeModal(true);
-          } else {
-            if (res.message === "the first table.content item must be 'Mã...' or 'Tên khách hàng'") {
-              this.toast.warning("Bảng phải có ít nhất 1 dòng với Key là 'Mã...' hoặc 'Tên khách hàng'");
-              return;
+      if (!this.data) {
+        this.apiZalo.create(body)
+          .then((res: any) => {
+            if (res.body.code === 200) {
+              this.toast.success("Tạo mẫu tin thành công")
+              this.closeModal(true)
+            } else {
+              this.toast.error("Tạo mẫu tin thất bại")
             }
-            console.log('res :>> ', res);
-          }
-        })
-        .catch(err => {
-          console.log('err :>> ', err);
-        })
-        .finally(() => {
-          this.spinner.hide();
-        });
+          })
+          .finally(() => {
+            this.spinner.hide();
+          });
+      } else {
+        body.id = this.data.id
+        this.apiZalo.update(body)
+          .then((res: any) => {
+            if (res.body.code === 200) {
+              this.toast.success("Cập nhật mẫu tin thành công")
+              this.closeModal(true)
+            } else {
+              this.toast.error("Cập nhật mẫu tin thất bại")
+            }
+          })
+          .finally(() => {
+            this.spinner.hide();
+          })
+      }
     }
   }
   onFileChange(event: any, type: string) {

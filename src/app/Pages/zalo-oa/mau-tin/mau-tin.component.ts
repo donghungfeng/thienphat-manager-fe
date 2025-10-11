@@ -7,6 +7,7 @@ import { SpinnerService } from "src/app/shared/service/spinner.service";
 import { ToastService } from "src/app/shared/service/toast.service";
 import { ThemSuaMauTinComponent } from "./them-sua-mau-tin/them-sua-mau-tin.component";
 import { ZaloOARequestServices } from "src/app/shared/service/request/zalo-oa/zalo-oa-request.service";
+import { TYPE_TEMPLATE_LIST } from "src/app/shared/common/constant";
 
 @Component({
   selector: "mau-tin",
@@ -18,6 +19,12 @@ export class MauTinComponent {
   page = 1;
   size = 10;
   totalItems = 0;
+  name: any
+  title: any
+  status: any
+  type: any
+  note: any
+  templateTypeList: any[] = TYPE_TEMPLATE_LIST
   headers: any[] = [
     {
       name: "ID",
@@ -53,7 +60,7 @@ export class MauTinComponent {
       name: "Trạng thái",
       key: "address",
       class: "",
-      style: "width: 350px",
+      style: "width: 150px",
     },
     {
       name: "Ghi chú",
@@ -108,24 +115,21 @@ export class MauTinComponent {
     const filterString = () => {
       let filter = [];
       filter.push("id>0");
-      // if (this.name) {
-      //   filter.push(`name==*${this.name}*`);
-      // }
-      // if (this.phone) {
-      //   filter.push(`phone==*${this.phone}*`);
-      // }
-      // if (this.address) {
-      //   filter.push(`address==*${this.address}*`);
-      // }
-      // if (this.userId) {
-      //   filter.push(`userId==*${this.userId}*`);
-      // }
-      // if (this.status) {
-      //   filter.push(`status==${this.status}`);
-      // }
-      // if (this.companyName) {
-      //   filter.push(`company.name==*${this.companyName}*`);
-      // }
+      if (this.name) {
+        filter.push(`name==*${this.name}*`);
+      }
+      if (this.status) {
+        filter.push(`status==${this.status}`);
+      }
+      if (this.title) {
+        filter.push(`title==${this.title}`);
+      }
+      if (this.type) {
+        filter.push(`type==${this.type}`);
+      }
+      if (this.note) {
+        filter.push(`note==*${this.note}*`);
+      }
       return filter.join(";");
     };
     const params = {
@@ -161,27 +165,31 @@ export class MauTinComponent {
     this.getListDataByFilter();
   }
   deleleItem(id: any) {
-    // const modal: NgbModalRef = this.modalService.open(DeleteConfirmModal);
-    // modal.result.then((result) => {
-    //   if (result) {
-    //     this.spinner.show();
-    //     this.apiCustomer
-    //       .delete(id)
-    //       .then((res: HttpResponse<any>) => {
-    //         if (res.body.code === 200) {
-    //           this.toast.success("Xóa bản ghi thành công");
-    //           this.getListDataByFilter();
-    //         }
-    //       })
-    //       .catch((err) => {
-    //         this.toast.error(err.error.message);
-    //       })
-    //       .finally(() => this.spinner.hide());
-    //   }
-    // });
+    const modal: NgbModalRef = this.modalService.open(DeleteConfirmModal);
+    modal.result.then((result) => {
+      if (result) {
+        this.spinner.show();
+        this.apiZalo
+          .delete(id)
+          .then((res: HttpResponse<any>) => {
+            if (res.body.code === 200) {
+              this.toast.success("Xóa bản ghi thành công");
+              this.getListDataByFilter();
+            }
+          })
+          .catch((err) => {
+            this.toast.error(err.error.message);
+          })
+          .finally(() => this.spinner.hide());
+      }
+    });
   }
   changePage(event: any) {
     this.page = event;
     this.getListDataByFilter();
+  }
+  getTemplateHeader(value: any) {
+    const data = JSON.parse(value);
+    console.log('data :>> ', data);
   }
 }

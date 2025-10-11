@@ -135,4 +135,16 @@ export class ShareService {
         return "btn-secondary";
     }
   }
+  getTemplateTypeNameByCode(type: any) {
+    switch (type) {
+      case 1:
+        return "Tin tư vấn";
+      case 2:
+        return "Tin giao dịch";
+      case 3:
+        return "Tin truyền thông";
+      default:
+        return "Tin tư vấn";
+    }
+  }
 }

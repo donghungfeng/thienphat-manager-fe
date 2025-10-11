@@ -30,8 +30,16 @@
               <div class="form-control-icon">
                 <img src="../../../../assets/images/icon/search-normal.png" alt="">
               </div>
-              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm" [(ngModel)]="name" (change)="handleFilter()">
             </div>
+          </th>
+          <th scope="col">
+            <select [(ngModel)]="type" class="form-select" (ngModelChange)="getListDataByFilter()">
+              <option value="">Chọn loại mẫu</option>
+              <option *ngFor="let item of templateTypeList" [value]="item.type">
+                {{item.name}}
+              </option>
+            </select>
           </th>
           <th scope="col">
             <div class="d-flex align-items-center">
@@ -46,31 +54,23 @@
               <div class="form-control-icon">
                 <img src="../../../../assets/images/icon/search-normal.png" alt="">
               </div>
-              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm" [(ngModel)]="title" (change)="handleFilter()">
             </div>
           </th>
           <th scope="col">
-            <div class="d-flex align-items-center">
-              <div class="form-control-icon">
-                <img src="../../../../assets/images/icon/search-normal.png" alt="">
-              </div>
-              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
-            </div>
-          </th>
-          <th scope="col">
-            <div class="d-flex align-items-center">
-              <div class="form-control-icon">
-                <img src="../../../../assets/images/icon/search-normal.png" alt="">
-              </div>
-              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm">
-            </div>
-          </th>
-          <th scope="col">
-            <select class="form-select" (ngModelChange)="getListDataByFilter()">
+            <select [(ngModel)]="status" class="form-select" (ngModelChange)="getListDataByFilter()">
               <option value="">Chọn trạng thái</option>
               <option value="1">Hoạt động</option>
               <option value="0">Ngừng hoạt động</option>
             </select>
+          </th>
+          <th scope="col">
+            <div class="d-flex align-items-center">
+              <div class="form-control-icon">
+                <img src="../../../../assets/images/icon/search-normal.png" alt="">
+              </div>
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm" [(ngModel)]="note" (change)="handleFilter()">
+            </div>
           </th>
           <th scope="col"></th>
         </tr>
@@ -81,14 +81,18 @@
         <td>
           {{item.name}}
         </td>
-        <td>{{ item.phone }}</td>
+        <td>
+          {{svShare.getTemplateTypeNameByCode(item.type)}}
+        </td>
         <td>{{ item.company ? item.company.name : '' }}</td>
-        <td>{{ item.address }}</td>
-        <td>{{ item.userId }}</td>
+        <td>{{ item.title }}</td>
         <td>
           <div [class]="svShare.getColorStatusCommonByCode(item.status)" class="text-white text-center rounded py-1">
             {{svShare.getStatusNameCommonByCode(item.status)}}
           </div>
+        </td>
+        <td>
+          {{item.note}}
         </td>
         <td>
           <div class="d-flex gap-2">
