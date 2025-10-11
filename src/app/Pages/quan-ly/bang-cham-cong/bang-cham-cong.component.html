@@ -4,7 +4,11 @@
       <!-- <button class="btn btn-primary-1" (click)="reportLogWorkModal()">
         Báo cáo công việc
       </button> -->
-      <button class="btn btn-success text-white" (click)="approveReason()" [disabled] ="!(this.selectedEntity.id > 0 && this.selectedEntity.status == 3)">
+      <button class="btn btn-outline-secondary" (click)="getListDataByFilter()">
+        <i class="fa-solid fa-refresh"></i>
+        Làm mới
+      </button>
+      <button class="btn btn-success text-white" (click)="approveReason()" [disabled] ="!(this.selectedEntity.id > 0 && this.selectedEntity.status == 5)">
         Xác nhận giải trình
       </button>
     </div>

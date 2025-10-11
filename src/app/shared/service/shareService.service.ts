@@ -36,11 +36,13 @@ export class ShareService {
       case 1:
         return "btn-status-success";
       case 2:
-        return "btn-status-danger";
       case 3:
+      case 4:
         return "btn-status-warning";
+      case 5:
+        return "btn-status-primary"
       default:
-        return "btn-status-success";
+        return "btn-status-info";
     }
   }
   getStatusLogWorkNamByCode(statusCode: any) {
@@ -48,11 +50,15 @@ export class ShareService {
       case 1:
         return "Hợp lệ";
       case 2:
-        return "Không hợp lệ";
+        return "Đi công tác";
       case 3:
-        return "Đã gửi giải trình";
+        return "Làm việc tại nhà";
+      case 4:
+        return "Khác";
+      case 5:
+        return "Gửi giải trình";
       default:
-        return "Hợp lệ";
+        return "Chưa xác định";
     }
   }
   getStatusNameCommonByCode(statusCode: any) {

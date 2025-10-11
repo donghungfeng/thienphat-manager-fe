@@ -21,7 +21,6 @@
           <th scope="col" *ngFor="let header of headers" class="fw-lighter" [style]="header.style">
             {{ header.name }}
           </th>
-          <th scope="col" class="fw-lighter" style="width: 150px;">Thao tác</th>
         </tr>
         <tr>
           <th scope="col">
@@ -169,11 +168,7 @@
           </td>
           <td style="user-select: none;">{{ item.note }}</td>
 
-          <td>
-            <div class="d-flex gap-2">
-              <img src="../../../../assets/images/icon/Eye.png" alt="">
-            </div>
-          </td>
+          
         </tr>
       </tbody>
     </table>

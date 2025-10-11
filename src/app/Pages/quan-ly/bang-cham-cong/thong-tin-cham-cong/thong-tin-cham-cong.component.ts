@@ -28,7 +28,7 @@ export class ThongTinChamCongModal {
     const params = {
       id: this.data.id,
       reason: this.data.reason, 
-      status: 3
+      status: 5
     };
     this.spinner.show()
     this.apiService.update(params).then((res: HttpResponse<any>) => {
