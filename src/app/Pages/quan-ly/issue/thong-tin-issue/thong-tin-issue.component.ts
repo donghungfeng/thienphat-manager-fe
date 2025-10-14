@@ -36,8 +36,8 @@ export class ThongTinIssueModal implements OnInit {
       title: ["", Validators.required],
       url: ["", Validators.required],
       assignId: [""],
-      dueDate: [""],        // string (dd/MM/yyyy)
-      resolveDate: [""],    // string (dd/MM/yyyy)
+      dueDate: [null, Validators.required],        // string (dd/MM/yyyy)
+      resolveDate: null,    // string (dd/MM/yyyy)
       estimate: ["", Validators.required],
       type: ["", Validators.required],
       priority: ["", Validators.required],
@@ -98,6 +98,8 @@ export class ThongTinIssueModal implements OnInit {
   }
 
   submitForm() {
+    const raw = this.form.value;
+    alert(raw.dueDate);
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach((control) => {
         control.markAsTouched();
@@ -106,11 +108,10 @@ export class ThongTinIssueModal implements OnInit {
       return;
     }
 
-    const raw = this.form.value;
     const payload = {
       ...raw,
       dueDate: this.ngbDateToString(raw.dueDate),
-      resolveDate: this.ngbDateToString(raw.resolveDate),
+      resolveDate: raw.resolveDate ?  this.ngbDateToString(raw.resolveDate) : null,
     };
 
     this.spinner.show();

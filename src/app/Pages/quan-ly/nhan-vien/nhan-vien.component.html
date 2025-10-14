@@ -75,11 +75,12 @@
             </div>
           </th>
           <th scope="col">
-            <select class="form-select" [(ngModel)]="status" (ngModelChange)="getListDataByFilter()">
-              <option value="">Chọn quyền</option>
-              <option value="admin">Quản trị viên</option>
-              <option value="user">Người dùng</option>
-            </select>
+            <div class="d-flex align-items-center">
+              <div class="form-control-icon">
+                <img src="../../../../assets/images/icon/search-normal.png" alt="">
+              </div>
+              <input type="text" class="form form-control form-control-custom"placeholder="Tìm kiếm" (keyup.enter)="handleFilter()" [(ngModel)]="role">
+            </div>
           </th>
           <th scope="col">
             <div class="d-flex align-items-center">
@@ -137,7 +138,7 @@
         <td>{{ item.address }}</td>
         <td>{{ item.identityCardNumber }}</td>
         <td>{{ item.department.name }}</td>
-        <td>{{ svShare.getRoleByCodeEn(item.role) }}</td>
+        <td>{{ item.role}}</td>
         <td>{{ item.deviceName ? item.deviceName : '' }}</td>
         <td>{{ item.deviceCode ? item.deviceCode : '' }}</td>
         <td>

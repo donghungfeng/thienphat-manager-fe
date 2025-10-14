@@ -63,7 +63,13 @@
           <button class="btn btn-outline-secondary" type="button" (click)="dueDatePicker.toggle()">
             <i class="fa-solid fa-calendar"></i>
           </button>
-
+          
+        </div>
+        <div class="text-danger fw-light mt-1"
+          *ngIf="form.get('dueDate')?.touched && form.get('dueDate')?.invalid">
+          <div *ngIf="form.get('dueDate')?.errors?.['required']">
+            Vui lòng nhập ngày đến hạn
+          </div>
         </div>
       </div>
 
@@ -166,6 +172,5 @@
 </div>
 <div *ngIf="mode !== 'view'" class="modal-footer">
   <button type="button" class="btn btn-secondary" (click)="closeModal(false)">Hủy</button>
-  <button type="button" class="btn btn-primary-1" (click)="submitForm()">{{data ? 'Lưu thay đổi' : 'Thêm
-    Issue'}}</button>
+  <button type="button" class="btn btn-primary-1" (click)="submitForm()">{{data ? 'Lưu thay đổi' : 'Thêm Issue'}}</button>
 </div>
