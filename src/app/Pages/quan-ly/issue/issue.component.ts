@@ -120,6 +120,7 @@ export class IssueComponent {
     },
   ];
   listDatas: IssueModel[] = [];
+  selectedEntity:any;
   constructor(
     private modalService: NgbModal,
     public svShare: ShareService,
@@ -129,7 +130,7 @@ export class IssueComponent {
   ) { }
 
   ngOnInit(): void {
-    this.getListDataByFilter()
+    this.getListDataByFilter();
   }
 
   getListDataByFilter() {
@@ -219,6 +220,11 @@ export class IssueComponent {
     this.getListDataByFilter()
   }
 
+  
+  selectRow(item = null) {
+    this.selectedEntity = item;
+  }
+
 
   detailModal(data = null) {
     const modal = this.modalService.open(ThongTinIssueModal, {
@@ -263,5 +269,23 @@ export class IssueComponent {
         }
       })
     }
+  }
+
+  getRowClass(item:any):string{
+    if(item){
+      if(this.selectedEntity && this.selectedEntity.id === item.id)
+        return 'table-primary';
+      if(this.getDistanceDueDate(item.dueDate) < -24)
+        return 'table-danger';
+      if(this.getDistanceDueDate(item.dueDate) <= 0)
+        return 'table-warning';
+      
+    }
+    return 'fw-light'
+  }
+  getDistanceDueDate(dateString:string):any {
+    const [day, month, year] = dateString.split('/').map(Number);
+    const due =  new Date(year, month - 1, day);
+    return (due.getTime() - new Date().getTime())/3600000;
   }
 }

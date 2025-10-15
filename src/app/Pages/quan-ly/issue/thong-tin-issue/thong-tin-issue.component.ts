@@ -58,6 +58,8 @@ export class ThongTinIssueModal implements OnInit {
         dueDate: this.stringToNgbDate(this.data.dueDate),
         resolveDate: this.stringToNgbDate(this.data.resolveDate)
       });
+
+      this.form.get('code')?.disable();
     }
 
     // Nếu chỉ xem, disable form
@@ -68,12 +70,18 @@ export class ThongTinIssueModal implements OnInit {
 
   /** 🧭 Lấy danh sách nhân viên assign */
   getListAssign() {
+    const params = {
+      page: 0,
+      size: 100,
+      filter: 'status>0',
+      sort: ["id", "desc"],
+    };
     this.spinner.show();
     this.apiAssign
-      .getAll()
+      .search(params)
       .then((res: HttpResponse<any>) => {
         if (res.body.code === 200) {
-          this.assignList = res.body.result || [];
+          this.assignList = res.body.result.content || [];
         } else {
           this.assignList = [];
         }
@@ -99,7 +107,6 @@ export class ThongTinIssueModal implements OnInit {
 
   submitForm() {
     const raw = this.form.value;
-    alert(raw.dueDate);
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach((control) => {
         control.markAsTouched();
@@ -141,9 +148,9 @@ export class ThongTinIssueModal implements OnInit {
   }
 
   closeModal(isReturn: boolean | null = null) {
-    console.log("Modal closed with:", isReturn);
     this.modal.close(isReturn); // 🔥 Chỉ close, không dismiss
   }
+  
 
 
 }

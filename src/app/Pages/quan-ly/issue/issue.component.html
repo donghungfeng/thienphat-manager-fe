@@ -144,29 +144,29 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of listDatas; index as i" class="fw-light" (dblclick)="detailModal(item)">
-          <td style="user-select: none;">{{ item.id }}</td>
-          <td style="user-select: none;">{{ item.code }}</td>
-          <td style="user-select: none;">{{ item.assign ? item.assign.fullName : "" }}</td>
-          <td style="user-select: none;">{{ item.create ? item.create.fullName : "" }}</td>
-          <td style="user-select: none;">{{ item.createdDate }}</td>
+        <tr *ngFor="let item of listDatas; index as i" class="fw-light" (dblclick)="detailModal(item)" (click)="selectRow(item)" [ngClass]="getRowClass(item)">
+          <td >{{ item.id }}</td>
+          <td >{{ item.code }}</td>
+          <td >{{ item.assign ? item.assign.fullName : "" }}</td>
+          <td >{{ item.create ? item.create.fullName : "" }}</td>
+          <td >{{ item.createdDate }}</td>
           <!-- <td style="user-select: none;">{{ item.updatedDate }}</td> -->
-          <td style="user-select: none;">{{ item.dueDate }}</td>
-          <td style="user-select: none;">{{ item.estimate }}</td>
-          <td style="user-select: none;">{{ item.title }}</td>
-          <td style="user-select: none;">{{ item.url }}</td>
-          <td style="user-select: none;">{{ item.type }}</td>
-          <td style="user-select: none;">
+          <td >{{ item.dueDate }}</td>
+          <td >{{ item.estimate }}</td>
+          <td >{{ item.title }}</td>
+          <td >{{ item.url }}</td>
+          <td >{{ item.type }}</td>
+          <td >
             <div [class]="svShare.getColorPriorityIssue(item.priority)" class="text-white text-center rounded py-1">
               {{svShare.getPriorityIssue(item.priority)}}
             </div>
           </td>
-          <td style="user-select: none;">
+          <td >
             <div [class]="svShare.getColorStatusNameIssue(item.status)" class="text-white text-center rounded py-1">
               {{svShare.getStatusNameIssue(item.status)}}
             </div>
           </td>
-          <td style="user-select: none;">{{ item.note }}</td>
+          <td >{{ item.note }}</td>
 
           
         </tr>
