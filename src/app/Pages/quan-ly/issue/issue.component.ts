@@ -284,7 +284,7 @@ export class IssueComponent {
     return 'fw-light'
   }
   getDistanceDueDate(dateString:string):any {
-    const [day, month, year] = dateString.split('/').map(Number);
+    const [year, month, day] = dateString.split('-').map(Number);
     const due =  new Date(year, month - 1, day);
     return (due.getTime() - new Date().getTime())/3600000;
   }
