@@ -252,8 +252,8 @@ export class IssueComponent {
     const drawer = this.drawerService.open(XemCommentIssueDrawer, {
       ariaLabelledBy: 'offcanvas-basic-title',
       keyboard: false,
-      backdrop: "static",
-      position: "end",
+      // backdrop: "static",
+      // position: "end",
       panelClass: "drawer-lg"
     })
    drawer.componentInstance.data = data
