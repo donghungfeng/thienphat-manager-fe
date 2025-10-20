@@ -14,6 +14,7 @@ import { DoiMatKhauModal } from "./nhan-vien/doi-mat-khau/doi-mat-khau.component
 import { PhanQuyenModal } from "./nhan-vien/phan-quyen/phan-quyen.component";
 import { ThongTinIssueModal } from "./issue/thong-tin-issue/thong-tin-issue.component";
 import { IssueComponent } from "./issue/issue.component";
+import { XemCommentIssueDrawer } from "./issue/xem-comment-issue/xem-comment-issue.component";
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { IssueComponent } from "./issue/issue.component";
     ThongTinIssueModal,
     DoiMatKhauModal,
     PhanQuyenModal,
+    XemCommentIssueDrawer,
   ],
   imports: [SharedModule, CommonModule],
   exports: [
@@ -44,6 +46,7 @@ import { IssueComponent } from "./issue/issue.component";
     ThongTinIssueModal,
     DoiMatKhauModal,
     PhanQuyenModal,
+    XemCommentIssueDrawer,
   ],
 })
 export class QuanLyModule {}

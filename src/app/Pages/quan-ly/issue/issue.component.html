@@ -2,7 +2,7 @@
   <div class="d-flex gap-2 mb-4">
     <button class="btn btn-primary-1" (click)="detailModal()">
       <i class="fa-solid fa-plus"></i>
-      Thêm Issue
+      Thêm công việc
     </button>
     <button class="btn btn-outline-secondary" (click)="getListDataByFilter()">
       <i class="fa-solid fa-refresh"></i>
@@ -14,8 +14,37 @@
     </button>
   </div>
   <div
-    class="card card-body d-flex flex-column flex-grow-1 mb-4 overflow-y-auto container-scroll horizontal-scroll-first-column">
-    <table class="table  overflow-x-auto " style="min-width: 2000px;">
+    class="card card-body d-flex flex-column flex-grow-1 gap-4 mb-4 overflow-y-auto container-scroll horizontal-scroll-first-column">
+    <div *ngFor="let item of listDatas" class="d-flex flex-column gap-2">
+      <div class="text-uppercase fw-bold d-flex align-items-center gap-2" style="color: #8C8C8C; font-size: 12px;">
+        {{item.statusName}} <span class="count-number">{{item.datas.length}}</span>
+      </div>
+      <div class="card card-body card-job d-flex flex-column gap-2">
+        <div *ngFor="let data of item.datas" class="card card-body d-flex gap-2 card-job-item" (dblclick)="detailModal(data)">
+          <div class="fw-bold">
+            {{data.title}} <span class="px-4 py-1 rounded-4" [class]="svShare.getColorPriorityIssue(+data.priority)">{{svShare.getPriorityIssue(+data.priority)}}</span>
+          </div>
+          <div>
+            Đọc và phản hồi email từ khách hàng, đối tác, đồng nghiệp.
+          </div>
+          <div class="d-flex align-items-center gap-3">
+            <div class="d-flex gap-2 align-items-center">
+              <img src="../../../../assets/images/icon/clock.png" alt="">
+              <div style="color: #AAACAD;" [class]="svShare.getExpiredTime(data.dueDate).color">
+                {{svShare.getExpiredTime(data.dueDate).text}}
+              </div>
+            </div>
+            <div class="d-flex gap-1 align-items-center px-2" style="background-color: #F3F3F3; border-radius: 18px;">
+              <img src="../../../../assets/images/icon/message-text.png" alt="">
+              <div style="color: #AAACAD;">
+                {{data.commentCount ? data.commentCount : 0}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <table class="table  overflow-x-auto " style="min-width: 2000px;">
       <thead>
         <tr>
           <th scope="col" *ngFor="let header of headers" class="fw-lighter" [style]="header.style">
@@ -61,15 +90,6 @@
                 (keyup.enter)="handleFilter()" [(ngModel)]="createDate">
             </div>
           </th>
-          <!-- <th scope="col">
-            <div class="d-flex align-items-center">
-              <div class="form-control-icon">
-                <img src="../../../../assets/images/icon/search-normal.png" alt="">
-              </div>
-              <input type="text" class="form form-control form-control-custom" placeholder="Tìm kiếm"
-                (keyup.enter)="handleFilter()" [(ngModel)]="updatedDate">
-            </div>
-          </th> -->
           <th scope="col">
             <div class="d-flex align-items-center">
               <div class="form-control-icon">
@@ -150,7 +170,6 @@
           <td >{{ item.assign ? item.assign.fullName : "" }}</td>
           <td >{{ item.create ? item.create.fullName : "" }}</td>
           <td >{{ item.createdDate }}</td>
-          <!-- <td style="user-select: none;">{{ item.updatedDate }}</td> -->
           <td >{{ item.dueDate }}</td>
           <td >{{ item.estimate }}</td>
           <td >{{ item.title }}</td>
@@ -167,11 +186,9 @@
             </div>
           </td>
           <td >{{ item.note }}</td>
-
-          
         </tr>
       </tbody>
-    </table>
+    </table> -->
   </div>
   <div class="d-flex justify-content-end">
     <ngb-pagination class="d-flex justify-content-start" [collectionSize]="totalItems" [page]="page"

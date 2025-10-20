@@ -121,3 +121,12 @@
 .container-body {
   height: calc(100vh - 104px - 64px);
 }
+
+.offcanvas.drawer-lg {
+  width: 40%!important;
+}
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

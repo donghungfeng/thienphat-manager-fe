@@ -1,3 +1,26 @@
 .container-scroll {
   max-height: calc(100vh - 267px);
 }
+.count-number {
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  background-color: #8C8C8C;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card-job {
+  background-color: #F2F2F2;
+  border: 1px solid rgba(229, 229, 229, 1)
+}
+.card-job-item {
+  transition: all 0.3s;
+  user-select: none;
+}
+.card-job-item:hover {
+  background-color: #F2F2F2;
+  cursor: pointer;
+  transition: all 0.3s;
+}

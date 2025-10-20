@@ -119,6 +119,50 @@
   color: white!important;
   transition: all 0.3s;
 }
+
+.btn-secondary-1 {
+  background-color: #dee2e6!important;
+  color: black!important;
+  transition: all 0.3s;
+}
+.btn-secondary-1:hover {
+  background-color: #dee2e6!important;
+  color: black!important;
+  transition: all 0.3s;
+}
+
+.btn-danger-1 {
+  background-color: #020AB3!important;
+  color: white!important;
+  transition: all 0.3s;
+}
+.btn-danger-1:hover {
+  background-color: $red-600!important;
+  color: white!important;
+  transition: all 0.3s;
+}
+.btn-warning-1 {
+  background-color: #FFC823!important;
+  color: white!important;
+  transition: all 0.3s;
+}
+.btn-warning-1:hover {
+  background-color: $yellow-400!important;
+  color: white!important;
+  transition: all 0.3s;
+}
+
+.btn-primary-2 {
+  background-color: #B7BAFF!important;
+  color: white!important;
+  transition: all 0.3s;
+}
+.btn-primary-2:hover {
+  background-color: $blue-300!important;
+  color: white!important;
+  transition: all 0.3s;
+}
+
 .text-primary-1 {
   color: #020AB3!important;
 }

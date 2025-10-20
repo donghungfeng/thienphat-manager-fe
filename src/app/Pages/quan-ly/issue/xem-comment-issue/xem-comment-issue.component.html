@@ -1,0 +1,106 @@
+<div class="h-100">
+  <div class="p-4 d-flex justify-content-between align-items-center border-bottom pb-3">
+    <div class="fw-light text-secondary d-flex align-items-center gap-2 rounded px-3 py-2" style="border: 1px solid rgba(179, 179, 179, 1); cursor: pointer;">
+      <img src="../../../../../assets/images/icon/tick-circle.png" alt="">
+      <div>Đã hoàn thành</div>
+    </div>
+    <div style="cursor: pointer;" (click)="close()">
+      <img src="../../../../../assets/images/icon/close-log-out.png" alt="">
+    </div>
+  </div>
+  <div class="mb-5 p-4" style="height: 40%;">
+    <div class="fw-bold fs-3 mb-4">
+      {{dataIssue.title}}
+    </div>
+    <div class="row mb-4">
+      <div class="col-4 text-secondary fw-bold">Nhân viên thực hiện</div>
+      <div class="col-8">{{dataIssue.assign.fullName}}</div>
+    </div>
+    <div class="row mb-4">
+      <div class="col-4 text-secondary fw-bold">Ngày đến hạn</div>
+      <div class="col-8">{{dataIssue.dueDate}}</div>
+    </div>
+    <div class="row mb-4">
+      <div class="col-4 text-secondary fw-bold">Trạng thái</div>
+      <div class="col-8">
+        <table class="border rounded table text-center">
+          <tr class="border-bottom">
+            <td class="border-end py-2" style="width: 100px;">Trạng thái</td>
+            <td class="py-2 d-flex justify-content-center align-items-center">
+              <div class="rounded-4 px-5" [class]="svShare.getColorStatusNameIssue(+dataIssue.status)">
+                {{svShare.getStatusNameIssue(+dataIssue.priority)}}
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="border-end py-2">Độ ưu tiên</td>
+            <td class="py-2 d-flex justify-content-center align-items-center">
+              <div class="rounded-4 px-5" [class]="svShare.getColorPriorityIssue(dataIssue.priority)">
+                {{svShare.getPriorityIssue(dataIssue.priority)}}
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col-4 text-secondary fw-bold">Mô tả</div>
+      <div class="col-8">{{dataIssue.description}}</div>
+    </div>
+    <div class="row mb-4">
+      <div class="col-4 text-secondary fw-bold">URL</div>
+      <div class="col-8 truncate">{{dataIssue.url}}</div>
+    </div>
+  </div>
+  <div class="position-relative" style="background: rgba(242, 242, 242, 1);height: calc(100vh - 40% - 83px);">
+    <div class="h-100 position-relative">
+      <div class="px-4 border-bottom border-1 d-flex">
+        <div class="border-bottom border-2 d-flex border-primary pt-4 py-2">
+          Bình luận
+        </div>
+      </div>
+      <div class="p-4 d-flex flex-column gap-3 overflow-y-auto" style="height: calc(100% - 160px);">
+        <div *ngFor="let item of listComment" class="row">
+          <div class="col-11">
+            <div class="d-flex gap-2 align-items-center">
+              <div class="rounded-circle" style="height: 45px; width: 45px;">
+                <img src="../../../../../assets/images/avatars/1.jpg" alt="" class="rounded-circle w-100 h-100" style="object-fit: cover;">
+              </div>
+              <div>
+                <div class="text-secondary fw-light d-flex align-items-center gap-2" style="font-size: 12px;">
+                  <div>Vũ Ngọc Huyền</div>
+                  <div>•</div>
+                  <div>
+                    16/9/2025
+                  </div>
+                </div>
+                <div style="font-size: 12px;">
+                  {{item.content}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-1">
+            <img *ngIf="!item.isLike" class="reaction-bubble" src="../../../assets/images/icon/heart.png" alt="" style="cursor: pointer;" (click)="reactionComment(item)">
+            <div *ngIf="item.isLike" class="position-relative">
+              <img class="reaction-bubble" src="../../../assets/images/icon/heart-danger.png" alt="" style="cursor: pointer;" (click)="reactionComment(item)">
+              <div class="count-reaction">
+                1
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex align-items-center w-100 bg-white" style="padding-right: 16px;">
+        <div class="w-100">
+          <input type="text" class="chat-type" placeholder="Thêm bình luận">
+        </div>
+        <div class="d-flex gap-2 align-items-center">
+          <img src="../../../assets/images/icon/link-3.png" alt="">
+          <img src="../../../assets/images/icon/image.png" alt="">
+          <img src="../../../assets/images/icon/send-primary.png" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

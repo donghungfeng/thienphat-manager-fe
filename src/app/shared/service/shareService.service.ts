@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { LOG_WORK_STATUS, STATUS } from "../common/constant";
-
+import moment from "moment";
 @Injectable({ providedIn: "root" })
 export class ShareService {
   getColorStatusByCode(statusCode: any) {
@@ -40,7 +40,7 @@ export class ShareService {
       case 4:
         return "btn-status-warning";
       case 5:
-        return "btn-status-primary"
+        return "btn-status-primary";
       default:
         return "btn-status-info";
     }
@@ -102,17 +102,17 @@ export class ShareService {
   getColorStatusNameIssue(staus: any) {
     switch (staus) {
       case 0:
-        return "btn-secondary"; // Đã tạo
+        return "btn-secondary-1"; // Đã tạo
       case 1:
-        return "btn-info"; // Đã giao
+        return "btn-primary-2"; // Đã giao
       case 2:
-        return "btn-warning"; // Đang xử lý
+        return "btn-warning-1"; // Đang xử lý
       case 3:
-        return "btn-success"; // Đã hoàn thành
+        return "btn-success-1"; // Đã hoàn thành
       case 4:
-        return "btn-danger"; // Đã đóng
+        return "btn-danger-1"; // Đã đóng
       default:
-        return "btn-secondary";
+        return "btn-secondary-1";
     }
   }
 
@@ -125,20 +125,20 @@ export class ShareService {
       case 3:
         return "Cao"; // Cao
       default:
-        return "btn-secondary";
+        return "Trung bình";
     }
   }
 
   getColorPriorityIssue(priority: any) {
     switch (priority) {
       case 1:
-        return "btn-success"; // Thấp
+        return "btn-primary-2"; // Thấp
       case 2:
-        return "btn-warning"; // Trung bình
+        return "btn-warning-1"; // Trung bình
       case 3:
-        return "btn-danger"; // Cao
+        return "btn-danger-1"; // Cao
       default:
-        return "btn-secondary";
+        return "btn-warning-1";
     }
   }
   getTemplateTypeNameByCode(type: any) {
@@ -176,5 +176,28 @@ export class ShareService {
   truncateString(str: string, maxLength: number): string {
     if (!str) return "";
     return str.length > maxLength ? str.slice(0, maxLength) + "..." : str;
+  }
+  getExpiredTime(endDate: any) {
+    if (+this.tinhSoNgayConLai(endDate) < 0) {
+      return {
+        text: "Hết hạn",
+        color: "text-danger fw-bold",
+      };
+    } else if (+this.tinhSoNgayConLai(endDate) === 0) {
+      return {
+        text: "Hết hạn hôm nay",
+        color: "",
+      };
+    } else {
+      return {
+        text: "Còn " + this.tinhSoNgayConLai(endDate) + " ngày",
+        color: "",
+      };
+    }
+  }
+  tinhSoNgayConLai(endDate: any) {
+    const start = moment();
+    const end = moment(endDate, 'DD/MM/YYYY');
+    return end.diff(start, "days");
   }
 }

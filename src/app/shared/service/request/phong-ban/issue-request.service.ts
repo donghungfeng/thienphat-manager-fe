@@ -81,4 +81,16 @@ export class IssueRequestServices {
         );
     });
   }
+  detail(id: any) {
+    return new Promise((resolve: any, reject: any) => {
+      this.apiService.get(API_V1 + ISSUE_CONTROLLER + '/detail?id=' + id).subscribe(
+        (res: HttpResponse<any>) => {
+          resolve(res);
+        },
+        (err) => {
+          reject(err);
+        }
+      );
+    });
+  }
 }

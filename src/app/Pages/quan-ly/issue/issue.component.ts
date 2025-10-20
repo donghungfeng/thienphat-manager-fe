@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModal, NgbOffcanvas } from "@ng-bootstrap/ng-bootstrap";
 import { ShareService } from "src/app/shared/service/shareService.service";
 import { ThongTinIssueModal } from "./thong-tin-issue/thong-tin-issue.component";
 import { SpinnerService } from "src/app/shared/service/spinner.service";
@@ -7,6 +7,7 @@ import { ToastService } from "src/app/shared/service/toast.service";
 import { HttpResponse } from "@angular/common/http";
 import { IssueRequestServices } from "src/app/shared/service/request/phong-ban/issue-request.service";
 import { IssueModel } from "src/app/shared/model/issue/issue.model";
+import { XemCommentIssueDrawer } from "./xem-comment-issue/xem-comment-issue.component";
 
 @Component({
   selector: "issue",
@@ -119,7 +120,7 @@ export class IssueComponent {
       style: "width: 350px",
     },
   ];
-  listDatas: IssueModel[] = [];
+  listDatas: any[] = [];
   selectedEntity:any;
   constructor(
     private modalService: NgbModal,
@@ -127,6 +128,7 @@ export class IssueComponent {
     private spinner: SpinnerService,
     private toast: ToastService,
     private apiService: IssueRequestServices,
+    private drawerService: NgbOffcanvas
   ) { }
 
   ngOnInit(): void {
@@ -193,19 +195,39 @@ export class IssueComponent {
     this.spinner.show()
     this.apiService.search(params).then((res: HttpResponse<any>) => {
       if (res.body.code === 200) {
-        this.listDatas = res.body.result.content
+        this.listDatas = []
+        let rs = {}
+        res.body.result.content.forEach((item: IssueModel) => {
+          if (!rs.hasOwnProperty(item.status)) {
+            rs[item.status] = [{
+              ...item,
+              statusName: this.svShare.getStatusNameIssue(item.status)
+            }]
+          } else {
+            rs[item.status].push({
+              ...item,
+              statusName: this.svShare.getStatusNameIssue(item.status),
+            });
+          }
+        })
+        Object.keys(rs).forEach((item: any) => {
+          this.listDatas.push({
+            statusName: this.svShare.getStatusNameIssue(+item),
+            datas: rs[item],
+          });
+        })
         this.totalItems = res.body.result.totalElements
       } else {
         this.listDatas = [];
         this.totalItems = 0
       }
     })
-      .catch(() => {
-        this.toast.error('Có lỗi trong khi tải dữ liệu')
-      })
-      .finally(() => {
-        this.spinner.hide()
-      })
+    .catch(() => {
+      this.toast.error('Có lỗi trong khi tải dữ liệu')
+    })
+    .finally(() => {
+      this.spinner.hide()
+    })
   }
   handleFilter() {
     this.page = 1
@@ -227,16 +249,14 @@ export class IssueComponent {
 
 
   detailModal(data = null) {
-    const modal = this.modalService.open(ThongTinIssueModal, {
-      centered: true,
-      size: "xl",
-      backdrop: "static",
+    const drawer = this.drawerService.open(XemCommentIssueDrawer, {
+      ariaLabelledBy: 'offcanvas-basic-title',
       keyboard: false,
-    });
-    modal.componentInstance.data = data;
-    modal.result.then((result) => { 
-      this.getListDataByFilter();
-    });
+      backdrop: "static",
+      position: "end",
+      panelClass: "drawer-lg"
+    })
+   drawer.componentInstance.data = data
   }
 
   addEditComany(data = null, mode = 'add') {
