@@ -66,7 +66,7 @@ export class XemCommentIssueDrawer implements OnInit, AfterViewChecked {
     this.getDetail();
   }
   ngAfterViewChecked(): void {
-    this.scrollToBottom();
+    // this.scrollToBottom();
   }
   getDetail() {
     this.spinner.show();
