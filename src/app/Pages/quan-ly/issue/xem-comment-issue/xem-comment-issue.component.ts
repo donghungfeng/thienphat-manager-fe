@@ -1,5 +1,5 @@
 import { HttpResponse } from "@angular/common/http";
-import { Component, Input, OnInit } from "@angular/core";
+import { AfterViewChecked, Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
 import { NgbOffcanvas, NgbOffcanvasRef } from "@ng-bootstrap/ng-bootstrap";
 import { IssueModel } from "src/app/shared/model/issue/issue.model";
 import { IssueRequestServices } from "src/app/shared/service/request/phong-ban/issue-request.service";
@@ -12,8 +12,9 @@ import { SpinnerService } from "src/app/shared/service/spinner.service";
   styleUrls: ["xem-comment-issue.component.scss"],
   standalone: false,
 })
-export class XemCommentIssueDrawer implements OnInit {
+export class XemCommentIssueDrawer implements OnInit, AfterViewChecked {
   @Input() data: any;
+  @ViewChild("scrollContainer") private scrollContainer!: ElementRef;
   dataIssue: IssueModel = new IssueModel();
   isLoading = false;
   listComment: any[] = [
@@ -54,6 +55,7 @@ export class XemCommentIssueDrawer implements OnInit {
       isLike: false,
     },
   ];
+  commentText: any;
   constructor(
     private apiService: IssueRequestServices,
     private spinner: SpinnerService,
@@ -62,6 +64,9 @@ export class XemCommentIssueDrawer implements OnInit {
   ) {}
   ngOnInit(): void {
     this.getDetail();
+  }
+  ngAfterViewChecked(): void {
+    this.scrollToBottom();
   }
   getDetail() {
     this.spinner.show();
@@ -78,9 +83,23 @@ export class XemCommentIssueDrawer implements OnInit {
     this.drawer.dismiss();
   }
   reactionComment(data) {
-    const index = this.listComment.findIndex(item => data.id === item.id)
+    const index = this.listComment.findIndex((item) => data.id === item.id);
     if (index !== -1) {
       this.listComment[index].isLike = !this.listComment[index].isLike;
     }
+  }
+  sendComment() {
+    this.listComment.push({
+      id: this.listComment.length + 1,
+      content: this.commentText,
+    });
+    this.commentText = "";
+    this.scrollToBottom()
+  }
+  private scrollToBottom(): void {
+    try {
+      const el = this.scrollContainer.nativeElement;
+      el.scrollTop = el.scrollHeight;
+    } catch (err) {}
   }
 }

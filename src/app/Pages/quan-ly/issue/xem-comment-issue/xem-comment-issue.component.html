@@ -59,7 +59,7 @@
           Bình luận
         </div>
       </div>
-      <div class="p-4 d-flex flex-column gap-3 overflow-y-auto" style="height: calc(100% - 160px);">
+      <div class="p-4 d-flex flex-column gap-3 overflow-y-auto" style="height: calc(100% - 160px);" #scrollContainer>
         <div *ngFor="let item of listComment" class="row">
           <div class="col-11">
             <div class="d-flex gap-2 align-items-center">
@@ -93,12 +93,12 @@
       </div>
       <div class="d-flex align-items-center w-100 bg-white" style="padding-right: 16px;">
         <div class="w-100">
-          <input type="text" class="chat-type" placeholder="Thêm bình luận">
+          <input type="text" [(ngModel)]="commentText" (keyup.enter)="sendComment()" class="chat-type" placeholder="Thêm bình luận">
         </div>
         <div class="d-flex gap-2 align-items-center">
           <img src="../../../assets/images/icon/link-3.png" alt="">
           <img src="../../../assets/images/icon/image.png" alt="">
-          <img src="../../../assets/images/icon/send-primary.png" alt="">
+          <img src="../../../assets/images/icon/send-primary.png" alt="" (click)="sendComment()">
         </div>
       </div>
     </div>
