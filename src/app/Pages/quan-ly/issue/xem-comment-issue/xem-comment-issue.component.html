@@ -14,7 +14,7 @@
     </div>
     <div class="row mb-4">
       <div class="col-4 text-secondary fw-bold">Nhân viên thực hiện</div>
-      <div class="col-8">{{dataIssue.assign.fullName}}</div>
+      <div class="col-8">{{dataIssue.assign ? dataIssue.assign.fullName : ''}}</div>
     </div>
     <div class="row mb-4">
       <div class="col-4 text-secondary fw-bold">Ngày đến hạn</div>
