@@ -13,10 +13,10 @@ import {AppRoutingModule} from './app-routing.module';
 import {CommonModule} from '@angular/common';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AppComponent} from './app.component';
-import { provideDaterangepickerLocale } from 'ngx-daterangepicker-bootstrap';
+import { NgxDaterangepickerBootstrapModule, NgxDaterangepickerLocaleService, provideDaterangepickerLocale } from 'ngx-daterangepicker-bootstrap';
 
 // BOOTSTRAP COMPONENTS
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbDatepickerModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -129,7 +129,9 @@ import { ConfirmModalModule } from './Layout/Components/common/cofirm-modal/cofi
     SpinnerModule,
     DeleteConfirmModalModule,
     ConfirmModalModule,
-    ViewImageModalModule
+    ViewImageModalModule,
+    NgbDatepickerModule,
+    NgxDaterangepickerBootstrapModule.forRoot(),
   ],
   providers: [
     ConfigService,
@@ -137,9 +139,10 @@ import { ConfirmModalModule } from './Layout/Components/common/cofirm-modal/cofi
     provideCharts(withDefaultRegisterables()),
     { provide: HTTP_INTERCEPTORS, useClass: HeadersInterceptor, multi: true },
     provideDaterangepickerLocale({
-      separator: ' - ',
-      applyLabel: 'Okay',
+      separator: " - ",
+      applyLabel: "Okay",
     }),
+    NgxDaterangepickerLocaleService,
   ],
   bootstrap: [AppComponent],
 })

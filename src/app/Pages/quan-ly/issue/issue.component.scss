@@ -24,3 +24,21 @@
   cursor: pointer;
   transition: all 0.3s;
 }
+
+.type-view-active {
+  background-color: #8C8C8C;
+}
+
+.card-grid-item {
+  width: 263px;
+  height: 77px;
+  background-color: white;
+  border-radius: 9px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.title-grid-card:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
