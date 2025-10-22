@@ -346,7 +346,6 @@ export class IssueComponent {
       }
       this.listDatas.push(body)
     })
-    console.log('this.listDatas :>> ', this.listDatas);
   }
   formatDataWithListLayout(data: any[]) {
     let rs = {};
