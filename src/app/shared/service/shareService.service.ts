@@ -95,7 +95,7 @@ export class ShareService {
       case 4:
         return "Đã đóng"; // Đã đóng
       default:
-        return "btn-secondary";
+        return "Đã tạo";
     }
   }
 

@@ -1,7 +1,7 @@
 <div class="bg-white p-4 d-flex flex-column container-body">
   <div class="d-flex justify-content-between align-items-baseline">
     <div class="d-flex gap-2 mb-4 align-items-center">
-      <button class="btn btn-primary-1" (click)="detailModal()">
+      <button class="btn btn-primary-1" (click)="addEditComany()">
         <i class="fa-solid fa-plus"></i>
         Thêm công việc
       </button>
@@ -62,7 +62,6 @@
     class="card card-body d-flex flex-column flex-grow-1 gap-2 mb-4 overflow-auto container-scroll" style="background-color: rgba(236, 239, 241, 1);">
     <div class="d-flex gap-2 align-items-center flex-nowrap">
       <div class="card-grid-item flex-shrink-0">
-        
       </div>
       <div *ngFor="let date of getDayList()" class="card-grid-item flex-column text-secondary flex-shrink-0">
         <div class="fw-bold" style="font-size: 24px;">{{date.date}}</div>
@@ -74,11 +73,23 @@
         {{item.fullName}}
       </div>
       <div *ngFor="let data of item.datas" class="card-grid-item flex-shrink-0 py-1" style="justify-content: left!important">
-        <ul style="margin: 0!important; font-size: 12px;" class="overflow-auto h-100 w-100">
-          <li *ngFor="let job of data" class="title-grid-card" (click)="detailModal(job)">
-            {{job.title}}
-          </li>
-        </ul>
+        <div style="font-size: 12px;" class="overflow-auto h-100 w-100 p-2">
+          <div>
+            <div>
+              <div *ngFor="let job of data" class="title-grid-card w-100 truncate d-flex align-items-center" (click)="detailModal(job)">
+                <div class="d-flex align-items-center w-100">
+                  <div [class]="'title-' + job.status + '-start'"></div>
+                  <div [class]="'title-' + job.status">{{job.title}}</div>
+                </div>
+                <div style="height: 19px; width: 19px;">
+                  <img *ngIf="job.priority === 3" src="../../../../assets/images/icon/priority-high.png" class="w-100" alt="">
+                  <img *ngIf="job.priority === 2" src="../../../../assets/images/icon/priority-mid.png" class="w-100" alt="">
+                  <img *ngIf="job.priority === 1" src="../../../../assets/images/icon/priority-low.png" class="w-100" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
