@@ -9,7 +9,7 @@ export class IssueModel {
   createdDate: string;
   updatedDate: string;
   resolveDate: string;
-  dueDate: string;
+  dueDate: any;
   estimate: number;
   title: string;
   description: string;

@@ -166,6 +166,10 @@ export class IssueComponent {
       if (this.dueDate) {
         filter.push(`dueDate==${this.dueDate}`);
       }
+      // if (this.selected) {
+      //   filter.push(`dueDate>=${moment(this.selected.startDate).format('DD/MM/YYYY')}`);
+      //   filter.push(`dueDate<=${moment(this.selected.endDate).format('DD/MM/YYYY')}`);
+      // }
       if (this.resolveDate) {
         filter.push(`resolveDate==${this.resolveDate}`);
       }
@@ -243,11 +247,16 @@ export class IssueComponent {
     const drawer = this.drawerService.open(XemCommentIssueDrawer, {
       ariaLabelledBy: "offcanvas-basic-title",
       keyboard: false,
-      // backdrop: "static",
+      backdrop: "static",
       position: "end",
       panelClass: "drawer-lg",
     });
     drawer.componentInstance.data = data;
+    drawer.result.then(result => {
+      if(result) {
+        this.getListDataByFilter()
+      }
+    })
   }
 
   addEditComany(data = null, mode = "add") {
