@@ -51,7 +51,7 @@
       </div>
     </div>
   </div>
-  <div *ngIf="typeView === 'list'"
+  <div *ngIf="listDataClone.length && typeView === 'list'"
     class="card card-body d-flex flex-column flex-grow-1 gap-4 mb-4 overflow-y-auto container-scroll horizontal-scroll-first-column">
     <div *ngFor="let item of listDatas" class="d-flex flex-column gap-2">
       <div class="text-uppercase fw-bold d-flex align-items-center gap-2" style="color: #8C8C8C; font-size: 12px;">
@@ -83,7 +83,7 @@
       </div>
     </div>
   </div>
-  <div *ngIf="typeView === 'grid'"
+  <div *ngIf="listDataClone.length && typeView === 'grid'"
     class="card card-body d-flex flex-column flex-grow-1 gap-2 mb-4 overflow-auto container-scroll" style="background-color: rgba(236, 239, 241, 1);">
     <div class="d-flex gap-2 align-items-center flex-nowrap">
       <div class="card-grid-item flex-shrink-0">
@@ -118,7 +118,10 @@
       </div>
     </div>
   </div>
-  <div class="d-flex justify-content-end">
+  <div *ngIf="!listDataClone.length" class="card card-body d-flex flex-column flex-grow-1 gap-2 mb-4 overflow-auto container-scroll" style="background-color: rgba(236, 239, 241, 1);">
+    Không có dữ liệu
+  </div>
+  <div *ngIf="listDataClone.length" class="d-flex justify-content-end">
     <ngb-pagination class="d-flex justify-content-start" [collectionSize]="totalItems" [page]="page"
       (pageChange)="changePage($event)"></ngb-pagination>
   </div>

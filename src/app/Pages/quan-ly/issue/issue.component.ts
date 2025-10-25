@@ -127,8 +127,8 @@ export class IssueComponent {
   selectedEntity: any;
   typeView = "list";
   selected = {
-    startDate: moment().startOf("months"),
-    endDate: moment().endOf("months"),
+    startDate: dayjs().startOf("month"),
+    endDate: dayjs().endOf("month"),
   };
   ranges: any = {
     'Hôm nay': [dayjs().startOf('day'), dayjs().endOf('day')],
@@ -200,13 +200,13 @@ export class IssueComponent {
       if (this.resolveDate) {
         filter.push(`resolveDate==${this.resolveDate}`);
       }
-      if (this.dueDate) {
-        filter.push(`dueDate==${this.dueDate}`);
-      }
-      // if (this.selected) {
-      //   filter.push(`dueDate>=${moment(this.selected.startDate).format('DD/MM/YYYY')}`);
-      //   filter.push(`dueDate<=${moment(this.selected.endDate).format('DD/MM/YYYY')}`);
+      // if (this.dueDate) {
+      //   filter.push(`dueDate==${this.dueDate}`);
       // }
+      if (this.selected) {
+        filter.push(`dueDate>=${dayjs(this.selected.startDate).format('DD/MM/YYYY')}`);
+        filter.push(`dueDate<=${dayjs(this.selected.endDate).format('DD/MM/YYYY')}`);
+      }
       if (this.resolveDate) {
         filter.push(`resolveDate==${this.resolveDate}`);
       }
@@ -245,19 +245,24 @@ export class IssueComponent {
       .then((res: HttpResponse<any>) => {
         if (res.body.code === 200) {
           this.listDatas = [];
-          this.listDataClone = res.body.result.content
-          if (this.typeView === "list") {
-            this.formatDataWithListLayout(res.body.result.content);
-          } else {
-            this.formatDataWithGridLayout(res.body.result.content);
+          this.listDataClone = [...res.body.result.content]
+          if(this.listDataClone.length) {
+            if (this.typeView === "list") {
+              this.formatDataWithListLayout(res.body.result.content);
+            } else {
+              this.formatDataWithGridLayout(res.body.result.content);
+            }
           }
           this.totalItems = res.body.result.totalElements;
         } else {
           this.listDatas = [];
+          this.listDataClone = []
           this.totalItems = 0;
         }
       })
       .catch(() => {
+        this.listDatas = [];
+        this.listDataClone = []
         this.toast.error("Có lỗi trong khi tải dữ liệu");
       })
       .finally(() => {
@@ -342,18 +347,21 @@ export class IssueComponent {
   changeTypeView(type) {
     this.typeView = type;
     this.listDatas = []
-    if (this.typeView === "list") {
-      this.formatDataWithListLayout(this.listDataClone);
-    } else {
-      this.formatDataWithGridLayout(this.listDataClone);
+    if(this.listDataClone.length) {
+      if (this.typeView === "list") {
+        this.formatDataWithListLayout(this.listDataClone);
+      } else {
+        this.formatDataWithGridLayout(this.listDataClone);
+      }
     }
   }
   getDayList() {
-    const dates: moment.Moment[] = [];
-    const current = this.selected.startDate.clone();
-    while (current.isSameOrBefore(this.selected.endDate, "day")) {
+    let dates = [];
+    let current = dayjs(this.selected.startDate);
+
+    while (current.isSame(this.selected.endDate, "day") || current.isBefore(this.selected.endDate, "day")) {
       dates.push(current.clone());
-      current.add(1, "day");
+      current = current.add(1, "day");
     }
     const result = dates.map((d) => ({
       date: d.format("DD"),
