@@ -211,7 +211,10 @@ export class XemCommentIssueDrawer implements OnInit, AfterViewChecked, OnDestro
     .finally(() => this.spinner.hide())
   }
   submit() {
-    this.dataIssue.dueDate = this.dataIssue.dueDate.day + '/' + this.dataIssue.dueDate.month + '/' + this.dataIssue.dueDate.year
+    let day = this.dataIssue.dueDate.day < 10 ? '0' + this.dataIssue.dueDate.day : this.dataIssue.dueDate.day
+    let month = this.dataIssue.dueDate.month < 10 ? '0' + this.dataIssue.dueDate.month : this.dataIssue.dueDate.month
+    let year = this.dataIssue.dueDate.year
+    this.dataIssue.dueDate = day + '/' + month + '/' + year
     const payload = {
       code: this.dataIssue.code,
       title: this.dataIssue.title,
