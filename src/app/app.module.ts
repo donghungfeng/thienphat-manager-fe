@@ -65,6 +65,7 @@ import { SpinnerModule } from './Layout/Components/common/spinner/spinner.module
 import { DeleteConfirmModalModule } from './Layout/Components/common/delete-cofirm-modal/delete-cofirm-modal.module';
 import { ViewImageModalModule } from './Layout/Components/common/view-image/view-image.component.module';
 import { ConfirmModalModule } from './Layout/Components/common/cofirm-modal/cofirm-modal.module';
+import { NgxSelectModule } from 'ngx-select-ex';
 
 @NgModule({
   declarations: [
@@ -132,6 +133,7 @@ import { ConfirmModalModule } from './Layout/Components/common/cofirm-modal/cofi
     ViewImageModalModule,
     NgbDatepickerModule,
     NgxDaterangepickerBootstrapModule.forRoot(),
+    NgxSelectModule
   ],
   providers: [
     ConfigService,

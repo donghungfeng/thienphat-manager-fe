@@ -27,7 +27,8 @@
       <div class="col-4 text-secondary fw-bold">Nhân viên thực hiện</div>
       <div *ngIf="!isEdit" class="col-8">{{dataIssue.assign ? dataIssue.assign.fullName : ''}}</div>
       <div *ngIf="isEdit" class="col-8">
-        <input [disabled]="infoUser.role !== 'admin'" *ngIf="dataIssue.assign" type="text" class="edit-input" [(ngModel)]="dataIssue.assign.fullName">
+        <!-- <input [disabled]="infoUser.role !== 'admin'" *ngIf="dataIssue.assign" type="text" class="edit-input" [(ngModel)]="dataIssue.assign.fullName"> -->
+        <ngx-select [disabled]="infoUser.role !== 'admin'" *ngIf="dataIssue.assign" [items]="listNhanVien" optionValueField="id" optionTextField="fullName" [allowClear]="true" [(ngModel)]="dataIssue.assign.id" (typed)="searchUser('ngx-select', $event)" [searchCallback]="onSearchNhanVien"></ngx-select>
       </div>
     </div>
     <div class="row mb-4">

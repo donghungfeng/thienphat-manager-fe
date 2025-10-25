@@ -204,4 +204,13 @@ export class ShareService {
     const end = moment(endDate, 'DD/MM/YYYY');
     return end.diff(start, "days");
   }
+  removeVietnameseTones(str: string): string {
+    return str
+      .normalize('NFD') // tách chữ và dấu
+      .replace(/[\u0300-\u036f]/g, '') // xóa các ký tự dấu
+      .replace(/đ/g, 'd')
+      .replace(/Đ/g, 'D')
+      .replace(/[^a-zA-Z0-9\s]/g, '') // loại bỏ ký tự đặc biệt (nếu muốn)
+      .trim();
+  }
 }

@@ -11,6 +11,8 @@ import { ToastService } from "src/app/shared/service/toast.service";
 import { CommentRequestService } from "src/app/shared/service/request/phong-ban/comment-request.service";
 import { CommentModel } from "src/app/shared/model/issue/comment.model";
 import { ConfirmModal } from "src/app/Layout/Components/common/cofirm-modal/cofirm-modal.component";
+import { NhanVienModel } from "src/app/shared/model/nhan-vien/nhan-vien.model";
+import { AuthRequestServices } from "src/app/shared/service/request/auth/auth-request.service";
 
 @Component({
   selector: "xem-comment-issue",
@@ -33,6 +35,7 @@ export class XemCommentIssueDrawer implements OnInit, AfterViewChecked, OnDestro
   infoUser: any
   ignoreFirstClick = false;
   backdropEl: HTMLElement | null = null;
+  listNhanVien: NhanVienModel[] = []
   removeClickListener: (() => void) | null = null;
   constructor(
     private apiService: IssueRequestServices,
@@ -45,11 +48,13 @@ export class XemCommentIssueDrawer implements OnInit, AfterViewChecked, OnDestro
     private apiComment: CommentRequestService,
     private elementRef: ElementRef,
     private renderer: Renderer2,
+    private apiUser: AuthRequestServices
   ) {
     this.infoUser = JSON.parse(localStorage.getItem('infoUser'))
   }
   ngOnInit(): void {
     this.getDetail();
+    this.getListNhanVien()
   }
   ngAfterViewChecked(): void {
     this.backdropEl = document.querySelector('ngb-offcanvas-backdrop.show');
@@ -246,4 +251,47 @@ export class XemCommentIssueDrawer implements OnInit, AfterViewChecked, OnDestro
     })
     .finally(() => this.spinner.hide())
   }
+  getListNhanVien(text: any = '') {
+    const filterString = () => {
+      let filter = [];
+      filter.push("id>0");
+      if (text) {
+        filter.push(`fullName==*${text}*`);
+      }
+      return filter.join(";");
+    };
+    const params = {
+      page: this.page - 1,
+      size: this.size,
+      filter: filterString(),
+      sort: ["id", "desc"],
+    };
+    this.apiUser
+      .search(params)
+      .then((res: HttpResponse<any>) => {
+        if (res.body.code === 200) {
+          this.listNhanVien = res.body.result.content;
+        } else {
+          this.listNhanVien = [];
+        }
+      })
+      .catch(() => {
+        this.listNhanVien = [];
+      })
+      .finally(() => {
+      });
+  }
+  searchUser(source: string, text: string) {
+    setTimeout(() => {
+      const convertText = this.svShare.removeVietnameseTones(text.toLocaleLowerCase())
+      this.getListNhanVien(convertText)
+    }, 500)
+  }
+  onSearchNhanVien = (search: string, item: any): boolean => {
+    if (!search) return true;
+
+    const term = this.svShare.removeVietnameseTones(search.toLowerCase());
+    const name = this.svShare.removeVietnameseTones((item.text || '').toLowerCase());
+    return name.includes(term);
+  };
 }

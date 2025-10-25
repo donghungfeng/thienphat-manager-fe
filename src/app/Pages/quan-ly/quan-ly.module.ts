@@ -16,7 +16,7 @@ import { ThongTinIssueModal } from "./issue/thong-tin-issue/thong-tin-issue.comp
 import { IssueComponent } from "./issue/issue.component";
 import { XemCommentIssueDrawer } from "./issue/xem-comment-issue/xem-comment-issue.component";
 import { NgxDaterangepickerBootstrapModule } from "ngx-daterangepicker-bootstrap";
-
+import { NgxSelectModule } from 'ngx-select-ex';
 @NgModule({
   declarations: [
     PhongBanComponent,
@@ -33,7 +33,7 @@ import { NgxDaterangepickerBootstrapModule } from "ngx-daterangepicker-bootstrap
     PhanQuyenModal,
     XemCommentIssueDrawer,
   ],
-  imports: [SharedModule, CommonModule, NgxDaterangepickerBootstrapModule.forRoot()],
+  imports: [SharedModule, CommonModule, NgxDaterangepickerBootstrapModule.forRoot(), NgxSelectModule],
   exports: [
     PhongBanComponent,
     ThemSuaPhongBanModal,
