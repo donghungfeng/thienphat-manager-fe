@@ -131,6 +131,17 @@
   transition: all 0.3s;
 }
 
+.btn-success-1 {
+  background-color: rgba(164, 243, 168, 1)!important;
+  color: white!important;
+  transition: all 0.3s;
+}
+.btn-success-1:hover {
+  background-color: $green-200!important;
+  color: white!important;
+  transition: all 0.3s;
+}
+
 .btn-danger-1 {
   background-color: #020AB3!important;
   color: white!important;

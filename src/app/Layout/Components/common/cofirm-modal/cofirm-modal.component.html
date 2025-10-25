@@ -4,7 +4,7 @@
   </button>
 </div>
 <div class="modal-body">
-  Xác nhận thực hiện thao tác?
+  {{title ? title : 'Xác nhận thực hiện thao tác?'}}
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-secondary" (click)="closeModal(false)">Hủy</button>

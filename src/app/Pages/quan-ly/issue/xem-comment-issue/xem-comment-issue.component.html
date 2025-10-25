@@ -1,7 +1,7 @@
 <div class="h-100">
   <div class="p-4 d-flex justify-content-between align-items-center border-bottom pb-3">
     <div class="d-flex gap-2 align-items-center">
-      <div class="fw-light text-secondary d-flex align-items-center gap-2 rounded px-3 py-2" style="border: 1px solid rgba(179, 179, 179, 1); cursor: pointer;">
+      <div *ngIf="dataIssue.status !== 3" class="fw-light text-secondary d-flex align-items-center gap-2 rounded px-3 py-2" style="border: 1px solid rgba(179, 179, 179, 1); cursor: pointer;" (click)="changeStatus()">
         <img src="../../../../../assets/images/icon/tick-circle.png" alt="">
         <div>Đã hoàn thành</div>
       </div>
@@ -15,7 +15,7 @@
         Sửa thông tin
       </div>
     </div>
-    <div style="cursor: pointer;" (click)="close()">
+    <div style="cursor: pointer;" (click)="confirmClose()">
       <img src="../../../../../assets/images/icon/close-log-out.png" alt="">
     </div>
   </div>
@@ -27,7 +27,7 @@
       <div class="col-4 text-secondary fw-bold">Nhân viên thực hiện</div>
       <div *ngIf="!isEdit" class="col-8">{{dataIssue.assign ? dataIssue.assign.fullName : ''}}</div>
       <div *ngIf="isEdit" class="col-8">
-        <input [disabled]="infoUser !== 'admin'" *ngIf="dataIssue.assign" type="text" class="edit-input" [(ngModel)]="dataIssue.assign.fullName">
+        <input [disabled]="infoUser.role !== 'admin'" *ngIf="dataIssue.assign" type="text" class="edit-input" [(ngModel)]="dataIssue.assign.fullName">
       </div>
     </div>
     <div class="row mb-4">
@@ -35,7 +35,7 @@
       <div *ngIf="!isEdit" class="col-8">{{dataIssue.dueDate}}</div>
       <div *ngIf="isEdit" class="col-8">
         <div class="input-group">
-          <input [disabled]="infoUser !== 'admin'" class="form-control" placeholder="Chọn ngày" ngbDatepicker
+          <input [disabled]="infoUser.role !== 'admin'" class="form-control" placeholder="Chọn ngày" ngbDatepicker
             #dueDatePicker="ngbDatepicker" [(ngModel)]="dataIssue.dueDate" [readonly]="true"
             (click)="dueDatePicker.toggle()" />
           <button class="btn btn-outline-secondary" type="button" (click)="dueDatePicker.toggle()">
@@ -70,7 +70,7 @@
               <div *ngIf="!isEdit" class="rounded-4 px-5" [class]="svShare.getColorPriorityIssue(dataIssue.priority)">
                 {{svShare.getPriorityIssue(dataIssue.priority)}}
               </div>
-              <select [disabled]="infoUser !== 'admin'" *ngIf="isEdit" [(ngModel)]="dataIssue.priority" class="form-select">
+              <select [disabled]="infoUser.role !== 'admin'" *ngIf="isEdit" [(ngModel)]="dataIssue.priority" class="form-select">
                 <option value="">Độ ưu tiên</option>
                 <option value="1">Thấp</option>
                 <option value="2">Trung bình</option>
@@ -85,14 +85,14 @@
       <div class="col-4 text-secondary fw-bold">Mô tả</div>
       <div *ngIf="!isEdit" class="col-8" style="white-space: pre-line" [innerHtml]="dataIssue.description"></div>
       <div *ngIf="isEdit" class="col-8">
-        <textarea [disabled]="infoUser !== 'admin'" rows="5" type="text" class="edit-input" [(ngModel)]="dataIssue.description"></textarea>
+        <textarea [disabled]="infoUser.role !== 'admin'" rows="5" type="text" class="edit-input" [(ngModel)]="dataIssue.description"></textarea>
       </div>
     </div>
     <div class="row mb-4">
       <div class="col-4 text-secondary fw-bold">URL</div>
       <div *ngIf="!isEdit" class="col-8 truncate">{{dataIssue.url}}</div>
       <div *ngIf="isEdit" class="col-8">
-        <input [disabled]="infoUser !== 'admin'" type="text" class="edit-input" [(ngModel)]="dataIssue.url">
+        <input [disabled]="infoUser.role !== 'admin'" type="text" class="edit-input" [(ngModel)]="dataIssue.url">
       </div>
     </div>
   </div>
@@ -112,26 +112,20 @@
               </div>
               <div>
                 <div class="text-secondary fw-light d-flex align-items-center gap-2" style="font-size: 12px;">
-                  <div>Vũ Ngọc Huyền</div>
+                  <div>{{item.assign ? item.assign.fullName : ''}}</div>
                   <div>•</div>
                   <div>
-                    16/9/2025
+                    {{item.time + ' ' + item.createdDate}}
                   </div>
                 </div>
                 <div style="font-size: 12px;">
-                  {{item.content}}
+                  {{item.text}}
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-1">
-            <img *ngIf="!item.isLike" class="reaction-bubble" src="../../../assets/images/icon/heart.png" alt="" style="cursor: pointer;" (click)="reactionComment(item)">
-            <div *ngIf="item.isLike" class="position-relative">
-              <img class="reaction-bubble" src="../../../assets/images/icon/heart-danger.png" alt="" style="cursor: pointer;" (click)="reactionComment(item)">
-              <div class="count-reaction">
-                1
-              </div>
-            </div>
+          <div class="col-1 d-flex align-items-center">
+            <img src="../../../../../assets/images/icon/Trash.png" alt="" style="cursor: pointer;" (click)="deleteComment(item.id)">
           </div>
         </div>
       </div>

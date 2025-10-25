@@ -178,6 +178,10 @@ export class ShareService {
     return str.length > maxLength ? str.slice(0, maxLength) + "..." : str;
   }
   getExpiredTime(endDate: any) {
+    if(!endDate) return {
+      text: '',
+      color: ""
+    }
     if (+this.tinhSoNgayConLai(endDate) < 0) {
       return {
         text: "Hết hạn",
