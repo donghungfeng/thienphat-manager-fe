@@ -39,12 +39,13 @@ export class ThongTinIssueModal implements OnInit {
       dueDate: [null, Validators.required],        // string (dd/MM/yyyy)
       resolveDate: null,    // string (dd/MM/yyyy)
       estimate: ["", Validators.required],
-      type: ["", Validators.required],
+      type: ["0", Validators.required],
       priority: ["", Validators.required],
-      status: ["", Validators.required],
+      status: ["1", Validators.required],
       note: [""],
       description: [""]
     });
+    this.form.get("status").disable()
   }
 
   ngOnInit(): void {
