@@ -256,7 +256,7 @@ export class XemCommentIssueDrawer implements OnInit, AfterViewChecked, OnDestro
       let filter = [];
       filter.push("id>0");
       if (text) {
-        filter.push(`fullName==*${text}*`);
+        filter.push(`fullName=="*${text}*"`);
       }
       return filter.join(";");
     };
