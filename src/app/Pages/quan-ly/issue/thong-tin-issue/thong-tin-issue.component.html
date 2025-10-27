@@ -6,7 +6,7 @@
 <div class="modal-body">
   <form [formGroup]="form" class="d-flex flex-column gap-4">
     <div class="row">
-      <div class="col">
+      <!-- <div class="col">
         <div>Code <span class="text-danger">*</span></div>
         <input placeholder="Nhập code" type="text" class="form-control" formControlName="code" required />
         <div class="text-danger fw-light mt-1" *ngIf="form.get('code')?.touched && form.get('code')?.invalid">
@@ -14,7 +14,7 @@
             Vui lòng nhập code
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="col">
         <div>Tiêu đề <span class="text-danger">*</span></div>
         <input placeholder="Nhập tiêu đề" type="text" class="form-control" formControlName="title" required>
@@ -54,6 +54,20 @@
 
     <div class="row">
       <div class="col">
+        <div>Ngày thực hiện</div>
+
+        <div class="input-group">
+          <input class="form-control" placeholder="Chọn ngày" name="resolveDate" ngbDatepicker
+            #resolveDatePicker="ngbDatepicker" formControlName="resolveDate" [readonly]="true"
+            (click)="resolveDatePicker.toggle()" />
+          <button class="btn btn-outline-secondary" type="button" (click)="resolveDatePicker.toggle()">
+            <i class="fa-solid fa-calendar"></i>
+          </button>
+
+        </div>
+      </div>
+
+      <div class="col">
         <div>Ngày hết hạn</div>
 
         <div class="input-group">
@@ -72,19 +86,6 @@
         </div>
       </div>
 
-      <div class="col">
-        <div>Ngày hoàn thành</div>
-
-        <div class="input-group">
-          <input class="form-control" placeholder="Chọn ngày" name="resolveDate" ngbDatepicker
-            #resolveDatePicker="ngbDatepicker" formControlName="resolveDate" [readonly]="true"
-            (click)="resolveDatePicker.toggle()" />
-          <button class="btn btn-outline-secondary" type="button" (click)="resolveDatePicker.toggle()">
-            <i class="fa-solid fa-calendar"></i>
-          </button>
-
-        </div>
-      </div>
     </div>
 
     <div class="row">
@@ -92,7 +93,7 @@
         <div class="row">
           <div class="col">
             <div>Số giờ <span class="text-danger">*</span></div>
-            <input placeholder="Nhập số giờ" type="text" class="form-control" formControlName="estimate" required>
+            <input placeholder="Nhập số giờ" type="number" class="form-control" formControlName="estimate" required>
             <div class="text-danger fw-light mt-1"
               *ngIf="form.get('estimate')?.touched && form.get('estimate')?.invalid">
               <div *ngIf="form.get('estimate')?.errors?.['required']">

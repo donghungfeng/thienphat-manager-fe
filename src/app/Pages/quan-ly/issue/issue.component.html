@@ -60,11 +60,9 @@
       <div class="card card-body card-job d-flex flex-column gap-2">
         <div *ngFor="let data of item.datas" class="card card-body d-flex gap-2 card-job-item" (dblclick)="detailModal(data)">
           <div class="d-flex gap-2">
+            
             <div class="fw-bold">
-              {{data.title}} <span class="px-4 py-1 rounded-4" [class]="svShare.getColorPriorityIssue(+data.priority)">{{svShare.getPriorityIssue(+data.priority)}}</span>
-            </div>
-            <div>
-              {{data.assign ? ' - ' + data.assign.fullName : ''}}
+              {{data.title}} - <div class="badge bg-primary">{{data.assign ? data.assign.fullName : ''}} </div> &nbsp; <span class="px-4 py-1 rounded-4" [class]="svShare.getColorPriorityIssue(+data.priority)">{{svShare.getPriorityIssue(+data.priority)}}</span>
             </div>
           </div>
           <div>

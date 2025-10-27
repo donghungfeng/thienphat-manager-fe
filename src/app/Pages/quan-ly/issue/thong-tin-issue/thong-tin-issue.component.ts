@@ -32,15 +32,15 @@ export class ThongTinIssueModal implements OnInit {
     public svShare: ShareService,
   ) {
     this.form = this.fb.group({
-      code: ["", Validators.required],
+      // code: ["", Validators.required],
       title: ["", Validators.required],
       url: ["", Validators.required],
       assignId: [""],
       dueDate: [null, Validators.required],        // string (dd/MM/yyyy)
       resolveDate: null,    // string (dd/MM/yyyy)
-      estimate: ["", Validators.required],
+      estimate: ["0", Validators.required],
       type: ["0", Validators.required],
-      priority: ["", Validators.required],
+      priority: ["1", Validators.required],
       status: ["1", Validators.required],
       note: [""],
       description: [""]

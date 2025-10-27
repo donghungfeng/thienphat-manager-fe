@@ -35,7 +35,7 @@ export class UserBoxComponent implements OnInit {
             ...res.body.result,
             avatar: res.body.result.avatar
               ? "data:image/jpeg;base64," + res.body.result.avatar
-              : "../../../../assets/images/user/user.png",
+              : "../../../../../assets/images/avatars/user.png",
           };
         } else {
           this.infoUser = null;
