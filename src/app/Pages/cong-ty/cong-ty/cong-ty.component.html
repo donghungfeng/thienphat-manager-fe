@@ -61,7 +61,7 @@
         </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let item of listDatas; index as i" class="fw-light">
+      <tr *ngFor="let item of listDatas; index as i" class="fw-light" (dblclick)="addEditComany(item, 'view')">
         <td>{{ i + 1 }}</td>
         <td>
           {{item.name}}

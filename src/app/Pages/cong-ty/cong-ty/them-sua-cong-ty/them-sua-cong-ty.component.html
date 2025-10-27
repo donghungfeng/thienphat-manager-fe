@@ -1,57 +1,285 @@
-<div class="modal-header">
-  <h4 class="modal-title text-primary-1">{{data ? mode === 'view' ? 'Xem chi tiết' : 'Sửa thông tin công ty' : 'Thêm mới công ty'}}</h4>
-  <button type="button" class="btn-close" aria-label="Close" (click)="closeModal(false)">
-  </button>
-</div>
 <div class="modal-body">
-  <div class="text-primary-1 fw-bold">
-    Thông tin công ty
-  </div>
-  <form [formGroup]="form" class="d-flex flex-column gap-4">
-    <div class="row">
-      <div class="col">
-        <div>Tên công ty <span class="text-danger">*</span></div>
-        <input placeholder="Nhập tên công ty" type="text" class="form-control" formControlName="name" required>
-        <div class="text-danger fw-light mt-1" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
-          <div *ngIf="form.get('name')?.errors?.['required']">
-            Vui lòng nhập tên công ty
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div>Mã số thuế <span class="text-danger">*</span></div>
-        <input placeholder="Nhập mã số thuế" type="text" class="form-control" formControlName="taxCode" required>
-        <div class="text-danger fw-light mt-1" *ngIf="form.get('taxCode')?.touched && form.get('taxCode')?.invalid">
-          <div *ngIf="form.get('taxCode')?.errors?.['required']">
-            Vui lòng nhập mã số thuế
-          </div>
-          <div *ngIf="form.get('taxCode')?.errors?.['pattern']">
-            Mã số thuế chỉ bao gồm số
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <div>Số điện thoại <span class="text-danger">*</span></div>
-        <input placeholder="Nhập số điện thoại" type="text" class="form-control" formControlName="phone" required>
-        <div class="text-danger fw-light mt-1" *ngIf="form.get('phone')?.touched && form.get('phone')?.invalid">
-          <div *ngIf="form.get('phone')?.errors?.['required']">
-            Vui lòng nhập số điện thoại
-          </div>
-          <div *ngIf="form.get('phone')?.errors?.['pattern']">
-            Số điện thoại chỉ bao gồm số
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div>Địa chỉ</div>
-        <input placeholder="Nhập địa chỉ" type="text" class="form-control" formControlName="address">
-      </div>
-    </div>
-  </form>
+    <ul ngbNav #nav="ngbNav" [(activeId)]="activeTab" class="nav-tabs">
+        <li [ngbNavItem]="1">
+            <a ngbNavLink>Thông tin cơ bản</a>
+            <ng-template ngbNavContent>
+                <div class="p-3">
+                    <div class="text-primary-1 fw-bold mb-3">Thông tin chung</div>
+                    <form [formGroup]="form" class="d-flex flex-column gap-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div>Mã công ty</div>
+                                <input placeholder="Mã công ty" type="text" class="form-control" formControlName="code" [readonly]="mode === 'view'">
+                            </div>
+                            <div class="col-md-6">
+                                <div>Tên viết tắt</div>
+                                <input placeholder="Nhập tên viết tắt" type="text" class="form-control" formControlName="shortName" [readonly]="mode === 'view'">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div>Tên công ty <span class="text-danger">*</span></div>
+                                <input placeholder="Nhập tên công ty" type="text" class="form-control" formControlName="name" required [readonly]="mode === 'view'">
+                                </div>
+                            <div class="col-md-6">
+                                <div>Mã số thuế <span class="text-danger">*</span></div>
+                                <input placeholder="Nhập mã số thuế" type="text" class="form-control" formControlName="taxCode" required [readonly]="mode === 'view'">
+                                </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div>Số điện thoại</div>
+                                <input placeholder="Nhập số điện thoại" type="text" class="form-control" formControlName="phone" [readonly]="mode === 'view'">
+                                </div>
+                            <div class="col-md-6">
+                                <div>Email</div>
+                                <input placeholder="Nhập email" type="email" class="form-control" formControlName="email" [readonly]="mode === 'view'">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div>Địa chỉ <span class="text-danger">*</span></div>
+                                <textarea placeholder="Nhập địa chỉ" class="form-control" formControlName="address" rows="2" required [readonly]="mode === 'view'"></textarea>
+                            </div>
+                        </div>
+                        
+                        <hr>
+
+                        <div class="text-primary-1 fw-bold mb-3">Thông tin quản lý & Tình trạng</div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div>Ngày thành lập</div>
+                                <input type="date" class="form-control" formControlName="establishedDate" [readonly]="mode === 'view'">
+                            </div>
+                            <div class="col-md-6">
+                                <div>Lĩnh vực kinh doanh</div>
+                                <input placeholder="Ngành nghề KD" type="text" class="form-control" formControlName="businessField" [readonly]="mode === 'view'">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div>Chi cục thuế quản lý</div>
+                                <input placeholder="Nhập tên Chi cục thuế" type="text" class="form-control" formControlName="taxDepartmentName" [readonly]="mode === 'view'">
+                            </div>
+                            <div class="col-md-6">
+                                <div>Phát sinh</div>
+                                <input placeholder="Phát sinh" type="text" class="form-control" formControlName="hasArising" [readonly]="mode === 'view'">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div>Tình trạng</div>
+                                <select class="form-select" formControlName="status" [disabled]="mode === 'view'">
+                                    <option [ngValue]="1">Đang cung cấp dịch vụ</option>
+                                    <option [ngValue]="0">Dừng/Bàn giao/Khác</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <div>Link tổng hợp Zalo</div>
+                                <input placeholder="Link Zalo" type="url" class="form-control" formControlName="totalZaloLink" [readonly]="mode === 'view'">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div>Ghi chú chung</div>
+                                <textarea placeholder="Ghi chú về công ty" class="form-control" formControlName="note" rows="1" [readonly]="mode === 'view'"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+            <a ngbNavLink>Phân công & Kế toán</a>
+            <ng-template ngbNavContent>
+                <div class="p-3">
+                    <div class="text-primary-1 fw-bold mb-3">Thông tin nhân sự phụ trách</div>
+                    <form [formGroup]="form" class="d-flex flex-column gap-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div>Kế toán viên</div>
+                                <input placeholder="ID Kế toán viên" class="form-control" formControlName="accountant" [readonly]="mode === 'view'">
+                            </div>
+                            <div class="col-md-6">
+                                <div>Hỗ trợ</div>
+                                <input placeholder="ID Hỗ trợ" class="form-control" formControlName="supporter" [readonly]="mode === 'view'">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div>Kế toán tổng hợp</div>
+                                <input placeholder="ID Kế toán tổng hợp" class="form-control" formControlName="generalAccountant" [readonly]="mode === 'view'">
+                            </div>
+                            <div class="col-md-6">
+                                <div>Cộng tác viên (CTV)</div>
+                                <input placeholder="ID Cộng tác viên" class="form-control" formControlName="collaborator" [readonly]="mode === 'view'">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="text-primary-1 fw-bold mb-3">Thông tin đại diện</div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div>Người đại diện pháp luật</div>
+                                <input placeholder="Tên người đại diện" class="form-control" formControlName="representativeName" [readonly]="mode === 'view'">
+                            </div>
+                            <div class="col-md-6">
+                                <div>Giám đốc</div>
+                                <input placeholder="Tên giám đốc" class="form-control" formControlName="director" [readonly]="mode === 'view'">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div>Kế toán trưởng</div>
+                                <input placeholder="Tên kế toán trưởng" class="form-control" formControlName="chiefAccountantName" [readonly]="mode === 'view'">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </ng-template>
+        </li>
+
+        
+        <li [ngbNavItem]="3">
+            <a ngbNavLink>Truy cập & Hóa đơn</a>
+            <ng-template ngbNavContent>
+                <div class="p-3">
+                    <div class="text-primary-1 fw-bold mb-3">Thông tin truy cập Thuế & CKS</div>
+                    <form [formGroup]="form" class="d-flex flex-column gap-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div>MK Thuế Điện tử</div>
+                                <input type="text" class="form-control" formControlName="electronicTaxPassword" [readonly]="mode === 'view'">
+                            </div>
+                            <div class="col-md-6">
+                                <div>MK Hóa đơn Điện tử (TCT)</div>
+                                <input type="text" class="form-control" formControlName="electronicOrderPassword" [readonly]="mode === 'view'">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div>Hạn CKS (yyyy-mm-dd)</div>
+                                <input type="date" class="form-control" formControlName="digitalSignatureExpiryDate" [readonly]="mode === 'view'">
+                            </div>
+                            <div class="col-md-6">
+                                <div>Số ngày còn lại (CKS)</div>
+                                <input type="number" class="form-control" formControlName="remainingDays" readonly>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="text-primary-1 fw-bold mb-3">Thông tin hệ thống Hóa đơn</div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div>Link truy cập Hóa đơn</div>
+                                <input type="url" class="form-control" formControlName="invoiceLink" [readonly]="mode === 'view'">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div>Tên đăng nhập Hóa đơn</div>
+                                <input type="text" class="form-control" formControlName="invoiceUsername" [readonly]="mode === 'view'">
+                            </div>
+                            <div class="col-md-6">
+                                <div>Mật khẩu Hóa đơn</div>
+                                <input type="text" class="form-control" formControlName="invoicePassword" [readonly]="mode === 'view'">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div>HĐ đã mua</div>
+                                <input type="number" class="form-control" formControlName="invoicePurchasedCount" [readonly]="mode === 'view'">
+                            </div>
+                            <div class="col-md-4">
+                                <div>HĐ đã sử dụng</div>
+                                <input type="number" class="form-control" formControlName="invoiceUsedCount" [readonly]="mode === 'view'">
+                            </div>
+                            <div class="col-md-4">
+                                <div>HĐ còn lại</div>
+                                <input type="number" class="form-control" formControlName="invoiceRemainingCount" [readonly]="mode === 'view'">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div>Tình trạng Hóa đơn</div>
+                                <select class="form-select" formControlName="invoiceStatus" [disabled]="mode === 'view'">
+                                    <option [ngValue]="1">Đang sử dụng/Đã mua</option>
+                                    <option [ngValue]="0">Chưa có/Hết HĐ</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="4">
+            <a ngbNavLink>Ngân hàng & Bảo hiểm</a>
+            <ng-template ngbNavContent>
+                <div class="p-3">
+                    <div class="text-primary-1 fw-bold mb-3">Thông tin Ngân hàng</div>
+                    <form [formGroup]="form" class="d-flex flex-column gap-3">
+                        <div class="row">
+                            <div class="col-12">
+                                <div>Thông tin Ngân hàng 1</div>
+                                <textarea placeholder="Link, User, Pass" class="form-control" formControlName="bankInfo1" rows="2" [readonly]="mode === 'view'"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div>Thông tin Ngân hàng 2</div>
+                                <textarea placeholder="Link, User, Pass" class="form-control" formControlName="bankInfo2" rows="2" [readonly]="mode === 'view'"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div>Thông tin Ngân hàng 3</div>
+                                <textarea placeholder="Link, User, Pass" class="form-control" formControlName="bankInfo3" rows="2" [readonly]="mode === 'view'"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div>Thông tin Ngân hàng 4</div>
+                                <textarea placeholder="Link, User, Pass" class="form-control" formControlName="bankInfo4" rows="2" [readonly]="mode === 'view'"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div>Thông tin Ngân hàng 5</div>
+                                <textarea placeholder="Link, User, Pass" class="form-control" formControlName="bankInfo5" rows="2" [readonly]="mode === 'view'"></textarea>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="text-primary-1 fw-bold mb-3">Thông tin Bảo hiểm xã hội</div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div>Link truy cập Bảo hiểm</div>
+                                <input type="url" class="form-control" formControlName="insuranceLink" [readonly]="mode === 'view'">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div>Tên đăng nhập Bảo hiểm (ID)</div>
+                                <input type="text" class="form-control" formControlName="insuranceUsername" [readonly]="mode === 'view'">
+                            </div>
+                            <div class="col-md-6">
+                                <div>Mật khẩu Bảo hiểm</div>
+                                <input type="text" class="form-control" formControlName="insurancePassword" [readonly]="mode === 'view'">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </ng-template>
+        </li>
+    </ul>
+
+    <div [ngbNavOutlet]="nav" class="mt-2"></div>
 </div>
+
 <div class="modal-footer" *ngIf="mode !== 'view'">
-  <button type="button" class="btn btn-secondary" (click)="closeModal(false)">Hủy</button>
-  <button type="button" class="btn btn-primary-1" (click)="submitForm()">{{data ? 'Lưu thay đổi' : 'Thêm công ty'}}</button>
+    <button type="button" class="btn btn-secondary" (click)="closeModal(false)">Hủy</button>
+    <button type="button" class="btn btn-primary-1" (click)="submitForm()" [disabled]="form.invalid">
+        {{data ? 'Lưu thay đổi' : 'Thêm công ty'}}
+    </button>
+</div>
+
+<div class="modal-footer" *ngIf="mode === 'view'">
+    <button type="button" class="btn btn-secondary" (click)="closeModal(false)">Đóng</button>
 </div>

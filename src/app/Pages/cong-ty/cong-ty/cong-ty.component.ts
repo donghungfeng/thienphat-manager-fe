@@ -17,7 +17,7 @@ import { DeleteConfirmModal } from "src/app/Layout/Components/common/delete-cofi
 })
 export class CongTyComponent implements OnInit {
   page = 1
-  size = 10
+  size = 20
   totalItems = 0
   name: any
   taxCode: any
@@ -104,7 +104,7 @@ export class CongTyComponent implements OnInit {
       let filter = []
       filter.push("id>0")
       if (this.name) {
-        filter.push(`name==*${this.name}*`)
+        filter.push(`name=='*${this.name}*'`)
       }
       if (this.taxCode) {
         filter.push(`taxCode==*${this.taxCode}*`);
@@ -113,7 +113,7 @@ export class CongTyComponent implements OnInit {
         filter.push(`phone==*${this.phone}*`);
       }
       if (this.address) {
-        filter.push(`address==*${this.address}*`);
+        filter.push(`address=='*${this.address}*'`);
       }
       return filter.join(";")
     }
